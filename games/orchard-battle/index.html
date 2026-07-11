@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f2f0e8" />
+    <title>贪吃蛇 - 果园大作战</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <section class="intro" aria-labelledby="game-title">
+        <p class="eyebrow">SNAKE CLUB</p>
+        <h1 id="game-title">果园<br /><em>大作战</em></h1>
+        <p class="intro-copy">吃掉果实，绕开自己。看看这条小蛇能长到多长。</p>
+
+        <div class="scoreboard" aria-label="游戏分数">
+          <div>
+            <span>本局得分</span>
+            <strong id="score">00</strong>
+          </div>
+          <div>
+            <span>最高纪录</span>
+            <strong id="best-score">00</strong>
+          </div>
+        </div>
+
+        <div class="desktop-actions">
+          <button class="button button-primary" id="start-button" type="button">开始游戏</button>
+          <button class="button button-secondary" id="pause-button" type="button" disabled>暂停</button>
+        </div>
+
+        <p class="keyboard-help">方向键或 WASD 移动，空格键暂停</p>
+      </section>
+
+      <section class="console" aria-label="贪吃蛇游戏区">
+        <div class="console-topbar">
+          <span>ORCHARD-20</span>
+          <span id="speed-label">速度 1</span>
+        </div>
+
+        <div class="screen-frame">
+          <canvas id="game-board" width="440" height="440" aria-label="贪吃蛇棋盘" role="img"></canvas>
+          <div class="game-overlay" id="game-overlay">
+            <div class="overlay-mark" aria-hidden="true">S</div>
+            <p id="overlay-title">准备好了吗？</p>
+            <span id="overlay-copy">按下开始，让小蛇去寻找果实</span>
+          </div>
+        </div>
+
+        <div class="mobile-actions">
+          <button class="button button-primary" id="mobile-start-button" type="button">开始游戏</button>
+          <button class="button button-secondary" id="mobile-pause-button" type="button" disabled>暂停</button>
+        </div>
+
+        <div class="dpad" aria-label="触屏方向控制">
+          <button data-direction="up" aria-label="向上">↑</button>
+          <button data-direction="left" aria-label="向左">←</button>
+          <button data-direction="down" aria-label="向下">↓</button>
+          <button data-direction="right" aria-label="向右">→</button>
+        </div>
+      </section>
+    </main>
+
+    <script src="./game.js"></script>
+  </body>
+</html>

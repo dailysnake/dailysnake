@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Odyssey - 蛇界空间 | 贪吃蛇创意探索工坊</title>
+    <meta name="description" content="一个致力于探索和开发创意贪吃蛇游戏变体的综合平台。提供霓虹朋克风、复古终端风、三维空间风等完全独立、各具特色的贪吃蛇游戏畅玩与介绍。">
+    <!-- Google Fonts: Outfit for sleek branding & headings, Inter for high-readability text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cyberpunk Background Orbs -->
+    <div class="stars-bg"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" id="nav-logo">
+                <span class="neon-text-green">SNAKE</span>
+                <span class="neon-text-pink">ODYSSEY</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#hero" class="active">主页</a>
+                <a href="#showcase">游戏大厅</a>
+                <a href="#features">技术特色</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="hero">
+        <div class="hero-content">
+            <div class="badge-new">NEW GAME INCOMING</div>
+            <h1 class="main-title">
+                探索经典的<br>
+                <span class="neon-text-gradient">全新进化维度</span>
+            </h1>
+            <p class="hero-desc">
+                《蛇界空间》是一个专注于重塑经典的创意探索工坊。我们将各种超乎想象的技术与玩法带入传统的“贪吃蛇”中——从高频粒子震荡的霓虹音效、到荧光闪烁的命令行终端，甚至到高维立体空间的重力穿梭。在这里，经典焕发新生。
+            </p>
+            <div class="hero-actions">
+                <a href="#showcase" class="btn btn-primary">进入大厅</a>
+                <a href="#features" class="btn btn-outline">了解技术</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Panel -->
+    <section class="stats-section">
+        <div class="stats-grid">
+            <div class="glass-card stat-card">
+                <span class="stat-num neon-text-green" id="stat-games">2</span>
+                <span class="stat-label">已上线版本</span>
+            </div>
+            <div class="glass-card stat-card">
+                <span class="stat-num neon-text-pink" id="stat-upcoming">1+</span>
+                <span class="stat-label">研发与筹备中</span>
+            </div>
+            <div class="glass-card stat-card">
+                <span class="stat-num neon-text-gold" id="stat-audio">100%</span>
+                <span class="stat-label">Web Synth 音效</span>
+            </div>
+            <div class="glass-card stat-card">
+                <span class="stat-num neon-text-blue" id="stat-fps">60+</span>
+                <span class="stat-label">丝滑运行帧率</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Showcase Grid -->
+    <section class="showcase-section" id="showcase">
+        <div class="section-header">
+            <h2 class="section-title">游戏大厅 <span class="neon-text-pink">GAME HALL</span></h2>
+            <p class="section-subtitle">选择你喜欢的变体，点击立即进入独立的世界游玩</p>
+            
+            <!-- Category Filters -->
+            <div class="filters-container" id="filters-container">
+                <button class="filter-btn active" data-filter="all">全部变体</button>
+                <button class="filter-btn" data-filter="modern">现代 / 霓虹</button>
+                <button class="filter-btn" data-filter="retro">经典 / 复古</button>
+                <button class="filter-btn" data-filter="3d">三维 / 空间</button>
+            </div>
+        </div>
+
+        <div class="game-grid" id="game-grid">
+            <!-- Game Card 1: Neon Snake -->
+            <article class="glass-card game-card" data-category="modern">
+                <div class="card-image-wrapper">
+                    <img src="assets/neon_snake_cover.jpg" alt="Neon Snake Game Screen" class="card-image">
+                    <div class="card-tag tag-active">在线畅玩</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="game-category">MODERN CYBERPUNK</span>
+                        <span class="game-version">V1.1</span>
+                    </div>
+                    <h3 class="game-title">霓虹极战贪吃蛇</h3>
+                    <p class="game-desc">
+                        极具现代科技感的霓虹极光画风。支持粒子物理特效、动态 Web Audio 声音合成器、多种强力道具（黄金晶体、超频药剂等）以及针对移动端特别优化过的滑动与触控手势。
+                    </p>
+                    <div class="card-features">
+                        <span class="feature-tag">合成音效</span>
+                        <span class="feature-tag">物理粒子</span>
+                        <span class="feature-tag">双端操作</span>
+                    </div>
+                    <a href="games/neon-snake/" class="btn btn-primary card-btn" target="_blank" id="play-neon-btn">立即开始</a>
+                </div>
+            </article>
+
+            <!-- Game Card 2: Retro Classic Snake -->
+            <article class="glass-card game-card" data-category="retro">
+                <div class="card-image-wrapper">
+                    <img src="assets/retro_snake_cover.jpg" alt="Orchard Battle Game Screen" class="card-image">
+                    <div class="card-tag tag-active">在线畅玩</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="game-category">RETRO CRT TERMINAL</span>
+                        <span class="game-version">V1.0</span>
+                    </div>
+                    <h3 class="game-title">果园大作战</h3>
+                    <p class="game-desc">
+                        吃掉果实，绕开自己。高度还原 80 年代经典迷你手掌掌上游戏机的设计风格。手绘纸张背景结合复古掌机物理按键，带你重温最原始纯粹的电子游戏乐趣。
+                    </p>
+                    <div class="card-features">
+                        <span class="feature-tag">拟真纸张风</span>
+                        <span class="feature-tag">多档速度设定</span>
+                        <span class="feature-tag">掌机手柄操作</span>
+                    </div>
+                    <a href="games/orchard-battle/" class="btn btn-primary card-btn" target="_blank" id="play-retro-btn">立即开始</a>
+                </div>
+            </article>
+
+            <!-- Game Card 3: 3D Gravity Snake -->
+            <article class="glass-card game-card" data-category="3d">
+                <div class="card-image-wrapper">
+                    <img src="assets/voxel_3d_snake_cover.jpg" alt="3D Space Gravity Snake Screen" class="card-image grayscale">
+                    <div class="card-tag tag-upcoming">筹备中</div>
+                </div>
+                <div class="card-content">
+                    <div class="card-meta">
+                        <span class="game-category">3D VOXEL SPACE</span>
+                        <span class="game-version">CONCEPT</span>
+                    </div>
+                    <h3 class="game-title">3D空间重力贪吃蛇</h3>
+                    <p class="game-desc">
+                        彻底摆脱二维平面！蛇将在三维立体网格构筑的星河支架中移动。六个方向的自由翻转、不同面上的重力变化与环形视野，将极具策略性地考验你的空间几何想象力。
+                    </p>
+                    <div class="card-features">
+                        <span class="feature-tag">三维透视</span>
+                        <span class="feature-tag">多重重力</span>
+                        <span class="feature-tag">全息渲染</span>
+                    </div>
+                    <button class="btn btn-disabled card-btn" disabled id="play-3d-btn">规划研发</button>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Technical Features Section -->
+    <section class="features-section" id="features">
+        <div class="section-header">
+            <h2 class="section-title">硬核技术支持 <span class="neon-text-blue">TECH STACK</span></h2>
+            <p class="section-subtitle">用最现代的网页前端标准，构建高性能的交互体验</p>
+        </div>
+        <div class="features-grid">
+            <div class="glass-card feature-item">
+                <div class="feature-icon neon-text-pink">🔊</div>
+                <h4>实时合成声音引擎</h4>
+                <p>抛弃沉重的音频文件，所有音效均使用 Web Audio API 通过代码动态改变振荡器频率与增益曲线合成，实现零延迟、高响应性的声效互动。</p>
+            </div>
+            <div class="glass-card feature-item">
+                <div class="feature-icon neon-text-green">⚡</div>
+                <h4>60FPS 运动学粒子系统</h4>
+                <p>将复杂的物理粒子算法引入经典碰撞。吃下苹果时的粒子爆炸、超频加速时的拖尾光圈均单独运行在 60 帧渲染循环中，手感如丝般顺滑。</p>
+            </div>
+            <div class="glass-card feature-item">
+                <div class="feature-icon neon-text-blue">📱</div>
+                <h4>全端响应与触控适配</h4>
+                <p>响应式布局兼容手机、平板与桌面端。触屏双手方向按键加单手滑动手势侦测，确保在任何移动设备上都能轻松创下最高分记录。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <p>&copy; 2026 Snake Odyssey Studio. 版权所有 &bull; 探索永无止境</p>
+            <div class="footer-glow"></div>
+        </div>
+    </footer>
+
+    <!-- Interactive script for filter effects & tabs -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const gameCards = document.querySelectorAll('.game-card');
+
+            // Category filter logic
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button state
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+
+                    // Filter cards
+                    const category = button.getAttribute('data-filter');
+                    
+                    gameCards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+                        if (category === 'all' || cardCategory === category) {
+                            card.style.display = 'flex';
+                            // Quick micro-animation trigger
+                            card.style.opacity = '0';
+                            card.style.transform = 'translateY(10px)';
+                            setTimeout(() => {
+                                card.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                                card.style.opacity = '1';
+                                card.style.transform = 'translateY(0)';
+                            }, 50);
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Smooth scrolling for anchors
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                        // Update active nav link
+                        document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+                        if (this.parentNode.classList.contains('nav-links')) {
+                            this.classList.add('active');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

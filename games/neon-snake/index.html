@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Snake - 霓虹激战贪吃蛇</title>
+    <meta name="description" content="一款极具现代科技感的霓虹贪吃蛇网页游戏。支持音效、粒子特效、多种道具与移动端操作。">
+    <!-- Google Fonts: Orbitron for digital numbers, Inter for UI text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="stars-bg"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                <span class="neon-text-green">NEON</span>
+                <span class="neon-text-pink">SNAKE</span>
+            </div>
+            <p class="subtitle">极光之速，经典新生</p>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="game-layout">
+            <!-- Left Side: Stats and Settings -->
+            <section class="panel-left">
+                <!-- Scoreboard -->
+                <div class="glass-card scoreboard">
+                    <div class="score-item">
+                        <span class="label">当前得分</span>
+                        <span id="current-score" class="digital-value neon-text-green">0000</span>
+                    </div>
+                    <div class="score-divider"></div>
+                    <div class="score-sub-group">
+                        <div class="score-sub-item">
+                            <span class="label">历史最高</span>
+                            <span id="high-score" class="digital-value small neon-text-pink">0000</span>
+                        </div>
+                        <div class="score-sub-item">
+                            <span class="label">倍率</span>
+                            <span id="combo-multiplier" class="digital-value small neon-text-gold">x1.0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings -->
+                <div class="glass-card settings-panel">
+                    <h3>游戏设置</h3>
+                    <div class="setting-row">
+                        <label for="difficulty-select">难度等级</label>
+                        <select id="difficulty-select">
+                            <option value="easy">休闲 (慢速)</option>
+                            <option value="normal" selected>经典 (常速)</option>
+                            <option value="hard">狂暴 (快速)</option>
+                        </select>
+                    </div>
+                    <div class="setting-row">
+                        <label for="sound-toggle">游戏音效</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="sound-toggle" checked>
+                            <label for="sound-toggle"></label>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label for="grid-toggle">网格辅助</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="grid-toggle" checked>
+                            <label for="grid-toggle"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game Rules/Legend -->
+                <div class="glass-card legend-panel">
+                    <h3>道具图鉴</h3>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <div class="legend-color food-normal"></div>
+                            <span class="legend-desc">能量核 ( +10 分 )</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color food-gold"></div>
+                            <span class="legend-desc">黄金晶体 ( +50 分，限时 )</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color food-speed"></div>
+                            <span class="legend-desc">超频药剂 ( 速度增加且双倍得分 )</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center: Game Board -->
+            <section class="game-center">
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+                    
+                    <!-- Overlay Screens -->
+                    <div id="start-overlay" class="overlay-screen active">
+                        <div class="overlay-content">
+                            <h2 class="neon-text-green pulse">准备就绪</h2>
+                            <p>使用 <span class="key-badge">W</span> <span class="key-badge">A</span> <span class="key-badge">S</span> <span class="key-badge">D</span> 或 <span class="key-badge">↑</span> <span class="key-badge">↓</span> <span class="key-badge">←</span> <span class="key-badge">→</span> 进行控制</p>
+                            <button id="start-btn" class="btn btn-primary">开始游戏</button>
+                        </div>
+                    </div>
+
+                    <div id="pause-overlay" class="overlay-screen">
+                        <div class="overlay-content">
+                            <h2 class="neon-text-gold">已暂停</h2>
+                            <p>按 <span class="key-badge">Space</span> 键继续游戏</p>
+                            <button id="resume-btn" class="btn btn-warning">继续游戏</button>
+                        </div>
+                    </div>
+
+                    <div id="gameover-overlay" class="overlay-screen">
+                        <div class="overlay-content">
+                            <h2 class="neon-text-pink shake">终端崩溃</h2>
+                            <div class="final-score-box">
+                                <p>最终得分: <span id="final-score" class="neon-text-green">0</span></p>
+                                <p class="new-record-tag neon-text-gold hidden" id="new-record-msg">🎉 创下新高！ 🎉</p>
+                            </div>
+                            <button id="restart-btn" class="btn btn-danger">重置终端 (重新开始)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Controls (Desktop Info / Mobile Controls) -->
+                <div class="game-controls">
+                    <div class="desktop-tips">
+                        <span>按 <strong>Space</strong> 暂停</span>
+                        <span>按 <strong>Esc</strong> 重新开始</span>
+                    </div>
+
+                    <!-- Virtual Joystick for Mobile -->
+                    <div class="mobile-joystick" id="mobile-controls">
+                        <div class="joy-row">
+                            <button class="joy-btn btn-up" id="ctrl-up">▲</button>
+                        </div>
+                        <div class="joy-row">
+                            <button class="joy-btn btn-left" id="ctrl-left">◀</button>
+                            <div class="joy-center"></div>
+                            <button class="joy-btn btn-right" id="ctrl-right">▶</button>
+                        </div>
+                        <div class="joy-row">
+                            <button class="joy-btn btn-down" id="ctrl-down">▼</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2026 Neon Snake Studio. Cyberpunk Edition.</p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
