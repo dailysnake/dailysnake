@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chrono-Portal Snake - 时空传送与回溯贪吃蛇</title>
+    <meta name="description" content="全新独特创新的贪吃蛇玩法：量子传送门与时空回溯系统。穿梭于时空隧道，吃下时间晶体，遇到危险能倒流时间重来！">
+    <!-- Google Fonts: Outfit for futuristic look, Orbitron for digital clocks/scores -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cyberpunk Background Orbs -->
+    <div class="stars-bg"></div>
+    <div class="glow-orb orb-orange"></div>
+    <div class="glow-orb orb-blue"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="back-link-container">
+                <a href="../../index.html" class="btn-back">
+                    <span class="back-icon">←</span> 返回大厅
+                </a>
+            </div>
+            <div class="logo">
+                <span class="neon-text-orange">CHRONO</span>
+                <span class="neon-text-blue">PORTAL</span>
+                <span class="logo-sub">SNAKE</span>
+            </div>
+            <div class="header-status">
+                <div class="status-indicator" id="time-state-badge">时空常态</div>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="game-layout">
+            <!-- Left Side: Stats, Energy, Settings -->
+            <section class="panel-left">
+                <!-- Scoreboard -->
+                <div class="glass-card scoreboard">
+                    <div class="score-row">
+                        <div class="score-item">
+                            <span class="label">当前得分</span>
+                            <span id="current-score" class="digital-value neon-text-blue">0000</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="label">历史最高</span>
+                            <span id="high-score" class="digital-value neon-text-orange">0000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chrono Energy (Core Mechanic) -->
+                <div class="glass-card energy-panel">
+                    <div class="panel-header">
+                        <h3>时空能量</h3>
+                        <span id="energy-percentage" class="energy-text neon-text-orange">0%</span>
+                    </div>
+                    <div class="energy-bar-container">
+                        <div class="energy-bar-glow" id="energy-bar-glow"></div>
+                        <div class="energy-bar-fill" id="energy-bar-fill" style="width: 0%;"></div>
+                        <!-- Marker line for rewind threshold (30%) -->
+                        <div class="energy-threshold-marker" title="回溯阈值 (30%)"></div>
+                    </div>
+                    <p class="energy-hint">能量满 30% 时发生碰撞可<span class="highlight">自动回溯时间</span> 3秒！或手动按 <span class="highlight-key">空格键</span> 触发。</p>
+                </div>
+
+                <!-- Settings -->
+                <div class="glass-card settings-panel">
+                    <h3>时空参数</h3>
+                    <div class="setting-row">
+                        <label for="difficulty-select">流速 (难度)</label>
+                        <select id="difficulty-select">
+                            <option value="easy">时空静止 (慢速)</option>
+                            <option value="normal" selected>常规秩序 (常速)</option>
+                            <option value="hard">超弦乱局 (快速)</option>
+                        </select>
+                    </div>
+                    <div class="setting-row">
+                        <label for="sound-toggle">声波频率 (音效)</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="sound-toggle" checked>
+                            <label for="sound-toggle"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legend / Instructions -->
+                <div class="glass-card legend-panel">
+                    <h3>时空元素</h3>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <div class="legend-color portal-orange-dot"></div>
+                            <div class="legend-color portal-blue-dot"></div>
+                            <span class="legend-desc">量子传送门 (双向穿梭)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color item-crystal"></div>
+                            <span class="legend-desc">时空晶体 (+20分, 充能+15%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color item-singularity"></div>
+                            <span class="legend-desc">时间奇点 (+50分, 慢速5秒)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color item-core"></div>
+                            <span class="legend-desc">能量核心 (+10分)</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center: Canvas Game Board -->
+            <section class="game-center">
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+                    
+                    <!-- Screens / Overlays -->
+                    <div class="screen-overlay" id="start-screen">
+                        <div class="overlay-content">
+                            <h2 class="neon-text-orange slide-in">CHRONO-PORTAL</h2>
+                            <p class="overlay-desc">欢迎进入量子时空。在这里，时空不再是一条单行道。</p>
+                            <div class="tutorial-box">
+                                <p><strong>🎮 键盘操作：</strong> 使用 <span class="key">WASD</span> 或 <span class="key">↑↓←→</span> 移动。按 <span class="key">空格键</span> 消耗 30% 能量主动回退时间。</p>
+                                <p><strong>📱 移动操作：</strong> 上下左右滑动屏幕控制方向，或点击屏幕下方按钮。</p>
+                            </div>
+                            <button id="btn-start" class="btn btn-primary">稳定局域网格 (开始)</button>
+                        </div>
+                    </div>
+
+                    <div class="screen-overlay hidden" id="game-over-screen">
+                        <div class="overlay-content">
+                            <h2 class="neon-text-red">时空坍缩</h2>
+                            <p class="overlay-desc">粒子流失控，当前时空已崩塌。</p>
+                            <div class="stats-report">
+                                <p>最终得分：<span id="final-score" class="neon-text-blue font-digital">0000</span></p>
+                                <p>吃掉晶体：<span id="stat-crystals" class="neon-text-orange font-digital">0</span> 个</p>
+                                <p>时空回溯：<span id="stat-rewinds" class="neon-text-pink font-digital">0</span> 次</p>
+                            </div>
+                            <button id="btn-restart" class="btn btn-primary">重新定向 (重试)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Controls Panel -->
+                <div class="mobile-controls">
+                    <div class="dpad-row">
+                        <button class="dpad-btn" id="dpad-up">▲</button>
+                    </div>
+                    <div class="dpad-row">
+                        <button class="dpad-btn" id="dpad-left">◀</button>
+                        <button class="dpad-btn action-btn" id="btn-mobile-rewind" title="时空回溯">
+                            ⏳<br><span>回溯</span>
+                        </button>
+                        <button class="dpad-btn" id="dpad-right">▶</button>
+                    </div>
+                    <div class="dpad-row">
+                        <button class="dpad-btn" id="dpad-down">▼</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Timeline overlay effect (flashes when rewinding) -->
+    <div class="rewind-effect-overlay" id="rewind-overlay">
+        <div class="scanlines"></div>
+        <div class="rewind-status-text">⏳ TIME REWINDING...</div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
