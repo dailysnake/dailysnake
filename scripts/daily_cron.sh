@@ -2,8 +2,13 @@
 set -e
 
 # System paths
-export PATH=/usr/local/bin:/usr/bin:/bin:/home/yhc/.local/bin:$PATH
 export HOME=/home/yhc
+export NVM_DIR="$HOME/.nvm"
+if [ -s "$NVM_DIR/nvm.sh" ]; then
+    . "$NVM_DIR/nvm.sh"
+    nvm use default || true
+fi
+export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/home/yhc/.local/bin
 
 PROJECT_DIR="/home/yhc/Projects/daily_snake"
 FEISHU_SCRIPT="/home/yhc/Projects/AutoBlogComment/auto-fill/.codex/skills/feishu-ops/scripts/send-app-bot-notification.mjs"
@@ -69,7 +74,7 @@ if [ "$SUCCESS" = true ]; then
     # Get the theme name from git commit or latest game folder if possible
     THEME_INFO="全新的贪吃蛇创意变体已集成发布"
     
-    node "$FEISHU_SCRIPT" \
+    HTTP_PROXY="" HTTPS_PROXY="" http_proxy="" https_proxy="" node "$FEISHU_SCRIPT" \
         --config-file "$FEISHU_CONFIG" \
         --level normal \
         --title "📅 每日贪吃蛇发布成功" \
@@ -78,7 +83,7 @@ if [ "$SUCCESS" = true ]; then
 else
     echo "==== [$(date)] Daily Snake generation FAILED after $MAX_RETRIES retries. ===="
     
-    node "$FEISHU_SCRIPT" \
+    HTTP_PROXY="" HTTPS_PROXY="" http_proxy="" https_proxy="" node "$FEISHU_SCRIPT" \
         --config-file "$FEISHU_CONFIG" \
         --level normal \
         --title "⚠️ 每日贪吃蛇发布失败" \
