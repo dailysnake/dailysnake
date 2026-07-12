@@ -1,0 +1,14 @@
+[Unit]
+Description=Daily Snake Game Generation Service
+After=network.target
+
+[Service]
+Type=simple
+User=yhc
+Group=yhc
+WorkingDirectory=/home/yhc/Projects/daily_snake
+ExecStart=/bin/bash /home/yhc/Projects/daily_snake/scripts/daily_cron.sh
+Restart=no
+Environment=HOME=/home/yhc
+Environment=PATH=/usr/local/bin:/usr/bin:/bin:/home/yhc/.local/bin
+Environment=USER=yhc
