@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+# set -e
 
 # System paths
 export HOME=/home/yhc

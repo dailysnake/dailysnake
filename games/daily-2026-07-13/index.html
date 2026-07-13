@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magnetic Polarity Snake - 磁极贪吃蛇</title>
+    <meta name="description" content="全新独特创新的电磁相吸相斥玩法：操控蛇头极性，利用电磁吸引吃下异极核心，在电磁共振墙间切换极性穿梭求生！">
+    <!-- Google Fonts: Outfit & Orbitron -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&family=Orbitron:wght@500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Starfield and Plasma Glow Background -->
+    <div class="stars-bg"></div>
+    <div class="plasma-glow-red"></div>
+    <div class="plasma-glow-blue"></div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="back-link-container">
+                <a href="../../index.html" class="btn-back">
+                    <span class="back-icon">←</span> 返回大厅
+                </a>
+            </div>
+            <div class="logo">
+                <span class="neon-text-red">MAGNETIC</span>
+                <span class="neon-text-blue">POLARITY</span>
+                <span class="logo-sub">SNAKE</span>
+            </div>
+            <div class="header-status">
+                <div class="polarity-badge polarity-n" id="polarity-header-badge">极性: N (正极)</div>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="game-layout">
+            <!-- Left Side Panel -->
+            <section class="panel-left">
+                <!-- Scoreboard -->
+                <div class="glass-card scoreboard">
+                    <div class="score-row">
+                        <div class="score-item">
+                            <span class="label">当前电荷</span>
+                            <span id="current-score" class="digital-value neon-text-blue">0000</span>
+                        </div>
+                        <div class="score-item">
+                            <span class="label">最高峰值</span>
+                            <span id="high-score" class="digital-value neon-text-red">0000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current Polarity Display (Core Mechanic) -->
+                <div class="glass-card polarity-panel">
+                    <h3>磁化核心状态</h3>
+                    <div class="polarity-visualizer" id="polarity-vis">
+                        <div class="polarity-letter" id="polarity-letter">N</div>
+                        <div class="polarity-desc" id="polarity-desc">正电荷 (RED)</div>
+                    </div>
+                    <button class="btn btn-switch" id="btn-manual-switch">
+                        ⚡ 切换磁极 (SHIFT)
+                    </button>
+                </div>
+
+                <!-- Settings -->
+                <div class="glass-card settings-panel">
+                    <h3>电磁场参数</h3>
+                    <div class="setting-row">
+                        <label for="difficulty-select">电磁流速 (难度)</label>
+                        <select id="difficulty-select">
+                            <option value="easy">阻尼区 (慢速)</option>
+                            <option value="normal" selected>常规电场 (常速)</option>
+                            <option value="hard">超强磁暴 (快速)</option>
+                        </select>
+                    </div>
+                    <div class="setting-row">
+                        <label for="sound-toggle">电流声频 (音效)</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="sound-toggle" checked>
+                            <label for="sound-toggle"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Instructions / Legend -->
+                <div class="glass-card legend-panel">
+                    <h3>电磁元素</h3>
+                    <div class="legend-items">
+                        <div class="legend-item">
+                            <div class="legend-color core-n"></div>
+                            <span class="legend-desc">正极核心 N：被蓝(S)吸引，排斥红(N)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color core-s"></div>
+                            <span class="legend-desc">负极核心 S：被红(N)吸引，排斥蓝(S)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line wall-n"></div>
+                            <span class="legend-desc">正极激光墙：仅限 N(红) 蛇头安全穿过</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-line wall-s"></div>
+                            <span class="legend-desc">负极激光墙：仅限 S(蓝) 蛇头安全穿过</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Board -->
+            <section class="game-center">
+                <div class="canvas-container" id="board-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Screens -->
+                    <div class="screen-overlay" id="start-screen">
+                        <div class="overlay-content">
+                            <h2 class="neon-text-red slide-in">MAGNETIC FIELD</h2>
+                            <p class="overlay-desc">电磁场已开启。利用磁极相吸相斥，在毁灭性的电磁壁垒间穿梭。</p>
+                            <div class="tutorial-box">
+                                <p><strong>🎮 键盘控制：</strong> WASD 或 方向键控制移动。按 <span class="key">Shift</span> 或 <span class="key">空格键</span> 切换蛇头磁极。</p>
+                                <p><strong>⚡ 磁力吸引：</strong> 当蛇头与食物磁极不同时，只要接近 3 格，食物就会被电磁力拉入蛇口；如果极性相同，食物将被推开！</p>
+                                <p><strong>🚧 激光墙：</strong> 地图上会横/纵向生成红色或蓝色激光。蛇头颜色必须与激光颜色相同方能安全穿透，否则当场触电！</p>
+                            </div>
+                            <button id="btn-start" class="btn btn-primary">激发磁场 (开始)</button>
+                        </div>
+                    </div>
+
+                    <div class="screen-overlay hidden" id="game-over-screen">
+                        <div class="overlay-content">
+                            <h2 class="neon-text-red">磁暴过载</h2>
+                            <p class="overlay-desc">蛇身回路已被强磁暴摧毁。</p>
+                            <div class="stats-report">
+                                <p>消散电荷：<span id="final-score" class="neon-text-blue font-digital">0000</span></p>
+                                <p>吸引核心：<span id="stat-cores" class="neon-text-red font-digital">0</span> 个</p>
+                                <p>极性切换：<span id="stat-switches" class="neon-text-pink font-digital">0</span> 次</p>
+                            </div>
+                            <button id="btn-restart" class="btn btn-primary">重新极化 (重试)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile controls -->
+                <div class="mobile-controls">
+                    <div class="dpad-row">
+                        <button class="dpad-btn" id="dpad-up">▲</button>
+                    </div>
+                    <div class="dpad-row">
+                        <button class="dpad-btn" id="dpad-left">◀</button>
+                        <button class="dpad-btn action-btn" id="btn-mobile-switch">
+                            ⚡<br><span>切极</span>
+                        </button>
+                        <button class="dpad-btn" id="dpad-right">▶</button>
+                    </div>
+                    <div class="dpad-row">
+                        <button class="dpad-btn" id="dpad-down">▼</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
