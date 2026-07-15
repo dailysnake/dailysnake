@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zen Ink Brush Snake - 墨染禅蛇</title>
+    <meta name="description" content="水墨山水画境下的创意贪吃蛇：360度自由笔触，随心运笔，提按自如；首创墨迹渐隐成长博弈，在古琴古筝的禅意琴音中探索写意世界。">
+    <!-- Google Fonts: ZCOOL XiaoWei for calligraphic titles, Long Cang for script, Noto Serif SC for body text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Long+Cang&family=Noto+Serif+SC:wght@300;400;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- SVG Filter for Liquid Ink Bleed Effect -->
+    <svg style="display: none;">
+        <defs>
+            <filter id="ink-bleed">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+                <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="matrix" />
+                <feBlend in="SourceGraphic" in2="matrix" mode="normal"/>
+            </filter>
+        </defs>
+    </svg>
+
+    <!-- Background paper texture overlay -->
+    <div class="paper-texture"></div>
+
+    <div class="scroll-wrapper">
+        <div class="scroll-roller scroll-top"></div>
+        
+        <div class="scroll-container">
+            <!-- Header -->
+            <header class="game-header">
+                <div class="back-link">
+                    <a href="../../index.html" class="btn-back">
+                        <span class="back-arrow">←</span> 返回大厅
+                    </a>
+                </div>
+                <div class="game-title">
+                    <h1>墨染禅蛇</h1>
+                    <span class="sub-title">Zen Ink Brush Snake</span>
+                </div>
+                <div class="zen-stamp">
+                    <div class="stamp-inner">画境</div>
+                </div>
+            </header>
+
+            <!-- Main Game Layout -->
+            <main class="game-layout">
+                <!-- Left Panel: Stats and Legends -->
+                <section class="panel-left">
+                    <!-- Stats Card -->
+                    <div class="paper-card stats-card">
+                        <h2 class="card-title">墨池状态</h2>
+                        <div class="stats-row">
+                            <div class="stat-item">
+                                <span class="stat-label">砚台能量</span>
+                                <div class="ink-meter">
+                                    <div class="ink-fill" id="ink-fill" style="width: 100%;"></div>
+                                    <span class="ink-text" id="ink-text">100%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="stats-row grid-2">
+                            <div class="stat-item">
+                                <span class="stat-label">画意得分</span>
+                                <span class="stat-val cursive" id="current-score">0</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-label">历史绝笔</span>
+                                <span class="stat-val cursive" id="high-score">0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Zen Characters (Powerups) -->
+                    <div class="paper-card zen-card">
+                        <h2 class="card-title">禅字诀</h2>
+                        <div class="zen-list">
+                            <div class="zen-item" id="zen-jing">
+                                <div class="zen-char">静</div>
+                                <div class="zen-desc">
+                                    <strong>子弹时间</strong>
+                                    <p>画境减速50%，期间墨耗暂停。心静则笔稳。</p>
+                                </div>
+                            </div>
+                            <div class="zen-item" id="zen-liu">
+                                <div class="zen-char">流</div>
+                                <div class="zen-desc">
+                                    <strong>疾风突进</strong>
+                                    <p>笔速增加50%，免能滑行。行云流水，一气呵成。</p>
+                                </div>
+                            </div>
+                            <div class="zen-item" id="zen-kong">
+                                <div class="zen-char">空</div>
+                                <div class="zen-desc">
+                                    <strong>四大皆空</strong>
+                                    <p>瞬间淡化历史墨迹，化险为夷。虚无即是安全。</p>
+                                </div>
+                            </div>
+                            <div class="zen-item" id="zen-run">
+                                <div class="zen-char">润</div>
+                                <div class="zen-desc">
+                                    <strong>金墨染八方</strong>
+                                    <p>墨滴化为金汁，吸纳可获双倍能量与得分。</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Control Settings -->
+                    <div class="paper-card settings-card">
+                        <h2 class="card-title">宣纸设置</h2>
+                        <div class="control-row">
+                            <label for="friction-select">行笔阻尼 (速度)</label>
+                            <select id="friction-select">
+                                <option value="slow">重墨 (慢速)</option>
+                                <option value="normal" selected>水墨 (常速)</option>
+                                <option value="fast">飞白 (快速)</option>
+                            </select>
+                        </div>
+                        <div class="control-row">
+                            <label for="music-toggle">空谷清音 (音效)</label>
+                            <div class="toggle-container">
+                                <input type="checkbox" id="music-toggle" checked>
+                                <label for="music-toggle" class="toggle-slider"></label>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Center Panel: The Scroll Canvas -->
+                <section class="game-center">
+                    <div class="canvas-wrapper">
+                        <!-- Red ink seal frame styling on corner -->
+                        <div class="canvas-corner top-left"></div>
+                        <div class="canvas-corner top-right"></div>
+                        <div class="canvas-corner bottom-left"></div>
+                        <div class="canvas-corner bottom-right"></div>
+
+                        <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                        <!-- Screen Overlay: Start Game -->
+                        <div class="screen-overlay" id="start-screen">
+                            <div class="overlay-content">
+                                <div class="seal-logo">禅</div>
+                                <h2 class="cursive">墨染禅蛇</h2>
+                                <p class="game-intro">在素雅的宣纸画境中，以笔为蛇，行云流水。吃下墨滴以维持笔墨，参悟禅字诀以化险为夷。</p>
+                                
+                                <div class="tutorial-box">
+                                    <p><strong>🖱️ 鼠标/触控：</strong> 蛇头会自动追随指针/手指的方向进行 360° 平滑游动。</p>
+                                    <p><strong>⌨️ 键盘操控：</strong> 使用 <code>WASD</code> 或 <code>方向键</code> 控制方向，手感更为灵巧。</p>
+                                    <p><strong>🍂 提按运笔：</strong> 快速转向、冲刺时笔锋会变细；直线慢行时笔画变粗晕开。</p>
+                                    <p><strong>⏳ 墨迹消融：</strong> 走过的墨痕会在一定时间后淡化。深色湿墨（不透明度 &gt; 30%）会产生碰撞，淡化后的灰色水渍可以安全穿过。</p>
+                                </div>
+                                <button id="btn-start" class="btn btn-ink">提笔作画 (开始)</button>
+                            </div>
+                        </div>
+
+                        <!-- Screen Overlay: Game Over -->
+                        <div class="screen-overlay hidden" id="game-over-screen">
+                            <div class="overlay-content">
+                                <div class="seal-logo red">终</div>
+                                <h2 class="cursive">墨尽神消</h2>
+                                <p class="game-intro" id="death-reason">宣纸之上，笔意已尽。</p>
+                                
+                                <div class="stats-report">
+                                    <p>墨宝得分：<span id="final-score" class="stat-highlight cursive">0</span></p>
+                                    <p>吸纳墨滴：<span id="final-drops" class="stat-highlight">0</span> 个</p>
+                                    <p>参悟汉字：<span id="final-words" class="stat-highlight">0</span> 次</p>
+                                </div>
+                                <button id="btn-restart" class="btn btn-ink">重整笔墨 (重试)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Touch controls for mobile -->
+                    <div class="mobile-controls">
+                        <div class="joystick-boundary" id="joystick-boundary">
+                            <div class="joystick-handle" id="joystick-handle"></div>
+                            <div class="joystick-center-dot"></div>
+                            <div class="joystick-yin-yang"></div>
+                        </div>
+                        <p class="mobile-tip">滑动屏幕或拖动摇杆控制行笔方向</p>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <div class="scroll-roller scroll-bottom"></div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
