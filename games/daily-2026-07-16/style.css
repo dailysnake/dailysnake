@@ -1,0 +1,951 @@
+/* style.css - Steampunk Gear & Pressure */
+
+:root {
+    --bg-dark: #120b06;
+    --bg-card: #20140b;
+    --bg-inner: #0f0905;
+    
+    --brass: #c59b3f;
+    --brass-glow: #e5b84c;
+    --brass-dark: #70551e;
+    
+    --copper: #b65a38;
+    --copper-glow: #d6714a;
+    --copper-dark: #6e331c;
+    
+    --steel: #484c50;
+    --steel-light: #71777d;
+    --steel-dark: #282b2e;
+    
+    --fire: #ff6a00;
+    --fire-glow: #ff9d00;
+    --water: #00b0ff;
+    --water-glow: #40c4ff;
+    
+    --steam-color: rgba(220, 220, 230, 0.7);
+    --font-victorian: 'Playfair Display', serif;
+    --font-mech: 'Orbitron', sans-serif;
+    --font-typewriter: 'Special Elite', monospace;
+    
+    --shadow-brass: 0 4px 15px rgba(112, 85, 30, 0.35);
+    --shadow-plate: inset 0 2px 10px rgba(0,0,0,0.8), 0 1px 0 rgba(255,255,255,0.05);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #e5d5c0;
+    font-family: var(--font-typewriter);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Background Wallpaper Pattern */
+.steampunk-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.05;
+    pointer-events: none;
+    z-index: 1;
+    background-image: 
+        radial-gradient(circle, var(--brass) 1px, transparent 1px),
+        radial-gradient(circle, var(--brass) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-position: 0 0, 20px 20px;
+}
+
+.steam-pipes {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 1;
+    background: 
+        linear-gradient(90deg, transparent 40px, var(--copper-dark) 40px, var(--copper) 45px, var(--copper-dark) 50px, transparent 50px),
+        linear-gradient(0deg, transparent 80px, var(--copper-dark) 80px, var(--copper) 85px, var(--copper-dark) 90px, transparent 90px);
+    background-size: 200px 200px;
+}
+
+.game-wrapper {
+    width: 100%;
+    max-width: 1100px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Header Styling */
+.game-header {
+    display: grid;
+    grid-template-columns: 180px 1fr 180px;
+    align-items: center;
+    background: linear-gradient(180deg, #2c1a0e, var(--bg-card));
+    border: 3px double var(--brass);
+    border-radius: 4px;
+    padding: 12px 20px;
+    box-shadow: var(--shadow-brass), inset 0 1px 0 rgba(255,255,255,0.1);
+    position: relative;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+}
+
+.btn-back {
+    color: var(--brass);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid var(--brass-dark);
+    padding: 6px 12px;
+    border-radius: 3px;
+    background: rgba(0,0,0,0.3);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-back:hover {
+    color: #fff;
+    background: var(--brass-dark);
+    box-shadow: 0 0 8px var(--brass-glow);
+}
+
+.game-title-group {
+    text-align: center;
+}
+
+.victorian-title {
+    font-family: var(--font-victorian);
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--brass-glow);
+    text-shadow: 2px 2px 0px rgba(0,0,0,0.8), 0 0 10px rgba(229,184,76,0.3);
+    letter-spacing: 2px;
+}
+
+.sub-title {
+    font-family: var(--font-mech);
+    font-size: 11px;
+    color: var(--copper-glow);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+}
+
+.brass-badge {
+    justify-self: end;
+    border: 2px solid var(--brass);
+    background: var(--bg-inner);
+    padding: 4px 10px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-plate);
+}
+
+.badge-text {
+    font-family: var(--font-mech);
+    font-size: 12px;
+    color: var(--brass);
+}
+
+/* Layout */
+.game-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
+}
+
+/* Cards & Plates */
+.brass-card {
+    background: radial-gradient(circle at 50% 0%, #301f12, var(--bg-card));
+    border: 2px solid var(--brass-dark);
+    outline: 1px solid rgba(255,255,255,0.05);
+    border-radius: 4px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: var(--shadow-brass), 0 8px 16px rgba(0,0,0,0.5);
+    position: relative;
+}
+
+.brass-card::before {
+    content: '';
+    position: absolute;
+    top: 3px; left: 3px; right: 3px; bottom: 3px;
+    border: 1px dashed rgba(197, 155, 63, 0.25);
+    pointer-events: none;
+    border-radius: 2px;
+}
+
+.card-title {
+    font-family: var(--font-victorian);
+    font-size: 16px;
+    color: var(--brass-glow);
+    border-bottom: 2px solid var(--brass-dark);
+    padding-bottom: 5px;
+    margin-bottom: 12px;
+    text-shadow: 1px 1px 0px #000;
+}
+
+/* Analog Gauge (Dial) styling */
+.gauge-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.analog-gauge {
+    width: 140px;
+    height: 140px;
+    position: relative;
+    background: radial-gradient(circle, #e5d8c3 60%, #bcab92 100%);
+    border: 8px solid var(--brass);
+    border-radius: 50%;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.6), inset 0 4px 12px rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.gauge-dial {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.gauge-ticks {
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle, transparent 65%, #222 66%, #222 68%, transparent 69%),
+        repeating-conic-gradient(from -120deg, #222 0deg 1deg, transparent 1deg 10deg);
+    mask-image: radial-gradient(circle, transparent 40%, black 41%);
+    -webkit-mask-image: radial-gradient(circle, transparent 40%, black 41%);
+    opacity: 0.6;
+    border-radius: 50%;
+}
+
+.gauge-needle {
+    width: 4px;
+    height: 60px;
+    background: #c62828;
+    position: absolute;
+    bottom: 50%;
+    left: calc(50% - 2px);
+    transform-origin: bottom center;
+    border-radius: 2px 2px 0 0;
+    transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+    z-index: 3;
+    box-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.gauge-needle::before {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 20px;
+    background: #c62828;
+    bottom: -15px;
+    left: -2px;
+    border-radius: 1px;
+}
+
+.gauge-pivot {
+    width: 16px;
+    height: 16px;
+    background: var(--brass-dark);
+    border: 2px solid var(--brass);
+    border-radius: 50%;
+    z-index: 4;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+}
+
+.gauge-warning-zone {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: conic-gradient(from 24deg, rgba(230,0,0,0.4) 0deg 48deg, transparent 48deg);
+    mask-image: radial-gradient(circle, transparent 58%, black 59%);
+    -webkit-mask-image: radial-gradient(circle, transparent 58%, black 59%);
+}
+
+.gauge-value {
+    position: absolute;
+    bottom: 22px;
+    font-family: var(--font-mech);
+    font-size: 16px;
+    font-weight: 700;
+    color: #111;
+    background: rgba(255,255,255,0.4);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid rgba(0,0,0,0.15);
+    letter-spacing: 1px;
+}
+
+.boiler-labels {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 10px 0 10px;
+    font-size: 11px;
+    color: #a59580;
+}
+
+.label-low { color: #88bbff; }
+.label-high { color: #ff6666; font-weight: bold; }
+
+/* Thermometer Tube */
+.thermometer-container {
+    margin-top: 10px;
+}
+
+.thermometer-label {
+    display: block;
+    font-size: 11px;
+    color: var(--brass-glow);
+    margin-bottom: 5px;
+}
+
+.mercury-tube {
+    height: 14px;
+    background: var(--bg-inner);
+    border: 2px solid var(--steel);
+    border-radius: 7px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-plate);
+}
+
+.mercury-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--fire), var(--fire-glow));
+    box-shadow: 0 0 10px var(--fire);
+    transition: width 0.3s ease;
+    position: relative;
+}
+
+/* Bubbles in boiling fill */
+.bubbles {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image: 
+        radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px),
+        radial-gradient(circle, rgba(255,255,255,0.3) 1.5px, transparent 1.5px);
+    background-size: 10px 10px, 15px 15px;
+    background-position: 0 0, 5px 5px;
+    animation: boil 1s infinite linear;
+    opacity: 0.6;
+}
+
+@keyframes boil {
+    0% { background-position: 0 0, 5px 5px; }
+    100% { background-position: -10px -10px, -5px -15px; }
+}
+
+/* Status Panel */
+.status-mode {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-inner);
+    border: 1px solid var(--steel-dark);
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: var(--shadow-plate);
+}
+
+.status-indicator-light {
+    width: 16px;
+    height: 16px;
+    background-color: #4CAF50;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #4CAF50;
+    flex-shrink: 0;
+    border: 2px solid rgba(255,255,255,0.3);
+}
+
+.status-indicator-light.overload {
+    background-color: #f44336;
+    box-shadow: 0 0 12px #f44336, 0 0 4px #f44336;
+    animation: flash 0.5s infinite alternate;
+}
+
+.status-indicator-light.offload {
+    background-color: #2196F3;
+    box-shadow: 0 0 8px #2196F3;
+}
+
+@keyframes flash {
+    from { opacity: 0.3; }
+    to { opacity: 1; }
+}
+
+.status-info {
+    flex-grow: 1;
+}
+
+#status-mode-title {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    font-family: var(--font-victorian);
+}
+
+.status-desc {
+    font-size: 10px;
+    color: #a59580;
+    line-height: 1.3;
+}
+
+/* Vent charge bar */
+.vent-charge-bar {
+    margin-top: 15px;
+}
+
+.charge-label {
+    display: block;
+    font-size: 11px;
+    color: #fff;
+    margin-bottom: 5px;
+}
+
+.charge-meter {
+    height: 10px;
+    background: var(--bg-inner);
+    border: 1px solid var(--steel-dark);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.charge-fill {
+    height: 100%;
+    background: var(--brass-glow);
+    box-shadow: 0 0 6px var(--brass-glow);
+    transition: width 0.2s linear;
+}
+
+/* Stats / Logs scoreboard */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.stat-box {
+    background: var(--bg-inner);
+    border: 1px solid var(--steel-dark);
+    padding: 8px;
+    border-radius: 3px;
+    text-align: center;
+    box-shadow: var(--shadow-plate);
+}
+
+.stat-title {
+    display: block;
+    font-size: 9px;
+    color: var(--brass);
+    text-transform: uppercase;
+}
+
+.stat-number {
+    font-size: 20px;
+    color: #fff;
+}
+
+.font-digital {
+    font-family: var(--font-mech);
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.stats-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 5px;
+    border-bottom: 1px dashed var(--steel-dark);
+    font-size: 12px;
+}
+
+.stat-val {
+    color: #fff;
+}
+
+/* Settings Valve Controls */
+.control-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    font-size: 12px;
+}
+
+.brass-select {
+    background: #3c2414;
+    color: var(--brass-glow);
+    border: 1px solid var(--brass-dark);
+    border-radius: 3px;
+    padding: 4px 8px;
+    outline: none;
+    font-family: var(--font-typewriter);
+    font-size: 11px;
+}
+
+/* Audio Toggle Switch (Steampunk styled lever) */
+.toggle-container {
+    position: relative;
+    width: 44px;
+    height: 20px;
+}
+
+.toggle-container input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--bg-inner);
+    border: 1px solid var(--steel);
+    transition: .3s;
+    border-radius: 10px;
+    box-shadow: var(--shadow-plate);
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 2px;
+    bottom: 2px;
+    background-color: var(--brass);
+    transition: .3s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.6);
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--brass-dark);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(24px);
+    background-color: var(--brass-glow);
+}
+
+/* Game Center Canvas Wrapper */
+.game-center {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.canvas-wrapper {
+    position: relative;
+    border: 10px solid var(--steel);
+    outline: 2px solid var(--brass);
+    border-radius: 6px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8), var(--shadow-brass);
+    background-color: #1a1a1a;
+    width: 600px;
+    height: 600px;
+}
+
+/* Rivets on metal frame corners */
+.rivet {
+    position: absolute;
+    width: 12px;
+    height: 12px;
+    background: radial-gradient(circle at 35% 35%, var(--steel-light) 10%, var(--steel-dark) 90%);
+    border-radius: 50%;
+    z-index: 10;
+    box-shadow: 1px 1px 2px rgba(0,0,0,0.6);
+}
+
+.rivet.top-left { top: -6px; left: -6px; }
+.rivet.top-right { top: -6px; right: -6px; }
+.rivet.bottom-left { bottom: -6px; left: -6px; }
+.rivet.bottom-right { bottom: -6px; right: -6px; }
+
+/* Pipe decoration */
+.steam-deco-pipe {
+    position: absolute;
+    top: -10px;
+    left: 40px;
+    width: 4px;
+    height: 10px;
+    background: linear-gradient(90deg, var(--copper-dark), var(--copper), var(--copper-dark));
+    z-index: 9;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    touch-action: none;
+}
+
+/* Overlay System */
+.screen-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(18, 11, 6, 0.9);
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    transition: opacity 0.3s ease;
+}
+
+.screen-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    background: radial-gradient(circle, #301f12, var(--bg-card));
+    border: 3px double var(--brass);
+    border-radius: 4px;
+    padding: 25px;
+    text-align: center;
+    max-width: 500px;
+    box-shadow: var(--shadow-brass), 0 15px 35px rgba(0,0,0,0.9);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.cog-logo {
+    font-size: 48px;
+    animation: spin 8s infinite linear;
+    text-shadow: 0 0 10px var(--brass-glow);
+}
+
+.cog-logo.red {
+    text-shadow: 0 0 15px #f44336;
+    animation: shake 0.2s infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+    0% { transform: translate(1px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -2px) rotate(-1deg); }
+    20% { transform: translate(-3px, 0px) rotate(1deg); }
+    30% { transform: translate(0px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 2px) rotate(-1deg); }
+    60% { transform: translate(-3px, 1px) rotate(0deg); }
+    70% { transform: translate(2px, 1px) rotate(-1deg); }
+    80% { transform: translate(-1px, -1px) rotate(1deg); }
+    90% { transform: translate(2px, 2px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+}
+
+.victorian-heading {
+    font-family: var(--font-victorian);
+    font-size: 22px;
+    color: var(--brass-glow);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.color-red { color: #f44336; }
+
+.game-intro {
+    font-size: 11px;
+    color: #d2c1ab;
+    line-height: 1.5;
+    text-align: justify;
+}
+
+.tutorial-box {
+    background: var(--bg-inner);
+    border: 1px dashed var(--brass-dark);
+    padding: 12px;
+    border-radius: 4px;
+    text-align: left;
+    font-size: 10px;
+    color: #b5a48f;
+    width: 100%;
+    max-height: 180px;
+    overflow-y: auto;
+}
+
+.tutorial-box p {
+    margin-bottom: 8px;
+    line-height: 1.4;
+}
+
+.tutorial-box p:last-child {
+    margin-bottom: 0;
+}
+
+.btn {
+    font-family: var(--font-typewriter);
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 3px;
+    padding: 10px 24px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    outline: none;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+
+.btn-brass {
+    background: linear-gradient(180deg, var(--brass-glow), var(--brass-dark));
+    border: 1px solid var(--brass);
+    color: #1f140a;
+}
+
+.btn-brass:hover {
+    background: linear-gradient(180deg, #ffd366, var(--brass));
+    box-shadow: 0 0 12px var(--brass-glow);
+    transform: translateY(-1px);
+}
+
+.btn-brass:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 3px rgba(0,0,0,0.3);
+}
+
+.btn-danger {
+    background: linear-gradient(180deg, #ff4c4c, var(--copper-dark));
+    border: 1px solid var(--copper);
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background: linear-gradient(180deg, #ff6666, #b65a38);
+    box-shadow: 0 0 12px #ff4c4c;
+}
+
+/* Stats Report for Game Over */
+.stats-report {
+    background: var(--bg-inner);
+    border: 1px solid var(--steel-dark);
+    padding: 12px;
+    border-radius: 3px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.stats-report p {
+    font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 6px;
+}
+
+.stats-report p:last-child {
+    margin-bottom: 0;
+}
+
+.stat-highlight {
+    font-weight: bold;
+    color: var(--brass-glow);
+}
+
+/* Mobile Controls Panel */
+.mobile-controls-panel {
+    display: none;
+    width: 100%;
+    max-width: 600px;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--bg-card);
+    border: 2px solid var(--brass-dark);
+    padding: 12px 20px;
+    border-radius: 4px;
+    box-shadow: var(--shadow-brass);
+}
+
+/* Joystick */
+.joystick-boundary {
+    width: 100px;
+    height: 100px;
+    background: rgba(0,0,0,0.4);
+    border: 3px solid var(--brass-dark);
+    border-radius: 50%;
+    position: relative;
+    touch-action: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: var(--shadow-plate);
+}
+
+.joystick-handle {
+    width: 40px;
+    height: 40px;
+    background: radial-gradient(circle at 30% 30%, var(--brass-glow), var(--brass-dark));
+    border: 1px solid var(--brass);
+    border-radius: 50%;
+    position: absolute;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+    z-index: 5;
+    cursor: grab;
+}
+
+.joystick-center-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--brass);
+    border-radius: 50%;
+    opacity: 0.3;
+}
+
+/* Vent Button Mobile */
+.btn-vent-mobile {
+    width: 140px;
+    height: 80px;
+    background: radial-gradient(circle at 50% 30%, #4c525a, var(--steel-dark));
+    border: 4px solid var(--brass);
+    border-radius: 8px;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.5), inset 0 2px 2px rgba(255,255,255,0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    touch-action: none;
+    outline: none;
+}
+
+.btn-vent-mobile:active {
+    transform: scale(0.96);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.5), inset 0 5px 8px rgba(0,0,0,0.8);
+    border-color: var(--copper);
+}
+
+.btn-vent-label {
+    font-family: var(--font-mech);
+    font-size: 14px;
+    font-weight: 900;
+    color: var(--brass-glow);
+    text-shadow: 1px 1px 2px #000;
+    letter-spacing: 1px;
+}
+
+.btn-vent-sub {
+    font-size: 9px;
+    color: #aaa;
+    margin-top: 4px;
+}
+
+/* Responsive / Adaptability rules */
+@media (max-width: 992px) {
+    body {
+        padding: 10px;
+    }
+    
+    .game-wrapper {
+        max-width: 620px;
+    }
+    
+    .game-header {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: auto auto;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .back-link {
+        grid-row: 1;
+        grid-column: 1;
+    }
+    
+    .brass-badge {
+        grid-row: 1;
+        grid-column: 2;
+    }
+    
+    .game-title-group {
+        grid-row: 2;
+        grid-column: 1 / span 2;
+        text-align: center;
+    }
+    
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .panel-left {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+    }
+    
+    .brass-card {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 640px) {
+    .game-wrapper {
+        max-width: 100%;
+        gap: 10px;
+    }
+    
+    .panel-left {
+        grid-template-columns: 1fr;
+    }
+    
+    .canvas-wrapper {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        max-width: 100vw;
+    }
+    
+    .mobile-controls-panel {
+        display: flex;
+    }
+}
+
+@media (max-height: 800px) and (min-width: 993px) {
+    /* Shrink gauges slightly on compact desktop screens */
+    .analog-gauge {
+        width: 110px;
+        height: 110px;
+    }
+    
+    .gauge-needle {
+        height: 45px;
+    }
+}

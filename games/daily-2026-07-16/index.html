@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Steampunk Gear & Pressure - 蒸汽机甲：齿轮与压力</title>
+    <meta name="description" content="蒸汽朋克机械风的创意贪吃蛇游戏。操控黄铜齿轮蛇，在旋转齿轮和黄铜管道间穿梭，吞噬煤炭与水源，在爆炸极限边缘游走，释放高压蒸汽击碎障碍！">
+    <!-- Google Fonts: Orbitron for gauges, Special Elite for typewriter labels, Playfair Display for Victorian headings -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Playfair+Display:ital,wght@0,600;0,800;1,500&family=Special+Elite&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Victorian Wallpaper Pattern Overlay -->
+    <div class="steampunk-bg"></div>
+    <div class="steam-pipes"></div>
+
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="back-link">
+                <a href="../../index.html" class="btn-back" id="btn-back-lobby">
+                    <span class="back-arrow">←</span> 返回大厅
+                </a>
+            </div>
+            <div class="game-title-group">
+                <h1 class="victorian-title">蒸汽机甲：齿轮与压力</h1>
+                <span class="sub-title">Steampunk Gear & Pressure</span>
+            </div>
+            <div class="brass-badge">
+                <span class="badge-text">No. 0716</span>
+            </div>
+        </header>
+
+        <!-- Main Game Layout -->
+        <main class="game-layout">
+            <!-- Left Panel: Gauges & Upgrades -->
+            <section class="panel-left">
+                <!-- Boiler Gauge Card -->
+                <div class="brass-card boiler-card">
+                    <h2 class="card-title">压力锅炉状态</h2>
+                    <div class="gauge-container">
+                        <!-- Custom CSS Analog Gauge -->
+                        <div class="analog-gauge" id="pressure-gauge-dial">
+                            <div class="gauge-dial">
+                                <div class="gauge-ticks"></div>
+                                <div class="gauge-needle" id="gauge-needle" style="transform: rotate(-120deg);"></div>
+                                <div class="gauge-pivot"></div>
+                                <div class="gauge-warning-zone"></div>
+                            </div>
+                            <div class="gauge-value" id="pressure-text">30%</div>
+                        </div>
+                        <div class="boiler-labels">
+                            <span class="label-low">低压</span>
+                            <span class="label-high">过载!</span>
+                        </div>
+                    </div>
+
+                    <!-- Linear Mercury/Fire Tube -->
+                    <div class="thermometer-container">
+                        <span class="thermometer-label">炉芯温度</span>
+                        <div class="mercury-tube">
+                            <div class="mercury-fill" id="temp-fill" style="width: 30%;"></div>
+                            <div class="bubbles" id="temp-bubbles"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overload Status Card -->
+                <div class="brass-card status-card">
+                    <h2 class="card-title">动力核心模式</h2>
+                    <div class="status-mode" id="core-mode-display">
+                        <div class="status-indicator-light" id="status-light"></div>
+                        <div class="status-info">
+                            <span class="status-label" id="status-mode-title">常压巡航</span>
+                            <p class="status-desc" id="status-mode-desc">效率100%。维持锅炉安全温度以避免爆炸。</p>
+                        </div>
+                    </div>
+                    <!-- Steam vent indicator -->
+                    <div class="vent-charge-bar">
+                        <span class="charge-label">蒸汽储备 (Space 释放)</span>
+                        <div class="charge-meter">
+                            <div class="charge-fill" id="charge-fill" style="width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Log / Score Card -->
+                <div class="brass-card score-card">
+                    <h2 class="card-title">运行仪表盘</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-title">动力点数</span>
+                            <span class="stat-number font-digital" id="current-score">00000</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-title">历史极值</span>
+                            <span class="stat-number font-digital" id="high-score">00000</span>
+                        </div>
+                    </div>
+                    <div class="stats-row">
+                        <span class="stat-label">已燃煤炭：</span>
+                        <span class="stat-val font-digital" id="coal-count">0</span>
+                    </div>
+                    <div class="stats-row">
+                        <span class="stat-label">冷凝水源：</span>
+                        <span class="stat-val font-digital" id="water-count">0</span>
+                    </div>
+                </div>
+
+                <!-- Steam Valves Settings -->
+                <div class="brass-card settings-card">
+                    <h2 class="card-title">阀门设定</h2>
+                    <div class="control-row">
+                        <label for="speed-select">动力输出 (速度)</label>
+                        <select id="speed-select" class="brass-select">
+                            <option value="slow">低压怠速 (慢速)</option>
+                            <option value="normal" selected>常规增压 (常速)</option>
+                            <option value="fast">超临界爆发 (快速)</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label for="sound-toggle">活塞声效 (音频)</label>
+                        <div class="toggle-container">
+                            <input type="checkbox" id="sound-toggle" checked>
+                            <label for="sound-toggle" class="toggle-slider"></label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel: Main Steam Canvas -->
+            <section class="game-center">
+                <div class="canvas-wrapper">
+                    <!-- Metal Frame corners -->
+                    <div class="rivet top-left"></div>
+                    <div class="rivet top-right"></div>
+                    <div class="rivet bottom-left"></div>
+                    <div class="rivet bottom-right"></div>
+                    <!-- Steam pressure gauge piping visual decoration -->
+                    <div class="steam-deco-pipe"></div>
+
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Screen Overlay: Start Game -->
+                    <div class="screen-overlay" id="start-screen">
+                        <div class="overlay-content">
+                            <div class="cog-logo">⚙️</div>
+                            <h2 class="victorian-heading">蒸汽机甲：齿轮与压力</h2>
+                            <p class="game-intro">在充满旋转齿轮的蒸汽工坊中，操控由铰链连接的黄铜机甲蛇。收集煤炭获取能量，吃水降温，在锅炉过载爆炸的边缘，利用高压蒸汽喷射突出重围！</p>
+                            
+                            <div class="tutorial-box">
+                                <p><strong>⚙️ 转向操控：</strong> 蛇头会自动追随指针/手指的方向进行 360° 矢量转向。或使用 <code>A / D</code> 或 <code>左 / 右方向键</code> 控制旋转。</p>
+                                <p><strong>💨 蒸汽喷射 (Space)：</strong> 压力 &ge; 30% 时，按<strong>空格键</strong>或点击<strong>喷射按钮</strong>。消耗 30% 压力，触发短暂无敌高速冲刺，喷射蒸汽可**融化小齿轮**并在撞击尾部时将其**吹开**！</p>
+                                <p><strong>🔥 极限红利：</strong> 压力维持在 **80% - 95%** 的高压区时，积分获取速度提升至 **1.5倍**，蛇身超频红热。</p>
+                                <p><strong>💥 过载自爆：</strong> 压力达到 **100%** 锅炉会瞬间自爆！吃**水源**可降低压力，吃**煤炭**会增加长度和压力。</p>
+                            </div>
+                            <button id="btn-start" class="btn btn-brass">开启活塞 (启动)</button>
+                        </div>
+                    </div>
+
+                    <!-- Screen Overlay: Game Over -->
+                    <div class="screen-overlay hidden" id="game-over-screen">
+                        <div class="overlay-content">
+                            <div class="cog-logo red">💥</div>
+                            <h2 class="victorian-heading color-red">锅炉过载自爆！</h2>
+                            <p class="game-intro" id="death-reason">蒸汽压力突破极限，气门熔毁，机械结构解体！</p>
+                            
+                            <div class="stats-report">
+                                <p>本次动力输出：<span id="final-score" class="stat-highlight font-digital">00000</span> 点</p>
+                                <p>燃烧优质煤块：<span id="final-coal" class="stat-highlight">0</span> 块</p>
+                                <p>消耗冷凝水源：<span id="final-water" class="stat-highlight">0</span> 次</p>
+                            </div>
+                            <button id="btn-restart" class="btn btn-brass btn-danger">重组核心 (重试)</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Touch controls for mobile -->
+                <div class="mobile-controls-panel">
+                    <div class="joystick-boundary" id="joystick-boundary">
+                        <div class="joystick-handle" id="joystick-handle"></div>
+                        <div class="joystick-center-dot"></div>
+                    </div>
+                    <button class="btn btn-vent-mobile" id="btn-vent-mobile">
+                        <span class="btn-vent-label">STEAM VENT</span>
+                        <span class="btn-vent-sub">释放蒸汽 (Space)</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Web Audio & Game Scripts -->
+    <script src="game.js"></script>
+</body>
+</html>
