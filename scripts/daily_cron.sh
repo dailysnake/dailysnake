@@ -17,33 +17,42 @@ FEISHU_CONFIG="/home/yhc/Projects/AutoBlogComment/auto-fill/.codex/skills/feishu
 cd "$PROJECT_DIR"
 echo "==== [$(date)] Starting Daily Snake Generation ===="
 
-# Wait for internet connectivity to Google (resolves WSL boot/wakeup network delay issues)
-MAX_NET_CHECKS=15
-NET_CHECK_INTERVAL=15
-NET_CONNECTED=false
+# Wait for internet connectivity to Google using exponential backoff (resolves boot/wakeup/network downtime issues)
+DELAY=60       # Initial delay: 1 minute (60s)
+MAX_DELAY=3600 # Maximum delay: 1 hour (3600s)
+FAILED_HOURS=0
 
 echo "Checking network connectivity to Google OAuth server..."
-for ((i=1; i<=MAX_NET_CHECKS; i++)); do
-    if curl -s --connect-timeout 5 https://oauth2.googleapis.com > /dev/null; then
+while true; do
+    if curl -s --connect-timeout 10 https://oauth2.googleapis.com > /dev/null; then
         echo "Network connectivity to Google is OK."
-        NET_CONNECTED=true
         break
     fi
-    echo "Google OAuth server is unreachable. Retrying in ${NET_CHECK_INTERVAL}s... ($i/$MAX_NET_CHECKS)"
-    sleep $NET_CHECK_INTERVAL
+    
+    # If the current delay has reached the maximum (1 hour), send a status update to Feishu
+    if [ $DELAY -eq $MAX_DELAY ]; then
+        FAILED_HOURS=$((FAILED_HOURS + 1))
+        echo "Google OAuth server is still unreachable after $FAILED_HOURS hour(s)."
+        
+        # Send Feishu status notification
+        HTTP_PROXY="" HTTPS_PROXY="" http_proxy="" https_proxy="" node "$FEISHU_SCRIPT" \
+            --config-file "$FEISHU_CONFIG" \
+            --level normal \
+            --title "⚠️ 每日贪吃蛇 - 持续断网报警" \
+            --message "今天 ($(date +%Y-%m-%d)) 的贪吃蛇定时任务由于网络持续无法连接到 Google 认证服务器已等待 $FAILED_HOURS 小时。\n脚本将继续在后台尝试连接。" \
+            --source "daily-snake-cron"
+    else
+        echo "Google OAuth server is unreachable. Sleeping for ${DELAY}s before retry..."
+    fi
+    
+    sleep $DELAY
+    
+    # Double the delay
+    DELAY=$((DELAY * 2))
+    if [ $DELAY -gt $MAX_DELAY ]; then
+        DELAY=$MAX_DELAY
+    fi
 done
-
-if [ "$NET_CONNECTED" = false ]; then
-    echo "Error: Network is unreachable. Google OAuth server cannot be contacted."
-    # Send Feishu failure notification early
-    HTTP_PROXY="" HTTPS_PROXY="" http_proxy="" https_proxy="" node "$FEISHU_SCRIPT" \
-        --config-file "$FEISHU_CONFIG" \
-        --level normal \
-        --title "⚠️ 每日贪吃蛇发布失败 (网络不可达)" \
-        --message "今天 ($(date +%Y-%m-%d)) 的贪吃蛇定时任务由于网络无法连接到 Google 认证服务器而终止。\n请确认服务器代理或 VPN 状态。" \
-        --source "daily-snake-cron"
-    exit 1
-fi
 
 # Get today's date
 TODAY=$(date +%Y-%m-%d)
