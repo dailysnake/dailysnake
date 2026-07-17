@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>深海幽光：回声探测蛇 - Abyssal Glow</title>
+    <meta name="description" content="深海探险生物发光主题的创意贪吃蛇游戏。在漆黑无光的深渊中游动，利用主动声呐脉冲扫描盲区，躲避深海礁石与饥饿的安康鱼，吞噬浮游生物，探寻金色珍珠带来的光明！">
+    <!-- Google Fonts: Outfit for futuristic deep-sea styling, Inter for UI text -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;800;900&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Abyss Backdrop -->
+    <div class="abyss-bg">
+        <div class="bubbles-overlay"></div>
+    </div>
+    
+    <!-- Fog / Vignette Overlay for deep sea pressure feel -->
+    <div class="vignette-overlay" id="vignette"></div>
+
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="back-link">
+                <a href="../../index.html" class="btn-back" id="btn-back-lobby">
+                    <span class="back-arrow">←</span> 返回大厅
+                </a>
+            </div>
+            <div class="game-title-group">
+                <h1 class="abyss-title">深海幽光</h1>
+                <span class="sub-title">Abyssal Glow &bull; Echolocation Snake</span>
+            </div>
+            <div class="abyss-badge">
+                <span class="badge-text" id="date-badge">No. 0718</span>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="game-layout">
+            <!-- Left Panel: Sonar & Scores -->
+            <section class="panel-left">
+                <!-- Sonar Cooldown Card -->
+                <div class="glass-card sonar-card">
+                    <h2 class="card-title">
+                        <span>声呐脉冲状态</span>
+                        <span class="hotkey">SPACE</span>
+                    </h2>
+                    <div class="sonar-display-container">
+                        <div class="sonar-radar" id="sonar-radar-hud">
+                            <div class="radar-line"></div>
+                            <div class="sonar-wave-hud"></div>
+                            <div class="sonar-readiness-hud" id="sonar-hud-status">READY</div>
+                        </div>
+                    </div>
+                    <div class="sonar-meter">
+                        <div class="sonar-fill" id="sonar-fill-bar" style="width: 100%;"></div>
+                    </div>
+                </div>
+
+                <!-- Score Dashboard -->
+                <div class="glass-card stats-card">
+                    <h2 class="card-title">仪表监测</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-title">当前深度 (得分)</span>
+                            <span class="stat-number neon-cyan" id="current-score">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-title">极限潜深 (最高分)</span>
+                            <span class="stat-number neon-magenta" id="high-score">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">生物光强度：</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill neon-bg-cyan" id="glow-intensity-bar" style="width: 50%;"></div>
+                        </div>
+                        <span class="stat-value" id="glow-intensity-text">100%</span>
+                    </div>
+                </div>
+
+                <!-- Settings Card -->
+                <div class="glass-card settings-card">
+                    <h2 class="card-title">系统调节</h2>
+                    <div class="control-row">
+                        <label for="control-select">转向模式</label>
+                        <select id="control-select" class="custom-select">
+                            <option value="pointer" selected>指针追踪 (鼠标/触控)</option>
+                            <option value="keyboard">键盘控制 (A/D 或 ←/→)</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label for="sound-toggle">声波合成器</label>
+                        <div class="toggle-container">
+                            <input type="checkbox" id="sound-toggle" checked>
+                            <label for="sound-toggle" class="toggle-slider"></label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel: The Canvas -->
+            <section class="panel-center">
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Start Game Overlay -->
+                    <div class="screen-overlay" id="start-screen">
+                        <div class="overlay-content">
+                            <div class="abyss-logo">🌊</div>
+                            <h2 class="overlay-title">深海幽光</h2>
+                            <p class="overlay-desc">
+                                你是深海中发光的奇异生命。四周是一片漆黑，请吞噬浮游生物成长。
+                                <br><br>
+                                <strong>⚠️ 危险：</strong>海底遍布致命礁石，深渊中更有游动的暗影捕食者。
+                                <br><br>
+                                <strong>🔊 声呐：</strong>按 <strong>空格键</strong> 发射声呐脉冲，可短暂探测周围的墙壁与障碍！
+                            </p>
+                            <button class="btn-action" id="start-btn">下潜开始</button>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay -->
+                    <div class="screen-overlay hidden" id="gameover-screen">
+                        <div class="overlay-content">
+                            <div class="death-icon">💀</div>
+                            <h2 class="overlay-title neon-text-red">生命信号消失</h2>
+                            <p class="overlay-desc" id="death-reason">
+                                探测器外壳受损，潜水器发生内爆。
+                            </p>
+                            <div class="score-summary">
+                                <p>本次下潜深度: <span id="final-score" class="neon-cyan">0</span> 米</p>
+                                <p>历史最大潜深: <span id="final-high" class="neon-magenta">0</span> 米</p>
+                            </div>
+                            <button class="btn-action" id="restart-btn">重新下潜</button>
+                        </div>
+                    </div>
+
+                    <!-- Paused Overlay -->
+                    <div class="screen-overlay hidden" id="pause-screen">
+                        <div class="overlay-content">
+                            <div class="pause-icon">⏸️</div>
+                            <h2 class="overlay-title">下潜暂停</h2>
+                            <p class="overlay-desc">声呐雷达已挂起，生命体征稳定。</p>
+                            <button class="btn-action" id="resume-btn">继续下潜</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Action Area -->
+                <div class="mobile-controls">
+                    <div class="touch-control-hint">拖拽屏幕任意处或点击并拖动以操控游动</div>
+                    <button class="sonar-btn" id="mobile-sonar-btn">
+                        <div class="sonar-btn-inner">
+                            <span class="sonar-icon">🔊</span>
+                            <span class="sonar-btn-text">SONAR</span>
+                        </div>
+                        <div class="sonar-btn-cooldown" id="mobile-sonar-cooldown"></div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Right Panel: Codex -->
+            <section class="panel-right">
+                <div class="glass-card codex-card">
+                    <h2 class="card-title">深海生命图鉴</h2>
+                    <div class="codex-list">
+                        <!-- Plankton -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-plankton"></div>
+                                <span class="codex-name">发光浮游生物</span>
+                            </div>
+                            <p class="codex-desc">基础食物。吃掉后增加蛇身长度，提供微弱光能，深度 +10。</p>
+                        </div>
+                        <!-- Jellyfish -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-jellyfish"></div>
+                                <span class="codex-name">荧光水母</span>
+                            </div>
+                            <p class="codex-desc">稀有食物。富含活性光能，吃掉后深度 +30，并自动触发一次声呐大脉冲。</p>
+                        </div>
+                        <!-- Pearl -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-pearl"></div>
+                                <span class="codex-name">深海珍珠</span>
+                            </div>
+                            <p class="codex-desc">极其罕见。吃掉后触发“深海晨曦”状态：完全照亮海底 5 秒，移速提升 30%，积分翻倍！</p>
+                        </div>
+                        <!-- Trench Rock -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-rock"></div>
+                                <span class="codex-name">深海礁石</span>
+                            </div>
+                            <p class="codex-desc">致命障碍物。散落在黑暗的海床中，撞击会导致探测器损毁。</p>
+                        </div>
+                        <!-- Anglerfish -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-angler"></div>
+                                <span class="codex-name">暗影安康鱼</span>
+                            </div>
+                            <p class="codex-desc">深海捕食者。得分增加后在深渊游弋，身体隐形，但头顶带有**闪烁的红色钓饵**，请提前避开。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Canvas drawing and Web Audio setup -->
+    <script src="game.js"></script>
+</body>
+</html>

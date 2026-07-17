@@ -10,9 +10,18 @@ if [ -s "$NVM_DIR/nvm.sh" ]; then
 fi
 export PATH=$PATH:/usr/local/bin:/usr/bin:/bin:/home/yhc/.local/bin
 
+# Proxy settings for network requests (Google access from China)
+export http_proxy="http://127.0.0.1:7890"
+export https_proxy="http://127.0.0.1:7890"
+export HTTP_PROXY="http://127.0.0.1:7890"
+export HTTPS_PROXY="http://127.0.0.1:7890"
+export no_proxy="127.0.0.1,localhost,192.168.*,172.*,10.*"
+export NO_PROXY="127.0.0.1,localhost,192.168.*,172.*,10.*"
+
 PROJECT_DIR="/home/yhc/Projects/daily_snake"
-FEISHU_SCRIPT="/home/yhc/Projects/AutoBlogComment/auto-fill/.codex/skills/feishu-ops/scripts/send-app-bot-notification.mjs"
-FEISHU_CONFIG="/home/yhc/Projects/AutoBlogComment/auto-fill/.codex/skills/feishu-ops/config.json"
+AGY_BIN="${AGY_BIN:-/home/yhc/.local/bin/agy}"
+FEISHU_SCRIPT="${FEISHU_SCRIPT:-/home/yhc/Projects/AutoBlogComment/auto-fill/.codex/skills/feishu-ops/scripts/send-app-bot-notification.mjs}"
+FEISHU_CONFIG="${FEISHU_CONFIG:-/home/yhc/Projects/AutoBlogComment/auto-fill/.codex/skills/feishu-ops/config.json}"
 
 cd "$PROJECT_DIR"
 echo "==== [$(date)] Starting Daily Snake Generation ===="
@@ -69,12 +78,19 @@ PROMPT=$(cat "$PROMPT_FILE")
 MAX_RETRIES=3
 RETRY_COUNT=0
 SUCCESS=false
+FAILURE_REASON=""
 
 echo "Running initial prompt with agy..."
 # Run agy non-interactively with auto-approving permissions
-/home/yhc/.local/bin/agy --prompt "$PROMPT" --dangerously-skip-permissions
+"$AGY_BIN" --prompt "$PROMPT" --dangerously-skip-permissions
+AGY_EXIT_CODE=$?
 
-while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
+if [ $AGY_EXIT_CODE -ne 0 ]; then
+    FAILURE_REASON="agy initial generation exited with status $AGY_EXIT_CODE"
+    echo "Error: $FAILURE_REASON"
+fi
+
+while [ $AGY_EXIT_CODE -eq 0 ] && [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
     echo "Verifying deployment status..."
     git fetch origin main || true
     
@@ -102,7 +118,13 @@ while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
         exit 1
     fi
     RETRY_PROMPT=$(cat "$RETRY_PROMPT_FILE")
-    /home/yhc/.local/bin/agy --continue --prompt "$RETRY_PROMPT" --dangerously-skip-permissions
+    "$AGY_BIN" --continue --prompt "$RETRY_PROMPT" --dangerously-skip-permissions
+    AGY_EXIT_CODE=$?
+    if [ $AGY_EXIT_CODE -ne 0 ]; then
+        FAILURE_REASON="agy retry exited with status $AGY_EXIT_CODE"
+        echo "Error: $FAILURE_REASON"
+        break
+    fi
 done
 
 if [ "$SUCCESS" = true ]; then
@@ -118,13 +140,17 @@ if [ "$SUCCESS" = true ]; then
         --message "今天 ($TODAY) 的贪吃蛇创意变体已成功自动生成、集成并推送到 GitHub 仓库！线上已自动通过 Cloudflare Pages 完成部署。\n\n访问地址: https://daily-snake.pages.dev" \
         --source "daily-snake-cron"
 else
-    echo "==== [$(date)] Daily Snake generation FAILED after $MAX_RETRIES retries. ===="
+    if [ -z "$FAILURE_REASON" ]; then
+        FAILURE_REASON="deployment verification failed after $MAX_RETRIES attempts"
+    fi
+
+    echo "==== [$(date)] Daily Snake generation FAILED: $FAILURE_REASON. ===="
     
     HTTP_PROXY="" HTTPS_PROXY="" http_proxy="" https_proxy="" node "$FEISHU_SCRIPT" \
         --config-file "$FEISHU_CONFIG" \
         --level normal \
         --title "⚠️ 每日贪吃蛇发布失败" \
-        --message "今天 ($TODAY) 的贪吃蛇定时任务在重试 $MAX_RETRIES 次后未能成功推送到 GitHub。请开发人员登录服务器进行排查。\n项目路径: /home/yhc/Projects/daily_snake" \
+        --message "今天 ($TODAY) 的贪吃蛇定时任务失败：$FAILURE_REASON。请开发人员登录服务器进行排查。\n项目路径: /home/yhc/Projects/daily_snake" \
         --source "daily-snake-cron"
     exit 1
 fi
