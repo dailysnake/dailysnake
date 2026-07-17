@@ -19,5 +19,5 @@
 
 === 阶段四：集成与部署推送 (Integration & Push) ===
 10. 将新游戏集成到根目录 'index.html' 的游戏大厅中（新增一张设计精美的游戏展示卡片，更新 '已上线版本' 统计数量为最新值）。
-11. 将所有新增和修改的文件提交并 git push 推送到 GitHub 仓库（main 分支）。
-12. 校验远程部署成功后，打印出今天实现的贪吃蛇玩法主题与设计风格。
+11. 只允许修改并提交以下本次任务文件：'games/daily-TODAY/index.html'、'games/daily-TODAY/style.css'、'games/daily-TODAY/game.js'、以 'assets/daily-TODAY-' 开头命名的本次专属封面，以及根目录 'index.html'。不得修改 scripts、prompts、systemd、配置或其他既有文件；不得删除、移动或清理任何任务开始前已存在的文件。
+12. 将上述允许的新增和修改文件提交并 git push 推送到 GitHub 仓库（main 分支）。不要自行断言 Cloudflare Pages 已部署，外层脚本会独立验证线上状态；最后打印今天实现的贪吃蛇玩法主题与设计风格。

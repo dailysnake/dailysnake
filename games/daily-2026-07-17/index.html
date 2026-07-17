@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Alchemist's Crucible - 炼金秘仪：魔药合成蛇</title>
+    <meta name="description" content="暗黑哥特魔法风格的创意贪吃蛇游戏。收集红蓝白三种炼金元素，合成缩身、护盾、磁力、清屏魔药。小心铅矿渣，防止炸膛暴走！">
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Fondamento&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Alchemical Dust background -->
+    <div class="alchemy-bg"></div>
+    <div id="smoke-overlay"></div>
+
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="back-link">
+                <a href="../../index.html" class="btn-back" id="btn-back-lobby">
+                    <span class="back-arrow">←</span> 返回大厅
+                </a>
+            </div>
+            <div class="game-title-group">
+                <h1 class="gothic-title">炼金秘仪：魔药合成蛇</h1>
+                <span class="sub-title">Alchemist's Crucible</span>
+            </div>
+            <div class="gold-badge">
+                <span class="badge-text">NO. 0717</span>
+                <button class="audio-ctrl" id="btn-audio" title="开/关音效">🔊</button>
+            </div>
+        </header>
+
+        <!-- Main Game Layout -->
+        <main class="game-layout">
+            <!-- Left Panel: Recipe target, Crucible slots, and Active Statuses -->
+            <section class="panel-left">
+                <!-- Target Recipe Card -->
+                <div class="alchemist-card">
+                    <h2 class="card-title">当前炼金目标</h2>
+                    <div class="recipe-goal-box">
+                        <div class="recipe-goal-name" id="target-recipe-name">加载中...</div>
+                        <div class="recipe-goal-sequence" id="target-recipe-seq">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Crucible Queue Slots Card -->
+                <div class="alchemist-card">
+                    <h2 class="card-title">炼金釜队列</h2>
+                    <div class="crucible-wrapper">
+                        <span class="crucible-queue-label">当前吞入元素 (上限3)</span>
+                        <div class="crucible-slots">
+                            <div class="crucible-slot" id="slot-0"></div>
+                            <div class="crucible-slot" id="slot-1"></div>
+                            <div class="crucible-slot" id="slot-2"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status Monitor Card -->
+                <div class="alchemist-card">
+                    <h2 class="card-title">反应状态监控</h2>
+                    <div class="status-indicator">
+                        <div class="status-orb" id="status-light"></div>
+                        <div class="status-info">
+                            <span class="status-text-title" id="status-title">法阵运转正常</span>
+                            <p class="status-text-desc" id="status-desc">坩埚运作平稳，收集原料以进行秘仪合成。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel: The Magic Board Canvas -->
+            <section class="panel-center">
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Overlay: Start Game -->
+                    <div class="canvas-overlay-screen" id="start-screen">
+                        <h2 class="overlay-title">开启炼金秘仪</h2>
+                        <p class="overlay-desc">
+                            操控由秘仪符文构筑的魔法之蛇，吞噬散落的炼金元素。按照羊皮纸卷轴的配方，在炼金釜中炼制神秘魔药！
+                        </p>
+
+                        <div style="background: rgba(0,0,0,0.5); border: 1px solid var(--gold-dark); border-radius: 4px; padding: 12px; font-size: 12px; margin-bottom: 20px; text-align: left; max-width: 480px; line-height: 1.5; color: #bfa68a;">
+                            <p style="color: var(--gold-glow); font-weight: bold; margin-bottom: 5px; text-align: center;">✦ 炼金法则与避忌 ✦</p>
+                            <p>🔴 <strong>元素收集：</strong> 红色硫磺 🜍、蓝色水银 ☿、白色精盐 🜔。按目标序列吃下即可完成合成！</p>
+                            <p>⚫ <strong>炸膛禁忌：</strong> 吞食灰色铅矿渣 🜄，或吃错元素无法凑成任何配方时，会导致**炸膛**（瞬间暴走加速3秒、身体变长且浓烟遮挡视线）！</p>
+                            <p>🚧 <strong>障壁铅墙：</strong> 随着得分提升，场上将生成铅质障碍物。撞击障碍或边缘将导致法阵解体（死亡）。</p>
+                        </div>
+
+                        <button class="btn-action" id="btn-start">启封秘仪</button>
+                    </div>
+
+                    <!-- Overlay: Game Over -->
+                    <div class="canvas-overlay-screen" style="display: none;" id="game-over-screen">
+                        <h2 class="overlay-title" style="color: #e74c3c; text-shadow: 0 0 10px rgba(231, 76, 60, 0.4);">秘仪反应失控！</h2>
+                        <p class="overlay-desc" id="death-reason">
+                            符文断裂，炼金反应堆坍塌，元素四散湮灭。
+                        </p>
+
+                        <div style="background: rgba(0,0,0,0.6); border: 1px solid var(--gold-dark); border-radius: 4px; padding: 15px; width: 80%; max-width: 320px; margin-bottom: 25px; text-align: center;">
+                            <p style="font-size: 14px; color: #8c8375;">炼金评估：<span id="final-score" style="font-size: 24px; color: var(--gold-glow); font-weight: bold; font-family: var(--font-gothic);">0</span> 积分</p>
+                            <p style="font-size: 13px; color: #8c8375; margin-top: 5px;">成功配方：<span id="final-potions" style="color: #fff; font-weight: bold;">0</span> 个</p>
+                        </div>
+
+                        <button class="btn-action" id="btn-restart">重组法阵</button>
+                    </div>
+                </div>
+
+                <!-- Touch controls for mobile -->
+                <div class="mobile-controls">
+                    <div class="dpad">
+                        <button class="dpad-btn dpad-up" id="btn-up">▲</button>
+                        <button class="dpad-btn dpad-left" id="btn-left">◀</button>
+                        <button class="dpad-btn dpad-center" disabled></button>
+                        <button class="dpad-btn dpad-right" id="btn-right">▶</button>
+                        <button class="dpad-btn dpad-down" id="btn-down">▼</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Scores & Recipe Codex -->
+            <section class="panel-right">
+                <!-- Scores Card -->
+                <div class="alchemist-card">
+                    <h2 class="card-title">秘仪记录仪表</h2>
+                    <div class="stats-list">
+                        <div class="stat-item">
+                            <span class="stat-label">当前积分</span>
+                            <span class="stat-value" id="current-score">0000</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">最高记录</span>
+                            <span class="stat-value" id="high-score">0000</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">已配魔药</span>
+                            <span class="stat-value" id="potion-count">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recipes Codex Card -->
+                <div class="alchemist-card">
+                    <h2 class="card-title">魔药秘方大典</h2>
+                    <div class="codex-list">
+                        <!-- Shrinking -->
+                        <div class="codex-item">
+                            <div class="codex-name">
+                                <span>缩身魔药</span>
+                                <div class="codex-ingredients">
+                                    <span class="symbol-badge badge-salt">🜔</span>
+                                    <span class="symbol-badge badge-mercury">☿</span>
+                                </div>
+                            </div>
+                            <div class="codex-effect">蛇身长度减半（最小为3节），降低生存压力。</div>
+                        </div>
+                        <!-- Elixir -->
+                        <div class="codex-item">
+                            <div class="codex-name">
+                                <span>长生灵药</span>
+                                <div class="codex-ingredients">
+                                    <span class="symbol-badge badge-salt">🜔</span>
+                                    <span class="symbol-badge badge-salt">🜔</span>
+                                    <span class="symbol-badge badge-sulfur">🜍</span>
+                                </div>
+                            </div>
+                            <div class="codex-effect">生成无限期金色护盾，免除一次致命碰撞。</div>
+                        </div>
+                        <!-- Dragon's Breath -->
+                        <div class="codex-item">
+                            <div class="codex-name">
+                                <span>龙之息</span>
+                                <div class="codex-ingredients">
+                                    <span class="symbol-badge badge-sulfur">🜍</span>
+                                    <span class="symbol-badge badge-sulfur">🜍</span>
+                                    <span class="symbol-badge badge-mercury">☿</span>
+                                </div>
+                            </div>
+                            <div class="codex-effect">进入8秒超频状态：前有烈焰吸引周围元素且积分翻倍。</div>
+                        </div>
+                        <!-- Philosopher's Stone -->
+                        <div class="codex-item">
+                            <div class="codex-name">
+                                <span>贤者之石</span>
+                                <div class="codex-ingredients">
+                                    <span class="symbol-badge badge-sulfur">🜍</span>
+                                    <span class="symbol-badge badge-mercury">☿</span>
+                                    <span class="symbol-badge badge-salt">🜔</span>
+                                </div>
+                            </div>
+                            <div class="codex-effect">终极魔法：清空全屏障碍物并化为黄金双倍元素！</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Web Audio & Game Scripts -->
+    <script src="game.js"></script>
+</body>
+</html>

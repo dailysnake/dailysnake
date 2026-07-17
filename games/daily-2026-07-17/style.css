@@ -1,0 +1,716 @@
+/* style.css - Alchemist's Crucible (炼金秘仪) */
+
+:root {
+    --bg-dark: #0b0a09;
+    --bg-card: #151310;
+    --bg-inner: #0d0c0a;
+
+    --gold: #d4af37;
+    --gold-glow: #ffd700;
+    --gold-dark: #8c6e1d;
+    --gold-muted: #5e4c19;
+
+    --sulfur: #ff3b30;
+    --sulfur-glow: #ff7675;
+    --mercury: #00f2fe;
+    --mercury-glow: #4facfe;
+    --salt: #ffffff;
+    --salt-glow: #f1f2f6;
+    --lead: #535c68;
+    --lead-glow: #95afc0;
+
+    --purple-magic: #8e44ad;
+    --purple-glow: #dff9fb;
+
+    --font-gothic: 'Cinzel', Georgia, serif;
+    --font-script: 'Fondamento', cursive, serif;
+    --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+
+    --shadow-gold: 0 4px 20px rgba(212, 175, 55, 0.25);
+    --shadow-inner: inset 0 2px 10px rgba(0, 0, 0, 0.9);
+    --border-gold: 2px solid var(--gold-dark);
+    --border-gold-double: 4px double var(--gold);
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: var(--bg-dark);
+    color: #e3dec3;
+    font-family: var(--font-sans);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Atmospheric backgrounds */
+.alchemy-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0.04;
+    pointer-events: none;
+    z-index: 1;
+    background-image:
+        radial-gradient(circle, var(--gold) 1.5px, transparent 1.5px),
+        radial-gradient(circle, var(--gold) 1.5px, transparent 1.5px);
+    background-size: 50px 50px;
+    background-position: 0 0, 25px 25px;
+}
+
+/* Smoke Overlay for Cursed Brew state */
+#smoke-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle, transparent 30%, rgba(20, 10, 30, 0.95) 100%);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 99;
+    transition: opacity 0.3s ease;
+}
+
+.game-wrapper {
+    width: 100%;
+    max-width: 1200px;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Header Styling */
+.game-header {
+    display: grid;
+    grid-template-columns: 180px 1fr 180px;
+    align-items: center;
+    background: linear-gradient(180deg, #1c1814, var(--bg-card));
+    border: var(--border-gold-double);
+    padding: 10px 20px;
+    border-radius: 4px;
+    box-shadow: var(--shadow-gold);
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+}
+
+.btn-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #c9b097;
+    text-decoration: none;
+    font-family: var(--font-gothic);
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid var(--gold-muted);
+    padding: 6px 12px;
+    border-radius: 3px;
+    background: rgba(30, 25, 20, 0.6);
+    transition: all 0.2s ease;
+}
+
+.btn-back:hover {
+    color: var(--gold-glow);
+    border-color: var(--gold);
+    box-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+    background: rgba(45, 38, 30, 0.8);
+}
+
+.game-title-group {
+    text-align: center;
+}
+
+.gothic-title {
+    font-family: var(--font-gothic);
+    font-size: 28px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    color: var(--gold-glow);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.8), 0 0 15px rgba(212,175,55,0.4);
+}
+
+.sub-title {
+    font-family: var(--font-script);
+    font-size: 16px;
+    color: #bfa68a;
+    display: block;
+    margin-top: 2px;
+}
+
+.gold-badge {
+    justify-self: end;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-gothic);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 4px 10px;
+    font-size: 13px;
+    letter-spacing: 1px;
+    border-radius: 2px;
+    background: rgba(212, 175, 55, 0.1);
+    box-shadow: inset 0 0 5px rgba(212, 175, 55, 0.2);
+    text-align: center;
+}
+
+/* Main Game Layout */
+.game-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr 280px;
+    gap: 15px;
+}
+
+/* Panel Design */
+.panel-left, .panel-right {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.alchemist-card {
+    background: var(--bg-card);
+    border: var(--border-gold);
+    border-radius: 4px;
+    padding: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.alchemist-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.card-title {
+    font-family: var(--font-gothic);
+    font-size: 16px;
+    color: var(--gold-glow);
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Left Panel Elements */
+.recipe-goal-box {
+    background: var(--bg-inner);
+    border: 1px solid var(--gold-muted);
+    border-radius: 4px;
+    padding: 12px;
+    text-align: center;
+}
+
+.recipe-goal-name {
+    font-family: var(--font-gothic);
+    font-size: 18px;
+    color: var(--gold);
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px rgba(212,175,55,0.3);
+}
+
+.recipe-goal-sequence {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+/* Crucible Queue Slots */
+.crucible-wrapper {
+    background: var(--bg-inner);
+    border: 1px solid var(--gold-muted);
+    border-radius: 6px;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    box-shadow: var(--shadow-inner);
+}
+
+.crucible-queue-label {
+    font-size: 12px;
+    color: #8c8375;
+    font-family: var(--font-gothic);
+    letter-spacing: 1px;
+}
+
+.crucible-slots {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.crucible-slot {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 2px dashed #4e4438;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.crucible-slot.filled {
+    border-style: solid;
+    animation: bubbleUp 0.6s infinite alternate ease-in-out;
+}
+
+.crucible-slot.sulfur-filled {
+    border-color: var(--sulfur);
+    box-shadow: 0 0 12px rgba(255, 59, 48, 0.4);
+    background: rgba(255, 59, 48, 0.15);
+    color: var(--sulfur-glow);
+}
+
+.crucible-slot.mercury-filled {
+    border-color: var(--mercury);
+    box-shadow: 0 0 12px rgba(0, 242, 254, 0.4);
+    background: rgba(0, 242, 254, 0.15);
+    color: var(--mercury-glow);
+}
+
+.crucible-slot.salt-filled {
+    border-color: var(--salt);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.15);
+    color: var(--salt-glow);
+}
+
+/* Alchemy Symbols */
+.symbol-badge {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    border: 1px solid currentColor;
+}
+
+.badge-sulfur { color: var(--sulfur-glow); border-color: var(--sulfur); background: rgba(255,59,48,0.1); }
+.badge-mercury { color: var(--mercury-glow); border-color: var(--mercury); background: rgba(0,242,254,0.1); }
+.badge-salt { color: var(--salt-glow); border-color: var(--salt); background: rgba(255,255,255,0.1); }
+.badge-lead { color: var(--lead-glow); border-color: var(--lead); background: rgba(83,92,104,0.1); }
+
+/* Status Panel */
+.status-indicator {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--bg-inner);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    border-radius: 4px;
+    padding: 10px;
+    width: 100%;
+}
+
+.status-orb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #555;
+    box-shadow: inset 0 2px 3px rgba(0,0,0,0.5);
+    transition: all 0.3s ease;
+}
+
+.status-orb.active {
+    background: #2ecc71;
+    box-shadow: 0 0 10px #2ecc71, inset 0 1px 2px rgba(255,255,255,0.8);
+    animation: statusPulse 1s infinite alternate;
+}
+
+.status-orb.panic {
+    background: #e74c3c;
+    box-shadow: 0 0 10px #e74c3c, inset 0 1px 2px rgba(255,255,255,0.8);
+    animation: statusPulse 0.4s infinite alternate;
+}
+
+.status-text-title {
+    font-weight: bold;
+    font-size: 14px;
+    color: #dfd9c0;
+}
+
+.status-text-desc {
+    font-size: 11px;
+    color: #8c8375;
+    margin-top: 2px;
+}
+
+/* Play panel center */
+.panel-center {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.canvas-container {
+    background: #110e0c;
+    border: 3px solid var(--gold-dark);
+    border-radius: 4px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.8), var(--shadow-gold);
+    position: relative;
+    overflow: hidden;
+    width: 600px;
+    height: 600px;
+    touch-action: none;
+}
+
+#game-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+    touch-action: none;
+}
+
+/* CSS Canvas Shake class */
+.canvas-container.shake {
+    animation: shakeEffect 0.5s ease-in-out;
+}
+
+.canvas-overlay-screen {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(10, 8, 7, 0.85);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+    padding: 40px;
+    backdrop-filter: blur(4px);
+    transition: opacity 0.3s ease;
+}
+
+.overlay-title {
+    font-family: var(--font-gothic);
+    font-size: 36px;
+    color: var(--gold-glow);
+    margin-bottom: 15px;
+    text-shadow: 0 0 15px rgba(212, 175, 55, 0.6);
+}
+
+.overlay-desc {
+    font-size: 14px;
+    color: #bfa68a;
+    line-height: 1.6;
+    margin-bottom: 30px;
+    max-width: 420px;
+}
+
+.btn-action {
+    font-family: var(--font-gothic);
+    font-size: 18px;
+    font-weight: bold;
+    color: #120b06;
+    background: linear-gradient(180deg, var(--gold-glow), var(--gold));
+    border: 1px solid var(--gold-dark);
+    padding: 12px 30px;
+    border-radius: 3px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.5), 0 0 10px rgba(212, 175, 55, 0.4);
+    transition: all 0.2s ease;
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.6), 0 0 20px rgba(212, 175, 55, 0.7);
+}
+
+.btn-action:active {
+    transform: translateY(1px);
+}
+
+/* Right Panel Elements */
+.stats-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.stat-item {
+    background: var(--bg-inner);
+    border: 1px solid var(--gold-muted);
+    border-radius: 4px;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-label {
+    font-size: 12px;
+    color: #8c8375;
+    font-family: var(--font-gothic);
+    letter-spacing: 1px;
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--gold-glow);
+    font-family: var(--font-gothic);
+}
+
+.codex-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Custom scrollbar for codex */
+.codex-list::-webkit-scrollbar {
+    width: 4px;
+}
+.codex-list::-webkit-scrollbar-track {
+    background: var(--bg-inner);
+}
+.codex-list::-webkit-scrollbar-thumb {
+    background: var(--gold-dark);
+}
+
+.codex-item {
+    background: var(--bg-inner);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+    border-radius: 4px;
+    padding: 8px 10px;
+    transition: border-color 0.2s ease;
+}
+
+.codex-item:hover {
+    border-color: rgba(212, 175, 55, 0.3);
+}
+
+.codex-name {
+    font-family: var(--font-gothic);
+    font-size: 13px;
+    color: var(--gold);
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.codex-ingredients {
+    display: flex;
+    gap: 4px;
+}
+
+.codex-effect {
+    font-size: 11px;
+    color: #8c8375;
+    line-height: 1.4;
+}
+
+/* Interactive Sound Control in Header */
+.audio-ctrl {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gold-muted);
+    background: rgba(30, 25, 20, 0.6);
+    color: #c9b097;
+    width: 32px;
+    height: 32px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.audio-ctrl:hover {
+    color: var(--gold-glow);
+    border-color: var(--gold);
+}
+
+/* Mobile Controls */
+.mobile-controls {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.dpad {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    background: rgba(21, 19, 16, 0.85);
+    border: 2px solid var(--gold-dark);
+    border-radius: 50%;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+}
+
+.dpad-btn {
+    position: absolute;
+    width: 44px;
+    height: 44px;
+    background: linear-gradient(180deg, #2a2520, #1b1714);
+    border: 1.5px solid var(--gold-muted);
+    border-radius: 8px;
+    color: var(--gold-glow);
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+    user-select: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    transition: all 0.1s ease;
+}
+
+.dpad-btn:active {
+    background: var(--gold);
+    color: #120b06;
+    border-color: var(--gold-glow);
+    transform: scale(0.95);
+}
+
+.dpad-up    { top: 6px; left: 58px; }
+.dpad-down  { bottom: 6px; left: 58px; }
+.dpad-left  { left: 6px; top: 58px; }
+.dpad-right { right: 6px; top: 58px; }
+.dpad-center {
+    position: absolute;
+    top: 58px; left: 58px;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #110e0c;
+    border: 1px solid var(--gold-muted);
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.8);
+}
+
+/* Animations */
+@keyframes bubbleUp {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(-4px) scale(1.05); }
+}
+
+@keyframes statusPulse {
+    0% { opacity: 0.6; box-shadow: 0 0 5px currentColor; }
+    100% { opacity: 1; box-shadow: 0 0 15px currentColor; }
+}
+
+@keyframes shakeEffect {
+    0%, 100% { transform: translate(0, 0); }
+    10% { transform: translate(-4px, -2px); }
+    20% { transform: translate(3px, 4px); }
+    30% { transform: translate(-5px, 1px); }
+    40% { transform: translate(2px, -3px); }
+    50% { transform: translate(-3px, 3px); }
+    60% { transform: translate(4px, 1px); }
+    70% { transform: translate(-1px, -4px); }
+    80% { transform: translate(2px, 3px); }
+    90% { transform: translate(-3px, -1px); }
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 1200px) {
+    body {
+        padding: 10px;
+    }
+    .game-layout {
+        grid-template-columns: 1fr;
+        max-width: 600px;
+        margin: 0 auto;
+        width: 100%;
+    }
+    .panel-left {
+        order: 2;
+    }
+    .panel-center {
+        order: 1;
+    }
+    .panel-right {
+        order: 3;
+    }
+    .game-header {
+        grid-template-columns: auto 1fr auto;
+    }
+}
+
+@media (max-width: 640px) {
+    .game-header {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .back-link {
+        align-self: flex-start;
+    }
+
+    .game-title-group {
+        width: 100%;
+    }
+
+    .gold-badge {
+        display: none;
+    }
+
+    .btn-back {
+        padding: 6px 8px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .canvas-container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1;
+    }
+    .canvas-overlay-screen {
+        padding: 20px;
+    }
+    .overlay-title {
+        font-size: 24px;
+    }
+    .gothic-title {
+        font-size: clamp(15px, 4.5vw, 19px);
+        letter-spacing: 0;
+        white-space: nowrap;
+    }
+    .sub-title {
+        font-size: 10px;
+    }
+    .mobile-controls {
+        display: flex;
+    }
+}
