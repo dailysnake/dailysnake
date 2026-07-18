@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>影戏乾坤：光影偶蛇 - Shadow Play Snake</title>
+    <meta name="description" content="首创光影物理避障的非遗皮影戏风格贪吃蛇游戏。在烛火摆动的牛皮幕布上，操控皮影纸雕长蛇穿梭于拉伸变形的投影死区中，吞噬荧光飞蛾，拨动火烛扭转乾坤！">
+    <!-- Google Fonts: Ma Shan Zheng for calligraphic branding, Noto Serif SC for elegant UI, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;900&family=Orbitron:wght@600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Wooden Theater Background Wrapper -->
+    <div class="theater-bg">
+        <div class="curtain-left"></div>
+        <div class="curtain-right"></div>
+        <div class="wood-grain-overlay"></div>
+    </div>
+    
+    <!-- Flickering light wash overall overlay -->
+    <div class="ambient-flicker" id="ambient-overlay"></div>
+
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="back-link">
+                <a href="../../index.html" class="btn-back" id="btn-back-lobby">
+                    <span class="back-arrow">←</span> 返回大厅
+                </a>
+            </div>
+            <div class="game-title-group">
+                <h1 class="theater-title">影戲乾坤</h1>
+                <span class="sub-title">Shadow Play Snake &bull; 光影偶蛇</span>
+            </div>
+            <div class="theater-badge">
+                <span class="badge-text" id="date-badge">No. 0719</span>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="game-layout">
+            <!-- Left Panel: Lantern Status & Scores -->
+            <section class="panel-left">
+                <!-- Candle Light Swing Angle Card -->
+                <div class="wood-card candle-card">
+                    <h2 class="card-title">
+                        <span>烛火摇曳状态</span>
+                        <span class="hotkey">SPACE</span>
+                    </h2>
+                    <div class="candle-hud-container">
+                        <div class="candle-hud-arc">
+                            <div class="candle-hud-pointer" id="candle-pointer"></div>
+                            <div class="candle-hud-center">🏮</div>
+                        </div>
+                        <div class="candle-hud-text" id="candle-hud-status">摆动中...</div>
+                    </div>
+                    <div class="hud-action-info">按【空格】拨动火烛，瞬间改变投影</div>
+                </div>
+
+                <!-- Score Dashboard -->
+                <div class="wood-card stats-card">
+                    <h2 class="card-title">戏台账目</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-title">当前赏金 (得分)</span>
+                            <span class="stat-number color-green" id="current-score">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-title">魁首纪录 (最高分)</span>
+                            <span class="stat-number color-red" id="high-score">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">皮影骨架长度：</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill color-bg-gold" id="snake-length-bar" style="width: 25%;"></div>
+                        </div>
+                        <span class="stat-value" id="snake-length-text">5 节</span>
+                    </div>
+                </div>
+
+                <!-- Settings Card -->
+                <div class="wood-card settings-card">
+                    <h2 class="card-title">戏箱调节</h2>
+                    <div class="control-row">
+                        <label for="control-select">操偶方式</label>
+                        <select id="control-select" class="custom-select">
+                            <option value="pointer" selected>提线追踪 (鼠标/触控)</option>
+                            <option value="keyboard">键盘操偶 (A/D 或 ←/→)</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label for="sound-toggle">戏班伴奏 (Synth)</label>
+                        <div class="toggle-container">
+                            <input type="checkbox" id="sound-toggle" checked>
+                            <label for="sound-toggle" class="toggle-slider"></label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel: The Screen Canvas -->
+            <section class="panel-center">
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Start Game Overlay -->
+                    <div class="screen-overlay" id="start-screen">
+                        <div class="overlay-content">
+                            <div class="theater-logo">🎭</div>
+                            <h2 class="overlay-title">影戲乾坤</h2>
+                            <p class="overlay-desc">
+                                欢迎来到非遗皮影戏台。你将操纵一只镂空雕花的牛皮长蛇。
+                                <br><br>
+                                <strong>⚠️ 致命投影：</strong>舞台中央的屏风与假山，在上方烛火下投射出黑色阴影。<strong>切勿触碰阴影</strong>，否则光影烧灼，瞬间散架！
+                                <br><br>
+                                <strong>🔥 拨动火烛：</strong>按<strong>空格键</strong>拨动火烛使其加速摆动，投影的范围和角度将随之改变。合理利用时机穿梭！
+                                <br><br>
+                                <strong>🪵 关节断开：</strong>若蛇头撞到自身或戏台边缘，皮影会发生<strong>断裂折半</strong>，消耗长度但能继续游玩。长度低于3节则终演。
+                             </p>
+                            <button class="btn-action" id="start-btn">开锣起乐</button>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay -->
+                    <div class="screen-overlay hidden" id="gameover-screen">
+                        <div class="overlay-content">
+                            <div class="death-icon">🪘</div>
+                            <h2 class="overlay-title color-red">戏终人散</h2>
+                            <p class="overlay-desc" id="death-reason">
+                                皮影散架，终演谢幕。
+                            </p>
+                            <div class="score-summary">
+                                <p>本次满堂彩 (得分): <span id="final-score" class="color-green">0</span></p>
+                                <p>历史最高赏 (最高分): <span id="final-high" class="color-red">0</span></p>
+                            </div>
+                            <button class="btn-action" id="restart-btn">重整旗鼓</button>
+                        </div>
+                    </div>
+
+                    <!-- Paused Overlay -->
+                    <div class="screen-overlay hidden" id="pause-screen">
+                        <div class="overlay-content">
+                            <div class="pause-icon">⏸️</div>
+                            <h2 class="overlay-title">大锣暂歇</h2>
+                            <p class="overlay-desc">戏台已定格，烛火静止中。</p>
+                            <button class="btn-action" id="resume-btn">继续大戏</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Action Area -->
+                <div class="mobile-controls">
+                    <div class="touch-control-hint">在屏幕任意位置拖拽以平滑操纵皮影游动</div>
+                    <button class="fire-btn" id="mobile-fire-btn">
+                        <div class="fire-btn-inner">
+                            <span class="fire-icon">🔥</span>
+                            <span class="fire-btn-text">拨动火烛</span>
+                        </div>
+                    </button>
+                </div>
+            </section>
+
+            <!-- Right Panel: Shadow Play Codex -->
+            <section class="panel-right">
+                <div class="wood-card codex-card">
+                    <h2 class="card-title">戏台百宝图鉴</h2>
+                    <div class="codex-list">
+                        <!-- Glow Moth -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-moth"></div>
+                                <span class="codex-name">荧光织蛾</span>
+                            </div>
+                            <p class="codex-desc">基础食物。吃掉后恢复 15% 墨油，增加 1 节关节，分数 +10。</p>
+                        </div>
+                        <!-- Candle Tears -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-wax"></div>
+                                <span class="codex-name">定影烛泪</span>
+                            </div>
+                            <p class="codex-desc">拾取使烛火与阴影停止摆动 5 秒，移速微降，提供安全的进食时机。</p>
+                        </div>
+                        <!-- Colored Glaze -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-glaze"></div>
+                                <span class="codex-name">五彩琉璃</span>
+                            </div>
+                            <p class="codex-desc">使其焕发五彩皮影流光（持续 5 秒），免疫阴影光热，可自由穿过阴影区！</p>
+                        </div>
+                        <!-- Flame Flare -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-flare"></div>
+                                <span class="codex-name">烛火暴走</span>
+                            </div>
+                            <p class="codex-desc">使烛火极度明亮（阴影大幅收缩），蛇获得 15% 移速爆发，持续 6 秒。</p>
+                        </div>
+                        <!-- Obsidian Rock -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-rock"></div>
+                                <span class="codex-name">屏风与假山</span>
+                            </div>
+                            <p class="codex-desc">物理障碍源。自身无伤，但投射出的黑色阴影区域具有毁灭性的光热，触碰即死。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Main Game Script -->
+    <script src="game.js"></script>
+</body>
+</html>
