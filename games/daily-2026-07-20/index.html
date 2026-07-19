@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>织星者：星移斗转 - Constellation Weaver</title>
+    <meta name="description" content="首创逆向回圈消除机制的宇宙星图风格贪吃蛇游戏。在深邃星空中编织星座，吞噬恒星核，捕捉星尘，避开致命黑洞与边界！">
+    <!-- Google Fonts: Orbitron for sci-fi HUD, Inter for clean layout and UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cosmic Background Elements -->
+    <div class="cosmic-bg">
+        <div class="starfield" id="starfield"></div>
+        <div class="nebula-glow glowing-purple"></div>
+        <div class="nebula-glow glowing-blue"></div>
+        <div class="coordinate-grid"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="back-link">
+                <a href="../../index.html" class="btn-back" id="btn-back-lobby">
+                    <span class="back-arrow">←</span> 返回大厅
+                </a>
+            </div>
+            <div class="game-title-group">
+                <h1 class="cosmic-title">织星者</h1>
+                <span class="sub-title">Constellation Weaver &bull; 星移斗转</span>
+            </div>
+            <div class="cosmic-badge">
+                <span class="badge-text" id="date-badge">No. 0720</span>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="game-layout">
+            <!-- Left Panel: Astro Stats & Controls -->
+            <section class="panel-left">
+                <!-- Score & Combo Dashboard -->
+                <div class="cosmic-card stats-card">
+                    <h2 class="card-title">星图数据仪</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-title">当前能量 (得分)</span>
+                            <span class="stat-number color-neon-cyan" id="current-score">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-title">最高星振 (最高分)</span>
+                            <span class="stat-number color-neon-magenta" id="high-score">0</span>
+                        </div>
+                    </div>
+                    <div class="stat-row">
+                        <span class="stat-label">星轨节点数：</span>
+                        <span class="stat-value" id="snake-length-text">30 节</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill color-bg-cyan" id="snake-length-bar" style="width: 30%;"></div>
+                    </div>
+                    <div class="combo-container">
+                        <span class="combo-label">星尘连击倍率:</span>
+                        <span class="combo-value color-neon-gold" id="combo-multiplier">x1.0</span>
+                    </div>
+                </div>
+
+                <!-- Control Panel -->
+                <div class="cosmic-card settings-card">
+                    <h2 class="card-title">引力仪校准</h2>
+                    <div class="control-row">
+                        <label for="control-select">操控模式</label>
+                        <select id="control-select" class="custom-select">
+                            <option value="pointer" selected>引力追踪 (鼠标/触控拖拽)</option>
+                            <option value="keyboard">键盘矢量 (A/D 或 ←/→ 旋转)</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label for="sound-toggle">恒星共鸣 (Web Synth)</label>
+                        <div class="toggle-container">
+                            <input type="checkbox" id="sound-toggle" checked>
+                            <label for="sound-toggle" class="toggle-slider"></label>
+                        </div>
+                    </div>
+                    <div class="hud-action-info">按【空格键】或触控爆发按键进行【星力爆发】加速，生成大型星图！</div>
+                </div>
+            </section>
+
+            <!-- Center Panel: The Celestial Canvas -->
+            <section class="panel-center">
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Start Game Overlay -->
+                    <div class="screen-overlay" id="start-screen">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">🌌</div>
+                            <h2 class="overlay-title">织星者</h2>
+                            <p class="overlay-desc">
+                                欢迎来到太虚星图。你正在操控一束高频星轨能量光束。
+                                <br><br>
+                                <strong>✨ 星座编织：</strong>与传统的贪吃蛇规则相反，<strong>撞击自己的身体不会死！</strong>反而会把闭合的环路编织成“星座”，坍缩后消除并获得基于环路面积的能量积分。
+                                <br><br>
+                                <strong>🌌 捕获星尘：</strong>利用闭合环路将漂浮的<strong>微光星尘</strong>包围在其中，可获得极高的星尘连击倍率！
+                                <br><br>
+                                <strong>🕳️ 引力陷阱：</strong>避开随机生成的<strong>黑洞</strong>与<strong>暗物质边界</strong>。黑洞具有强大引力偏航，直接撞击或越界会导致星轨瞬间溃散。
+                            </p>
+                            <button class="btn-action" id="start-btn">共鸣启程</button>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay -->
+                    <div class="screen-overlay hidden" id="gameover-screen">
+                        <div class="overlay-content">
+                            <div class="overlay-icon color-neon-magenta">☠️</div>
+                            <h2 class="overlay-title color-neon-magenta">星轨溃散</h2>
+                            <p class="overlay-desc" id="death-reason">
+                                撞击了黑洞，或越出星域暗物质边界。
+                            </p>
+                            <div class="score-summary">
+                                <p>本次凝聚能量 (得分): <span id="final-score" class="color-neon-cyan">0</span></p>
+                                <p>最高星振记录 (最高分): <span id="final-high" class="color-neon-magenta">0</span></p>
+                            </div>
+                            <button class="btn-action" id="restart-btn">重整星核</button>
+                        </div>
+                    </div>
+
+                    <!-- Paused Overlay -->
+                    <div class="screen-overlay hidden" id="pause-screen">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">⏸️</div>
+                            <h2 class="overlay-title">星域定格</h2>
+                            <p class="overlay-desc">引力仪暂缓，星轨流速静止。</p>
+                            <button class="btn-action" id="resume-btn">继续织星</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Controls Overlay Area -->
+                <div class="mobile-controls">
+                    <div class="touch-control-hint">在下面触控板拖拽或屏幕任意处滑动改变能量朝向</div>
+                    <div class="mobile-hud-actions">
+                        <div class="virtual-joystick-pad" id="joystick-pad">
+                            <div class="joystick-knob" id="joystick-knob"></div>
+                        </div>
+                        <button class="boost-btn" id="mobile-boost-btn">
+                            <div class="boost-btn-inner">
+                                <span class="boost-icon">⚡</span>
+                                <span class="boost-text">星力爆发</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Astrological Codex -->
+            <section class="panel-right">
+                <div class="cosmic-card codex-card">
+                    <h2 class="card-title">星天仪图鉴</h2>
+                    <div class="codex-list">
+                        <!-- Star Nucleus -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-nucleus"></div>
+                                <span class="codex-name">恒星核 (Star Nucleus)</span>
+                            </div>
+                            <p class="codex-desc">星图核心食物。吞噬增加 1 节长度，充能 100 积分，并在织星坍缩时提升基础分。</p>
+                        </div>
+                        <!-- Nebula Dust -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-dust"></div>
+                                <span class="codex-name">星尘粒子 (Nebula Dust)</span>
+                            </div>
+                            <p class="codex-desc">散落太虚的能量微粒。被环路圈起包围时被捕获，每个使消除得分翻倍 (x1.5, x2, x3...)！</p>
+                        </div>
+                        <!-- Supernova Flare -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-supernova"></div>
+                                <span class="codex-name">超新星光斑 (Supernova)</span>
+                            </div>
+                            <p class="codex-desc">稀有能量星。吞噬后使星轨进入 6 秒爆发过载：移速提升 30%，产生引力场磁吸周围所有星尘。</p>
+                        </div>
+                        <!-- Black Hole -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-blackhole"></div>
+                                <span class="codex-name">致命黑洞 (Black Hole)</span>
+                            </div>
+                            <p class="codex-desc">引力灾象。周围环绕红色引力视界圈，会将靠近的蛇头强制拖曳。触碰黑洞核心直接气化死亡。</p>
+                        </div>
+                        <!-- Boundaries -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-icon color-boundary"></div>
+                                <span class="codex-name">暗物质边界</span>
+                            </div>
+                            <p class="codex-desc">星图的物理壁垒。碰撞会使高能星轨瞬间发散崩溃，导致游戏终结。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Main Game Script -->
+    <script src="game.js"></script>
+</body>
+</html>
