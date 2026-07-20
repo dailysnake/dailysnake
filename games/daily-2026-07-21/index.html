@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>纸境折跃：折纸神乐 - Paperfold Odyssey</title>
+    <meta name="description" content="极具艺术感的低饱和度纸雕风格贪吃蛇游戏。操控折纸小蛇在宣纸棋盘上穿梭，收集图谱变身千羽鹤、折纸蛙与乌篷船，利用空间折叠褶皱突破次元边界！">
+    <!-- Google Fonts: Inter for clean UI, Outfit for elegant titles -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&family=Noto+Serif+SC:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Papercraft Background Elements -->
+    <div class="paper-bg-wrapper">
+        <div class="paper-texture"></div>
+        <div class="paper-gradient-overlay"></div>
+        <div class="background-creases"></div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="game-wrapper">
+        <!-- Header -->
+        <header class="game-header">
+            <div class="back-link">
+                <a href="../../index.html" class="btn-back" id="btn-back-lobby">
+                    <span class="back-arrow">←</span> 返回大厅
+                </a>
+            </div>
+            <div class="game-title-group">
+                <h1 class="paper-title">纸境折跃</h1>
+                <span class="sub-title">Paperfold Odyssey &bull; 折纸神乐</span>
+            </div>
+            <div class="paper-badge">
+                <span class="badge-text" id="date-badge">No. 0721</span>
+            </div>
+        </header>
+
+        <!-- Main Layout -->
+        <main class="game-layout">
+            <!-- Left Panel: Paper Stats & Controls -->
+            <section class="panel-left">
+                <!-- Score & Fold Energy Dashboard -->
+                <div class="paper-card stats-card">
+                    <h2 class="card-title">折纸卷轴</h2>
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-title">当前纸心 (得分)</span>
+                            <span class="stat-number color-paper-red" id="current-score">0</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-title">最古折痕 (最高分)</span>
+                            <span class="stat-number color-paper-blue" id="high-score">0</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Origami Form Indicator -->
+                    <div class="stat-row form-indicator">
+                        <span class="stat-label">当前形态：</span>
+                        <span class="stat-value form-text-normal" id="current-form-text">普通纸蛇</span>
+                    </div>
+                    <div class="form-duration-bar">
+                        <div class="form-duration-fill" id="form-duration-fill" style="width: 0%;"></div>
+                    </div>
+
+                    <!-- Fold Energy -->
+                    <div class="stat-row">
+                        <span class="stat-label">折纸能量：</span>
+                        <span class="stat-value" id="energy-percentage">0%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill color-bg-red" id="energy-bar-fill" style="width: 0%;"></div>
+                    </div>
+                    <div class="fold-status-text" id="fold-ready-text">能量未满，吃纸屑可充能</div>
+                </div>
+
+                <!-- Control Panel -->
+                <div class="paper-card settings-card">
+                    <h2 class="card-title">工坊配置</h2>
+                    <div class="control-row">
+                        <label for="control-select">操控模式</label>
+                        <select id="control-select" class="custom-select">
+                            <option value="keyboard" selected>键盘方向键 / WASD</option>
+                            <option value="drag">拖拽手势 (触控/鼠标)</option>
+                        </select>
+                    </div>
+                    <div class="control-row">
+                        <label for="sound-toggle">纸境音振 (Web Audio)</label>
+                        <div class="toggle-container">
+                            <input type="checkbox" id="sound-toggle" checked>
+                            <label for="sound-toggle" class="toggle-slider"></label>
+                        </div>
+                    </div>
+                    <div class="hud-action-info">
+                        <strong>💡 折跃指南：</strong><br>
+                        - 变身<b>折纸蛙</b>时，按【空格键】进行折跃跳跃！<br>
+                        - 能量达到 100% 时，按【F键】或点击折叠按钮对屏幕进行【空间折痕折叠】！
+                    </div>
+                </div>
+            </section>
+
+            <!-- Center Panel: The Origami Canvas -->
+            <section class="panel-center">
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Start Game Overlay -->
+                    <div class="screen-overlay" id="start-screen">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">🦢</div>
+                            <h2 class="overlay-title">纸境折跃</h2>
+                            <p class="overlay-desc">
+                                欢迎来到手工折纸的寂静世界。在这里，你将操控一只折纸小蛇。
+                                <br><br>
+                                <strong>📄 纸艺化身：</strong>吞下地图中的<strong>折纸图谱</strong>，在限定时间内化身神奇形态：
+                                <br>• <span class="text-crane">千羽鹤 (蓝色)</span>：能自由穿过自身和障碍，但无法进食。
+                                <br>• <span class="text-frog">折纸蛙 (绿色)</span>：可按【空格键】或点击【跳跃】瞬间前跃2格。
+                                <br>• <span class="text-boat">乌篷船 (黄色)</span>：在水墨洼中不被减速且获得双倍得分。
+                                <br><br>
+                                <strong>✂️ 空间折叠：</strong>吃五彩纸屑积攒能量，满额后按【F键】或点击【折叠】。画布将产生折痕，虚线两侧的网格瞬间连通，助你突破重围！
+                            </p>
+                            <button class="btn-action" id="start-btn">抚平纸张 启程</button>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay -->
+                    <div class="screen-overlay hidden" id="gameover-screen">
+                        <div class="overlay-content">
+                            <div class="overlay-icon color-paper-red">🍂</div>
+                            <h2 class="overlay-title color-paper-red">折痕损毁</h2>
+                            <p class="overlay-desc" id="death-reason">
+                                撞击了硬卡纸边缘或碰到了自己的尾部。
+                             </p>
+                            <div class="score-summary">
+                                <p>本次折纸心得分: <span id="final-score" class="color-paper-red">0</span></p>
+                                <p>历史最古折痕分: <span id="final-high" class="color-paper-blue">0</span></p>
+                            </div>
+                            <button class="btn-action" id="restart-btn">重新折叠</button>
+                        </div>
+                    </div>
+
+                    <!-- Paused Overlay -->
+                    <div class="screen-overlay hidden" id="pause-screen">
+                        <div class="overlay-content">
+                            <div class="overlay-icon">⏳</div>
+                            <h2 class="overlay-title">定影成纸</h2>
+                            <p class="overlay-desc">时间如折痕般固定。点击继续恢复穿梭。</p>
+                            <button class="btn-action" id="resume-btn">继续折叠</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Controls Overlay Area -->
+                <div class="mobile-controls">
+                    <div class="touch-control-hint">使用下方按键或屏幕拖动进行纸蛇操控</div>
+                    <div class="mobile-hud-actions">
+                        <div class="virtual-keypad">
+                            <button class="keypad-btn key-up" id="key-up">▲</button>
+                            <div class="keypad-middle">
+                                <button class="keypad-btn key-left" id="key-left">◀</button>
+                                <button class="keypad-btn key-down" id="key-down">▼</button>
+                                <button class="keypad-btn key-right" id="key-right">▶</button>
+                            </div>
+                        </div>
+                        <div class="action-buttons-group">
+                            <button class="action-btn" id="mobile-jump-btn" disabled>
+                                <span class="action-btn-icon">🐸</span>
+                                <span class="action-btn-text">蛙跳跃 (空格)</span>
+                            </button>
+                            <button class="action-btn color-btn-red" id="mobile-fold-btn" disabled>
+                                <span class="action-btn-icon">✂️</span>
+                                <span class="action-btn-text">空折叠 (F)</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Origami Papercraft Codex -->
+            <section class="panel-right">
+                <div class="paper-card codex-card">
+                    <h2 class="card-title">折纸图鉴</h2>
+                    <div class="codex-list">
+                        <!-- Colorful Scraps -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-dot color-scraps"></div>
+                                <span class="codex-name">五彩纸屑 (Confetti)</span>
+                            </div>
+                            <p class="codex-desc">散落的手工纸屑。吞噬增加 1 节长度，提供 10 积分并为空间折叠积攒 10% 能量。</p>
+                        </div>
+                        <!-- Paper Crane -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-dot color-crane"></div>
+                                <span class="codex-name">千羽鹤图谱 (Crane)</span>
+                            </div>
+                            <p class="codex-desc">吃下后变身千羽鹤 6 秒。在空中飞行，无视自身碰撞与卡纸障碍物，但期间无法吞噬纸屑。</p>
+                        </div>
+                        <!-- Origami Frog -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-dot color-frog"></div>
+                                <span class="codex-name">折纸蛙图谱 (Frog)</span>
+                            </div>
+                            <p class="codex-desc">吃下后变身折纸蛙 8 秒。期间可按【空格键】（手机点击跳跃键）朝面朝方向前跃两格（CD 3秒）。</p>
+                        </div>
+                        <!-- Paper Boat -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-dot color-boat"></div>
+                                <span class="codex-name">乌篷船图谱 (Boat)</span>
+                            </div>
+                            <p class="codex-desc">吃下后变身乌篷船 10 秒。通过桌面的墨水洼时不受任何减速影响，且吞噬纸屑获得 2x 积分。</p>
+                        </div>
+                        <!-- Ink Puddle -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-dot color-ink"></div>
+                                <span class="codex-name">桌面水墨洼 (Ink Puddle)</span>
+                            </div>
+                            <p class="codex-desc">地图上随机扩散的湿墨迹。普通纸蛇驶入会减速 40% 且阻尼变大，唯有乌篷船形态能破水穿行。</p>
+                        </div>
+                        <!-- Cardboard Wall -->
+                        <div class="codex-item">
+                            <div class="codex-header">
+                                <div class="codex-dot color-wall"></div>
+                                <span class="codex-name">硬质灰卡纸 (Cardboard)</span>
+                            </div>
+                            <p class="codex-desc">地图上坚硬的裁剪纸板障碍物。普通纸蛇撞上会折断损毁，需灵活绕行或使用千羽鹤飞越。</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
