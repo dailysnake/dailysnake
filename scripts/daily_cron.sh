@@ -94,12 +94,12 @@ elif ! START_REMOTE_HASH=$(git rev-parse --verify origin/main); then
 else
     INITIAL_DIRTY_FILES=$(git status --porcelain --untracked-files=all)
     if [ -n "$INITIAL_DIRTY_FILES" ]; then
-        UNRELATED_DIRTY=$(printf '%s\n' "$INITIAL_DIRTY_FILES" | grep -Ev '^\?\? games/daily-[0-9]{4}-[0-9]{2}-[0-9]{2}/(index\.html|style\.css|game\.js)$' || true)
+        UNRELATED_DIRTY=$(printf '%s\n' "$INITIAL_DIRTY_FILES" | grep -Ev '^\?\? (games/daily-[0-9]{4}-[0-9]{2}-[0-9]{2}/(index\.html|style\.css|game\.js)|assets/daily-[0-9]{4}-[0-9]{2}-[0-9]{2}-.*)$' || true)
         if [ -n "$UNRELATED_DIRTY" ]; then
             FAILURE_REASON="workspace contains changes unrelated to a recoverable daily-game run; they were left untouched"
         else
             RECOVERY_DATES=$(printf '%s\n' "$INITIAL_DIRTY_FILES" \
-                | sed -nE 's#^\?\? games/daily-([0-9]{4}-[0-9]{2}-[0-9]{2})/(index\.html|style\.css|game\.js)$#\1#p' \
+                | sed -nE 's#^\?\? (games|assets)/daily-([0-9]{4}-[0-9]{2}-[0-9]{2}).*#\2#p' \
                 | sort -u)
 
             for RECOVERY_DATE in $RECOVERY_DATES; do
@@ -124,7 +124,7 @@ AGY_EXIT_CODE=1
 if [ -z "$FAILURE_REASON" ]; then
     echo "Running initial prompt with agy..."
     # Run agy non-interactively with auto-approving permissions
-    "$AGY_BIN" --prompt "$PROMPT" --dangerously-skip-permissions
+    "$AGY_BIN" --prompt "$PROMPT" --model gemini-3.6-flash-high --effort high --dangerously-skip-permissions
     AGY_EXIT_CODE=$?
 fi
 
@@ -206,7 +206,7 @@ while [ $AGY_EXIT_CODE -eq 0 ] && [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
 
 本轮还必须完成并推送这些已识别的历史失败日期：$RECOVERY_DATES。每个日期都必须具备 games/daily-DATE/{index.html,style.css,game.js}、assets/daily-DATE-* 专属封面和根首页入口；不得删除已有残留文件。"
     fi
-    "$AGY_BIN" --continue --prompt "$RETRY_PROMPT" --dangerously-skip-permissions
+    "$AGY_BIN" --continue --prompt "$RETRY_PROMPT" --model gemini-3.6-flash-high --effort high --dangerously-skip-permissions
     AGY_EXIT_CODE=$?
     if [ $AGY_EXIT_CODE -ne 0 ]; then
         FAILURE_REASON="agy retry exited with status $AGY_EXIT_CODE"
