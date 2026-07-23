@@ -1,0 +1,813 @@
+/* ==========================================
+   GLASSTEAVER (圣堂琉璃) - CSS STYLE SYSTEM
+   ========================================== */
+
+/* Design Tokens & CSS Variables */
+:root {
+    --bg-dark: #0a0812;          /* Deep obsidian cathedral space */
+    --bg-card: rgba(20, 16, 32, 0.65); /* Translucent glass */
+    --gold-primary: #d1b880;     /* Metallic gold trim */
+    --gold-glow: rgba(209, 184, 128, 0.3);
+    --text-primary: #f0f0f5;     /* Pure light text */
+    --text-secondary: #a3a1b5;   /* Soft slate gray */
+    --border-color: rgba(209, 184, 128, 0.15); /* Delicate gold line */
+    --border-glow: rgba(209, 184, 128, 0.25);
+    
+    /* Holy Glass Colors (Glows) */
+    --glass-red: #ff3344;
+    --glass-blue: #3388ff;
+    --glass-green: #22cc66;
+    --glass-yellow: #ffaa00;
+    --glass-prism: #e8d0ff;
+
+    --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    --font-title: 'Outfit', sans-serif;
+    --font-accent: 'Cinzel', serif;
+    --font-lcd: 'Orbitron', monospace;
+
+    /* Bloom Shadows */
+    --glow-red: 0 0 15px rgba(255, 51, 68, 0.6);
+    --glow-blue: 0 0 15px rgba(51, 136, 255, 0.6);
+    --glow-green: 0 0 15px rgba(34, 204, 102, 0.6);
+    --glow-yellow: 0 0 15px rgba(255, 170, 0, 0.6);
+    --glow-gold: 0 0 18px rgba(209, 184, 128, 0.4);
+    --glow-prism: 0 0 25px rgba(232, 208, 255, 0.8);
+}
+
+/* Reset & Base Styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: var(--font-ui);
+    background-color: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+    position: relative;
+    line-height: 1.5;
+}
+
+.font-cinzel {
+    font-family: var(--font-accent);
+}
+
+.text-red { color: var(--glass-red); }
+.text-blue { color: var(--glass-blue); }
+.text-green { color: var(--glass-green); }
+.text-yellow { color: var(--glass-yellow); }
+
+/* 1. Cathedral Atmosphere Background */
+.cathedral-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -10;
+    pointer-events: none;
+    background: radial-gradient(circle at center, #1b152d 0%, #06050b 100%);
+    overflow: hidden;
+}
+
+/* Gothic vaulted arches drawing using gradient overlays */
+.vault-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(ellipse at 50% -20%, transparent 60%, rgba(209, 184, 128, 0.04) 62%, transparent 63%),
+        radial-gradient(ellipse at 50% 120%, transparent 60%, rgba(209, 184, 128, 0.04) 62%, transparent 63%),
+        linear-gradient(45deg, transparent 49.8%, rgba(209, 184, 128, 0.03) 50%, transparent 50.2%),
+        linear-gradient(-45deg, transparent 49.8%, rgba(209, 184, 128, 0.03) 50%, transparent 50.2%);
+    background-size: 100% 100%, 100% 100%, 200px 200px, 200px 200px;
+    opacity: 0.8;
+}
+
+/* Large rose window pattern fading in the background */
+.rose-window-silhouette {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80vh;
+    height: 80vh;
+    border-radius: 50%;
+    background: radial-gradient(circle, transparent 20%, rgba(20, 15, 30, 0.5) 70%),
+                repeating-conic-gradient(from 0deg, transparent 0deg 15deg, rgba(209, 184, 128, 0.015) 15deg 30deg);
+    border: 2px dashed rgba(209, 184, 128, 0.03);
+    opacity: 0.6;
+}
+
+/* Floating light dust particles (God Rays dust) */
+.light-dust-particles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.15;
+}
+
+/* 2. Layout Structure */
+.game-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Header design */
+.game-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: 0 4px 20px -10px rgba(0, 0, 0, 0.5);
+}
+
+.back-link .btn-back {
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    font-size: 0.9rem;
+    padding: 8px 16px;
+    background: rgba(30, 25, 45, 0.5);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.back-link .btn-back:hover {
+    transform: translateY(-1px);
+    border-color: var(--gold-primary);
+    color: var(--gold-primary);
+    box-shadow: 0 0 10px var(--gold-glow);
+}
+
+.back-arrow {
+    margin-right: 6px;
+    transition: transform 0.2s ease;
+}
+
+.back-link .btn-back:hover .back-arrow {
+    transform: translateX(-3px);
+}
+
+.game-title-group {
+    text-align: center;
+}
+
+.glass-title {
+    font-family: var(--font-accent);
+    font-size: 1.8rem;
+    font-weight: 800;
+    letter-spacing: 4px;
+    color: var(--gold-primary);
+    text-shadow: 0 0 12px var(--gold-glow);
+}
+
+.sub-title {
+    font-family: var(--font-title);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-secondary);
+}
+
+.cathedral-badge {
+    background: linear-gradient(135deg, rgba(209,184,128,0.2) 0%, rgba(209,184,128,0.05) 100%);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    padding: 4px 10px;
+    box-shadow: var(--glow-gold);
+}
+
+.badge-text {
+    font-family: var(--font-lcd);
+    font-size: 0.85rem;
+    color: var(--gold-primary);
+    letter-spacing: 1px;
+}
+
+/* 3. Main Game Layout Grid */
+.game-layout {
+    display: grid;
+    grid-template-columns: 320px 1fr 320px;
+    gap: 20px;
+    flex-grow: 1;
+    align-items: start;
+}
+
+/* Glass Cards styling */
+.glass-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    position: relative;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: rgba(209, 184, 128, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 10px rgba(209, 184, 128, 0.05);
+}
+
+.card-title {
+    font-family: var(--font-accent);
+    font-size: 1.25rem;
+    color: var(--gold-primary);
+    margin-bottom: 18px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid rgba(209, 184, 128, 0.15);
+    letter-spacing: 2px;
+}
+
+/* Stats dashboard */
+.stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.stat-box {
+    background: rgba(10, 8, 16, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.stat-title {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+
+.stat-number {
+    font-family: var(--font-lcd);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.score-glow {
+    color: var(--gold-primary);
+    text-shadow: 0 0 8px rgba(209, 184, 128, 0.5);
+}
+
+.high-score-glow {
+    color: var(--glass-blue);
+    text-shadow: 0 0 8px rgba(51, 136, 255, 0.5);
+}
+
+/* Altar status items */
+.altars-indicator-section {
+    margin-bottom: 20px;
+}
+
+.section-minor-title {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+
+.altar-progress-item {
+    margin-bottom: 10px;
+}
+
+.altar-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    margin-bottom: 4px;
+}
+
+.altar-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.altar-dot.color-red { background: var(--glass-red); box-shadow: var(--glow-red); }
+.altar-dot.color-blue { background: var(--glass-blue); box-shadow: var(--glow-blue); }
+.altar-dot.color-green { background: var(--glass-green); box-shadow: var(--glow-green); }
+.altar-dot.color-yellow { background: var(--glass-yellow); box-shadow: var(--glow-yellow); }
+
+.altar-name {
+    flex-grow: 1;
+    color: var(--text-primary);
+}
+
+.altar-percent {
+    font-family: var(--font-lcd);
+    color: var(--text-secondary);
+}
+
+/* Progress bar */
+.progress-bar {
+    height: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 3px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.progress-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 3px;
+    transition: width 0.1s ease;
+}
+
+.progress-fill.bg-red { background: linear-gradient(90deg, #bb1122, var(--glass-red)); box-shadow: var(--glow-red); }
+.progress-fill.bg-blue { background: linear-gradient(90deg, #1155bb, var(--glass-blue)); box-shadow: var(--glow-blue); }
+.progress-fill.bg-green { background: linear-gradient(90deg, #119944, var(--glass-green)); box-shadow: var(--glow-green); }
+.progress-fill.bg-yellow { background: linear-gradient(90deg, #cc8800, var(--glass-yellow)); box-shadow: var(--glow-yellow); }
+.progress-fill.bg-glow { background: linear-gradient(90deg, #8a2be2, var(--glass-prism)); box-shadow: var(--glow-prism); }
+
+/* Bullet time section */
+.bullet-time-section {
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.bullet-time-section .stat-label {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+}
+
+/* Config row controls */
+.control-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 0.85rem;
+}
+
+.custom-select {
+    background: rgba(10, 8, 16, 0.8);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    padding: 6px 12px;
+    outline: none;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.custom-select:hover {
+    border-color: var(--gold-primary);
+}
+
+.toggle-container {
+    position: relative;
+    width: 44px;
+    height: 22px;
+}
+
+.toggle-container input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--border-color);
+    transition: .3s;
+    border-radius: 22px;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 14px;
+    width: 14px;
+    left: 3px;
+    bottom: 3px;
+    background-color: var(--text-secondary);
+    transition: .3s;
+    border-radius: 50%;
+}
+
+input:checked + .toggle-slider {
+    background-color: rgba(209, 184, 128, 0.25);
+    border-color: var(--gold-primary);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(22px);
+    background-color: var(--gold-primary);
+    box-shadow: var(--glow-gold);
+}
+
+.hud-action-info {
+    margin-top: 15px;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    background: rgba(10, 8, 16, 0.4);
+    padding: 10px;
+    border-radius: 6px;
+    border-left: 2px solid var(--gold-primary);
+}
+
+/* 4. Center Panel Canvas Style */
+.panel-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.canvas-container {
+    position: relative;
+    background: radial-gradient(circle, #100d1e 0%, #05040a 100%);
+    border: 2px solid var(--gold-primary);
+    border-radius: 16px;
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), var(--glow-gold);
+    overflow: hidden;
+    width: 600px;
+    height: 600px;
+}
+
+#game-canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+/* Screen overlay panels */
+.screen-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(6, 5, 10, 0.88);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 20;
+    backdrop-filter: blur(8px);
+    transition: opacity 0.3s ease;
+}
+
+.screen-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.overlay-content {
+    max-width: 480px;
+    padding: 30px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.overlay-icon {
+    font-size: 3.5rem;
+    margin-bottom: 15px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.1));
+}
+
+.overlay-title {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--gold-primary);
+    margin-bottom: 15px;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px var(--gold-glow);
+}
+
+.overlay-desc {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.overlay-desc strong {
+    color: var(--text-primary);
+}
+
+.text-crane { color: var(--glass-blue); font-weight: 600; }
+.text-frog { color: var(--glass-green); font-weight: 600; }
+.text-boat { color: var(--glass-yellow); font-weight: 600; }
+
+.btn-action {
+    background: linear-gradient(135deg, rgba(209, 184, 128, 0.3) 0%, rgba(209, 184, 128, 0.08) 100%);
+    border: 1px solid var(--gold-primary);
+    color: var(--gold-primary);
+    padding: 12px 35px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    letter-spacing: 2px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+}
+
+.btn-action:hover {
+    transform: translateY(-2px);
+    background: linear-gradient(135deg, rgba(209, 184, 128, 0.5) 0%, rgba(209, 184, 128, 0.15) 100%);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4), var(--glow-gold);
+}
+
+.score-summary {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 15px 30px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+}
+
+.score-summary span {
+    font-family: var(--font-lcd);
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-left: 8px;
+}
+
+/* 5. Mobile Controls style */
+.mobile-controls {
+    display: none; /* Hidden on desktop */
+    width: 100%;
+    margin-top: 15px;
+}
+
+.mobile-layout-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 15px;
+}
+
+/* Virtual D-Pad Keypad */
+.virtual-keypad-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.virtual-keypad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+
+.keypad-middle {
+    display: flex;
+    gap: 20px;
+}
+
+.keypad-btn {
+    width: 50px;
+    height: 50px;
+    background: rgba(30, 25, 45, 0.6);
+    border: 1px solid var(--border-color);
+    border-radius: 50%;
+    color: var(--gold-primary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.1s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.keypad-btn:active {
+    background: rgba(209, 184, 128, 0.25);
+    border-color: var(--gold-primary);
+    box-shadow: 0 0 10px var(--gold-glow);
+    transform: scale(0.95);
+}
+
+/* Mobile Actions Group */
+.mobile-action-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: rgba(30, 25, 45, 0.7);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
+.action-btn:active, .action-btn.active {
+    background: rgba(138, 43, 226, 0.3);
+    border-color: var(--glass-prism);
+    box-shadow: var(--glow-prism);
+    transform: scale(0.95);
+}
+
+.action-btn-icon {
+    font-size: 1.2rem;
+}
+
+/* 6. Codex Card style */
+.codex-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.codex-item {
+    background: rgba(10, 8, 16, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.codex-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.codex-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+
+.glass-shards-icon {
+    background: linear-gradient(135deg, var(--glass-red), var(--glass-blue));
+    box-shadow: 0 0 6px var(--glass-red);
+}
+
+.prism-shards-icon {
+    background: var(--glass-prism);
+    box-shadow: var(--glow-prism);
+    border-radius: 0;
+    transform: rotate(45deg);
+}
+
+.codex-icon-box {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.codex-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--gold-primary);
+    letter-spacing: 0.5px;
+}
+
+.codex-desc {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+
+/* 7. Responsive Style Systems */
+@media (max-width: 1300px) {
+    .game-layout {
+        grid-template-columns: 280px 1fr;
+    }
+    .panel-right {
+        display: none; /* Hide codex panel on small screens */
+    }
+}
+
+@media (max-width: 990px) {
+    .game-layout {
+        grid-template-columns: 1fr;
+    }
+    
+    .panel-left {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        width: 100%;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+    
+    .info-card, .config-card {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 650px) {
+    .game-wrapper {
+        padding: 10px;
+    }
+
+    .game-header {
+        margin-bottom: 12px;
+        padding-bottom: 8px;
+    }
+
+    .glass-title {
+        font-size: 1.4rem;
+        letter-spacing: 2px;
+    }
+
+    .panel-left {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        max-width: 100%;
+    }
+
+    .canvas-container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+    }
+
+    .mobile-controls {
+        display: block; /* Show controls on touch devices */
+    }
+    
+    .overlay-content {
+        padding: 15px;
+    }
+    
+    .overlay-title {
+        font-size: 1.5rem;
+    }
+    
+    .overlay-desc {
+        font-size: 0.72rem;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+}
+
+/* User Selection Prevention for Mobile Touch controls */
+.keypad-btn, .action-btn, .canvas-container {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+/* Ultra-small Screen Layout Adjustments */
+@media (max-width: 360px) {
+    .keypad-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 0.9rem;
+    }
+    .keypad-middle {
+        gap: 10px;
+    }
+    .action-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+}
