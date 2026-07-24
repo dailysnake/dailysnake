@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>瓷韵金缮 (Kintsugi Porcelain Odyssey) - 青花金丝贪吃蛇</title>
+    <meta name="description" content="典雅的青花瓷与金缮修复艺术相结合的全新贪吃蛇游戏！积累冰裂应力，收集金漆重塑瓷质身躯，开启瓷韵金辉释放无敌金光震荡波。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;600;700;900&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas & Glaze Particle FX -->
+    <div class="porcelain-bg"></div>
+    <div class="gold-dust-container" id="gold-dust"></div>
+
+    <div class="app-container">
+        <!-- Header Navigation -->
+        <header class="game-header">
+            <a href="../../index.html" class="back-link" title="返回游戏大厅">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>大厅</span>
+            </a>
+            <div class="game-title-group">
+                <h1 class="game-title">KINTSUGI <span class="gold-text">PORCELAIN</span></h1>
+                <span class="game-subtitle">瓷韵金缮 · 青花金丝之境</span>
+            </div>
+            <button id="sound-btn" class="icon-btn" title="开关音效">
+                <svg id="sound-icon-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+                <svg id="sound-icon-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                    <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+            </button>
+        </header>
+
+        <!-- Dashboard Stats Bar -->
+        <div class="dashboard-panel">
+            <div class="stat-box">
+                <span class="stat-label">得分</span>
+                <span class="stat-value gold-num" id="score-val">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">最高分</span>
+                <span class="stat-value" id="highscore-val">0</span>
+            </div>
+            <div class="stat-box strain-box">
+                <div class="stat-label-row">
+                    <span class="stat-label">冰裂应力</span>
+                    <span class="stat-subval" id="strain-pct">0%</span>
+                </div>
+                <div class="progress-bar-track">
+                    <div class="progress-bar-fill" id="strain-fill"></div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">金缮缝合</span>
+                <div class="seams-counter" id="seams-counter">
+                    <span class="seam-dot"></span>
+                    <span class="seam-dot"></span>
+                    <span class="seam-dot"></span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">窑变形态</span>
+                <span class="stat-value glaze-tag" id="glaze-tag">青花莲韵</span>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <main class="game-area">
+            <div class="canvas-wrapper" id="canvas-wrapper">
+                <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                <!-- Overlay: Start Screen -->
+                <div class="overlay-screen active" id="start-overlay">
+                    <div class="overlay-content">
+                        <div class="porcelain-crest">瓷</div>
+                        <h2 class="overlay-title">瓷韵金缮</h2>
+                        <p class="overlay-desc">
+                            操控青花瓷蛇在古意瓷盘中游弋。<br>
+                            高速转向与碰壁会增加<strong class="gold-text">冰裂应力</strong>，破损后寻找<strong class="gold-text">金漆</strong>进行金缮缝合。<br>
+                            积攒 3 处金缮可开启<strong class="gold-text">瓷韵金辉 (Space/技能键)</strong>，极能无敌震荡！
+                        </p>
+                        <button class="btn-start" id="start-btn">开启瓷境</button>
+                    </div>
+                </div>
+
+                <!-- Overlay: Game Over Screen -->
+                <div class="overlay-screen" id="gameover-overlay">
+                    <div class="overlay-content">
+                        <div class="porcelain-crest shattered">碎</div>
+                        <h2 class="overlay-title">瓷器碎裂</h2>
+                        <div class="score-summary">
+                            <p>本次得分：<span class="final-score gold-num" id="final-score">0</span></p>
+                            <p>历史最高：<span class="final-highscore" id="final-highscore">0</span></p>
+                            <p>金缮修补次数：<span class="final-seams" id="final-seams">0</span></p>
+                        </div>
+                        <button class="btn-start" id="restart-btn">重塑瓷身</button>
+                    </div>
+                </div>
+
+                <!-- Active Ability Button for Touch / Quick Action -->
+                <button class="ability-btn" id="ability-btn" disabled>
+                    <span class="ability-icon">✨</span>
+                    <span class="ability-text">瓷韵金辉</span>
+                </button>
+            </div>
+        </main>
+
+        <!-- Touch D-Pad Controls for Mobile -->
+        <div class="touch-controls" id="touch-controls">
+            <div class="dpad-btn dpad-up" data-dir="UP">▲</div>
+            <div class="dpad-row">
+                <div class="dpad-btn dpad-left" data-dir="LEFT">◄</div>
+                <div class="dpad-center"></div>
+                <div class="dpad-btn dpad-right" data-dir="RIGHT">►</div>
+            </div>
+            <div class="dpad-btn dpad-down" data-dir="DOWN">▼</div>
+        </div>
+
+        <!-- Footer Instructions -->
+        <footer class="game-footer">
+            <div class="controls-hint">
+                <span>键盘：<kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> / <kbd>↑</kbd><kbd>←</kbd><kbd>↓</kbd><kbd>→</kbd> 转向</span>
+                <span>技能：<kbd>Space</kbd> 释放瓷韵金辉</span>
+                <span>触控：虚拟 D-Pad 方向键 / 点击金辉按钮</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
