@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>光晶三棱镜 (Prismatic Optics) - 三棱折射光脉贪吃蛇</title>
+    <meta name="description" content="全新三棱镜与色彩折射机制贪吃蛇！操控极光光索穿梭黑曜水晶阵，吸收三原色光子引发色相共鸣，穿越三棱晶核触发分光跃迁与超光速色脉冲。">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas & Dynamic Light Dust -->
+    <div class="crystal-bg"></div>
+    <div class="light-dust-container" id="light-dust"></div>
+
+    <div class="app-container">
+        <!-- Header Navigation -->
+        <header class="game-header">
+            <a href="../../index.html" class="back-link" title="返回游戏大厅">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>大厅</span>
+            </a>
+            <div class="game-title-group">
+                <h1 class="game-title">PRISMATIC <span class="spectrum-text">OPTICS</span></h1>
+                <span class="game-subtitle">光晶三棱镜 · 三棱色规折射战</span>
+            </div>
+            <div class="header-controls">
+                <button id="sound-btn" class="icon-btn" title="开关音效">
+                    <svg id="sound-icon-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="sound-icon-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+                <button id="pause-btn" class="icon-btn" title="暂停游戏">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Stats Bar -->
+        <div class="dashboard-panel">
+            <div class="stat-box">
+                <span class="stat-label">光谱能量</span>
+                <span class="stat-value spectrum-num" id="score-val">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">巅峰纪录</span>
+                <span class="stat-value" id="highscore-val">0</span>
+            </div>
+            <div class="stat-box combo-box">
+                <span class="stat-label">色相共鸣</span>
+                <div class="combo-badge" id="combo-badge">
+                    <span id="combo-val">x1</span>
+                </div>
+            </div>
+            <div class="stat-box energy-box">
+                <div class="stat-label-row">
+                    <span class="stat-label">三棱脉冲</span>
+                    <span class="stat-subval" id="energy-pct">0%</span>
+                </div>
+                <div class="energy-bar-track">
+                    <div class="energy-bar-fill" id="energy-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="canvas-wrapper">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Status Banners / Notifications -->
+            <div id="status-banner" class="status-banner">
+                <span id="status-text">三棱折射已激活！虚幻跃迁中...</span>
+            </div>
+
+            <!-- Start Game Overlay -->
+            <div id="start-overlay" class="overlay">
+                <div class="overlay-card glass-panel">
+                    <div class="prism-logo">
+                        <div class="prism-icon"></div>
+                    </div>
+                    <h2>光晶三棱镜</h2>
+                    <p class="overlay-subtitle">PRISMATIC LIGHTWAVE EXPEDITION</p>
+                    
+                    <div class="rules-grid">
+                        <div class="rule-item">
+                            <div class="rule-icon red-glow"></div>
+                            <div class="rule-desc">
+                                <strong>光子收集与色规共鸣</strong>
+                                <span>吸收红/绿/蓝光子。连续吸收同色光子激活【色相共鸣】，获得多倍积分与高音阶响音。</span>
+                            </div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-icon cyan-glow"></div>
+                            <div class="rule-desc">
+                                <strong>三棱晶核与折射跃迁</strong>
+                                <span>穿过战场中的【三棱晶核】，触发【分光折射】，获得短时间【虚幻跃迁】（可穿墙与自身）。</span>
+                            </div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-icon gold-glow"></div>
+                            <div class="rule-desc">
+                                <strong>超光速色脉冲 (Skill)</strong>
+                                <span>脉冲能量蓄满后按 [空格] 或 [色脉冲按钮] 释放全屏折射风暴，摧毁周围暗物质暗晶！</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls-hint">
+                        <div class="hint-item"><span class="key">W A S D</span> / <span class="key">↑ ↓ ← →</span> 转向</div>
+                        <div class="hint-item"><span class="key">Space</span> 释放色脉冲</div>
+                    </div>
+
+                    <button id="start-btn" class="glow-btn">
+                        <span>光速启航 START</span>
+                        <div class="btn-glow-layer"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Game Over Overlay -->
+            <div id="gameover-overlay" class="overlay" style="display: none;">
+                <div class="overlay-card glass-panel">
+                    <div class="gameover-title">色谱解聚</div>
+                    <p class="gameover-subtitle">SPECTRAL DECOHERENCE DETECTED</p>
+                    
+                    <div class="final-stats">
+                        <div class="final-stat-item">
+                            <span class="label">本次光谱得分</span>
+                            <span class="value gold-num" id="final-score">0</span>
+                        </div>
+                        <div class="final-stat-item">
+                            <span class="label">最高色相共鸣</span>
+                            <span class="value" id="final-combo">x1</span>
+                        </div>
+                        <div class="final-stat-item">
+                            <span class="label">折射跃迁次数</span>
+                            <span class="value" id="final-refractions">0</span>
+                        </div>
+                    </div>
+
+                    <div id="new-high-badge" class="new-high-badge" style="display: none;">
+                        ✨ 突破历史最高纪录！
+                    </div>
+
+                    <button id="restart-btn" class="glow-btn">
+                        <span>重聚光束 RESTART</span>
+                        <div class="btn-glow-layer"></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Touch Controls -->
+        <div class="mobile-controls">
+            <div class="dpad">
+                <button class="dpad-btn up" id="btn-up" aria-label="向上">▲</button>
+                <button class="dpad-btn left" id="btn-left" aria-label="向左">◄</button>
+                <button class="dpad-btn right" id="btn-right" aria-label="向右">►</button>
+                <button class="dpad-btn down" id="btn-down" aria-label="向下">▼</button>
+                <div class="dpad-center"></div>
+            </div>
+            <button id="mobile-skill-btn" class="mobile-skill-btn" aria-label="超光速色脉冲">
+                <span class="skill-icon">⚡</span>
+                <span class="skill-label">色脉冲</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
