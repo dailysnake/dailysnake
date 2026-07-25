@@ -128,72 +128,74 @@ if [ -z "$FAILURE_REASON" ]; then
     AGY_EXIT_CODE=$?
 fi
 
-if [ $AGY_EXIT_CODE -ne 0 ] && [ -z "$FAILURE_REASON" ]; then
-    FAILURE_REASON="agy initial generation exited with status $AGY_EXIT_CODE"
-    echo "Error: $FAILURE_REASON"
-fi
-
-while [ $AGY_EXIT_CODE -eq 0 ] && [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
-    echo "Verifying deployment status..."
+# Retry & Continuation loop: handles both deployment verification failures AND initial timeout/exit failures
+while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
     FAILURE_REASON=""
-    LOCAL_HASH=$(git rev-parse --verify HEAD 2>/dev/null || echo "")
-    REMOTE_HASH=""
-    DIRTY_FILES=$(git status --porcelain)
+    
+    if [ $AGY_EXIT_CODE -eq 0 ]; then
+        echo "Verifying deployment status..."
+        LOCAL_HASH=$(git rev-parse --verify HEAD 2>/dev/null || echo "")
+        REMOTE_HASH=""
+        DIRTY_FILES=$(git status --porcelain)
 
-    if ! git fetch origin main; then
-        FAILURE_REASON="git fetch failed during verification"
-    elif ! REMOTE_HASH=$(git rev-parse --verify origin/main); then
-        FAILURE_REASON="unable to resolve origin/main during verification"
-    elif [ -z "$LOCAL_HASH" ] || [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
-        FAILURE_REASON="local HEAD does not match origin/main"
-    elif [ "$REMOTE_HASH" = "$START_REMOTE_HASH" ]; then
-        FAILURE_REASON="agy did not publish a new commit"
-    elif [ -n "$DIRTY_FILES" ]; then
-        FAILURE_REASON="workspace is dirty after generation"
-    elif ! git cat-file -e "origin/main:$THEME_DIR/index.html" 2>/dev/null \
-        || ! git cat-file -e "origin/main:$THEME_DIR/style.css" 2>/dev/null \
-        || ! git cat-file -e "origin/main:$THEME_DIR/game.js" 2>/dev/null; then
-        FAILURE_REASON="origin/main is missing one or more required files for $THEME_DIR"
-    elif ! git show origin/main:index.html | grep -Fq "$THEME_DIR/"; then
-        FAILURE_REASON="origin/main homepage does not link to $THEME_DIR"
-    else
-        CHANGED_PATHS=$(git diff --name-only "$START_REMOTE_HASH" "$REMOTE_HASH")
-        ALLOWED_DATES="$TODAY"
-        if [ -n "$RECOVERY_DATES" ]; then
-            ALLOWED_DATES="$ALLOWED_DATES|$(printf '%s' "$RECOVERY_DATES" | tr '\n' '|' | sed 's/|$//')"
-        fi
-        DISALLOWED_PATHS=$(printf '%s\n' "$CHANGED_PATHS" | grep -Ev "^(index\\.html|assets/daily-($ALLOWED_DATES)-[^/]+|games/daily-($ALLOWED_DATES)/(index\\.html|style\\.css|game\\.js))$" || true)
-        if [ -n "$DISALLOWED_PATHS" ]; then
-            FAILURE_REASON="daily generation changed files outside the allowed game, asset, and homepage paths"
-        elif ! printf '%s\n' "$CHANGED_PATHS" | grep -Fq "$THEME_DIR/"; then
-            FAILURE_REASON="new commit does not contain today's game files"
+        if ! git fetch origin main; then
+            FAILURE_REASON="git fetch failed during verification"
+        elif ! REMOTE_HASH=$(git rev-parse --verify origin/main); then
+            FAILURE_REASON="unable to resolve origin/main during verification"
+        elif [ -z "$LOCAL_HASH" ] || [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
+            FAILURE_REASON="local HEAD does not match origin/main"
+        elif [ "$REMOTE_HASH" = "$START_REMOTE_HASH" ]; then
+            FAILURE_REASON="agy did not publish a new commit"
+        elif [ -n "$DIRTY_FILES" ]; then
+            FAILURE_REASON="workspace is dirty after generation"
+        elif ! git cat-file -e "origin/main:$THEME_DIR/index.html" 2>/dev/null \
+            || ! git cat-file -e "origin/main:$THEME_DIR/style.css" 2>/dev/null \
+            || ! git cat-file -e "origin/main:$THEME_DIR/game.js" 2>/dev/null; then
+            FAILURE_REASON="origin/main is missing one or more required files for $THEME_DIR"
+        elif ! git show origin/main:index.html | grep -Fq "$THEME_DIR/"; then
+            FAILURE_REASON="origin/main homepage does not link to $THEME_DIR"
         else
-            for RECOVERY_DATE in $RECOVERY_DATES; do
-                RECOVERY_DIR="games/daily-$RECOVERY_DATE"
-                if ! git cat-file -e "origin/main:$RECOVERY_DIR/index.html" 2>/dev/null \
-                    || ! git cat-file -e "origin/main:$RECOVERY_DIR/style.css" 2>/dev/null \
-                    || ! git cat-file -e "origin/main:$RECOVERY_DIR/game.js" 2>/dev/null \
-                    || ! git show origin/main:index.html | grep -Fq "$RECOVERY_DIR/"; then
-                    FAILURE_REASON="recovered daily game $RECOVERY_DATE is incomplete on origin/main"
-                    break
-                fi
-            done
+            CHANGED_PATHS=$(git diff --name-only "$START_REMOTE_HASH" "$REMOTE_HASH")
+            ALLOWED_DATES="$TODAY"
+            if [ -n "$RECOVERY_DATES" ]; then
+                ALLOWED_DATES="$ALLOWED_DATES|$(printf '%s' "$RECOVERY_DATES" | tr '\n' '|' | sed 's/|$//')"
+            fi
+            DISALLOWED_PATHS=$(printf '%s\n' "$CHANGED_PATHS" | grep -Ev "^(index\\.html|assets/daily-($ALLOWED_DATES)-[^/]+|games/daily-($ALLOWED_DATES)/(index\\.html|style\\.css|game\\.js))$" || true)
+            if [ -n "$DISALLOWED_PATHS" ]; then
+                FAILURE_REASON="daily generation changed files outside the allowed game, asset, and homepage paths"
+            elif ! printf '%s\n' "$CHANGED_PATHS" | grep -Fq "$THEME_DIR/"; then
+                FAILURE_REASON="new commit does not contain today's game files"
+            else
+                for RECOVERY_DATE in $RECOVERY_DATES; do
+                    RECOVERY_DIR="games/daily-$RECOVERY_DATE"
+                    if ! git cat-file -e "origin/main:$RECOVERY_DIR/index.html" 2>/dev/null \
+                        || ! git cat-file -e "origin/main:$RECOVERY_DIR/style.css" 2>/dev/null \
+                        || ! git cat-file -e "origin/main:$RECOVERY_DIR/game.js" 2>/dev/null \
+                        || ! git show origin/main:index.html | grep -Fq "$RECOVERY_DIR/"; then
+                        FAILURE_REASON="recovered daily game $RECOVERY_DATE is incomplete on origin/main"
+                        break
+                    fi
+                done
+            fi
         fi
+
+        if [ -z "$FAILURE_REASON" ]; then
+            SUCCESS=true
+            PUBLISHED_HASH="$REMOTE_HASH"
+            break
+        fi
+    else
+        FAILURE_REASON="agy initial/previous run exited with status $AGY_EXIT_CODE (possibly 5-minute timeout)"
     fi
 
-    if [ -z "$FAILURE_REASON" ]; then
-        SUCCESS=true
-        PUBLISHED_HASH="$REMOTE_HASH"
-        break
-    fi
-    
     RETRY_COUNT=$((RETRY_COUNT + 1))
-    if [ $RETRY_COUNT -eq $MAX_RETRIES ]; then
+    if [ $RETRY_COUNT -ge $MAX_RETRIES ]; then
+        echo "Reached max retries ($MAX_RETRIES). Failing task."
         break
     fi
-    
-    echo "Verification failed: $FAILURE_REASON. Retrying ($RETRY_COUNT/$MAX_RETRIES)..."
-    
+
+    echo "Attempt failed: $FAILURE_REASON. Resuming session with agy --continue (retry $RETRY_COUNT/$MAX_RETRIES)..."
+
     # Continue the session and tell it to fix the issue and push
     RETRY_PROMPT_FILE="$PROJECT_DIR/prompts/retry_snake.txt"
     if [ ! -f "$RETRY_PROMPT_FILE" ]; then
@@ -208,11 +210,6 @@ while [ $AGY_EXIT_CODE -eq 0 ] && [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
     fi
     "$AGY_BIN" --continue --prompt "$RETRY_PROMPT" --model gemini-3.6-flash --effort high --dangerously-skip-permissions
     AGY_EXIT_CODE=$?
-    if [ $AGY_EXIT_CODE -ne 0 ]; then
-        FAILURE_REASON="agy retry exited with status $AGY_EXIT_CODE"
-        echo "Error: $FAILURE_REASON"
-        break
-    fi
 done
 
 if [ "$SUCCESS" = true ]; then
