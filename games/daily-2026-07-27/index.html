@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>量子波弦 (Quantum Wave Weaver) - 波粒二象性贪吃蛇</title>
+    <meta name="description" content="全新量子物理与波粒二象性机制贪吃蛇！操控量子波弦在微观概率场中游弋，在实体粒子态与半透明穿透波动态间自由切换，穿越量子纠缠黑洞跃迁！">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas & Dynamic Light Particles -->
+    <div class="quantum-bg"></div>
+    <div class="particle-dust-container" id="particle-dust"></div>
+
+    <div class="app-container">
+        <!-- Header Navigation -->
+        <header class="game-header">
+            <a href="../../index.html" class="back-link" title="返回游戏大厅" id="back-to-lobby-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>大厅</span>
+            </a>
+            <div class="game-title-group">
+                <h1 class="game-title">QUANTUM <span class="quantum-text">WEAVER</span></h1>
+                <span class="game-subtitle">量子波弦 · 波粒二象微观战</span>
+            </div>
+            <div class="header-controls">
+                <button id="sound-btn" class="icon-btn" title="开关音效">
+                    <svg id="sound-icon-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="sound-icon-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+                <button id="pause-btn" class="icon-btn" title="暂停游戏">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Stats Bar -->
+        <div class="dashboard-panel">
+            <div class="stat-box">
+                <span class="stat-label">量子能阶</span>
+                <span class="stat-value quantum-num" id="score-val">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">最高能阶</span>
+                <span class="stat-value" id="highscore-val">0</span>
+            </div>
+            <div class="stat-box state-box">
+                <span class="stat-label">当前形态</span>
+                <div class="state-badge particle-mode" id="state-badge">
+                    <span id="state-val">PARTICLE 粒子态</span>
+                </div>
+            </div>
+            <div class="stat-box energy-box">
+                <div class="stat-label-row">
+                    <span class="stat-label">坍缩充能</span>
+                    <span class="stat-subval" id="energy-pct">0%</span>
+                </div>
+                <div class="energy-bar-track">
+                    <div class="energy-bar-fill" id="energy-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="canvas-wrapper">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Status Banner / Floating Notification -->
+            <div id="status-banner" class="status-banner">
+                <span id="status-text">量子相位已激活！穿透屏障中...</span>
+            </div>
+
+            <!-- Start Game Overlay -->
+            <div id="start-overlay" class="overlay">
+                <div class="overlay-card glass-panel">
+                    <div class="quantum-logo">
+                        <div class="atom-icon">
+                            <div class="orbit orbit-1"></div>
+                            <div class="orbit orbit-2"></div>
+                            <div class="nucleus"></div>
+                        </div>
+                    </div>
+                    <h2>量子波弦</h2>
+                    <p class="overlay-subtitle">QUANTUM WAVE WEAVER - DUALITY SNAKE</p>
+                    
+                    <div class="rules-grid">
+                        <div class="rule-item">
+                            <div class="rule-icon cyan-icon">●</div>
+                            <div class="rule-text">
+                                <strong>粒子态 (PARTICLE)</strong>
+                                <p>实体形态，吞食夸克/希格斯玻色子变长，增加得分与坍缩充能。</p>
+                            </div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-icon purple-icon">≈</div>
+                            <div class="rule-text">
+                                <strong>波动态 (WAVE)</strong>
+                                <p>按 <strong>[Space/Shift]</strong> 切换。变身为正弦波，<strong>穿透自身与墙体</strong>，但消耗波动能量！</p>
+                            </div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-icon gold-icon">🌀</div>
+                            <div class="rule-text">
+                                <strong>量子纠缠 (ENTANGLEMENT)</strong>
+                                <p>进入偶联量子纠缠点，瞬移穿梭至另一端，触发相位冲击波。</p>
+                            </div>
+                        </div>
+                        <div class="rule-item">
+                            <div class="rule-icon pink-icon">💥</div>
+                            <div class="rule-text">
+                                <strong>波函数坍缩 (COLLAPSE)</strong>
+                                <p>充能达100%按 <strong>[E]</strong> 发动，清屏陷阱并获得无敌超能引力！</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="controls-hint">
+                        <span>⌨️ PC：方向键 / WASD 移动 | Space 切换波动态 | E 发动坍缩</span>
+                        <span>📱 移动端：虚拟摇杆 / 触控按键双重操作</span>
+                    </div>
+
+                    <button id="start-btn" class="btn btn-primary btn-glow">启动量子探针</button>
+                </div>
+            </div>
+
+            <!-- Pause Overlay -->
+            <div id="pause-overlay" class="overlay hidden">
+                <div class="overlay-card glass-panel center-card">
+                    <h2>微观观测暂停</h2>
+                    <p class="overlay-subtitle">PAUSED</p>
+                    <div class="overlay-buttons">
+                        <button id="resume-btn" class="btn btn-primary">继续观测</button>
+                        <button id="restart-pause-btn" class="btn btn-outline">重新开始</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Over Overlay -->
+            <div id="gameover-overlay" class="overlay hidden">
+                <div class="overlay-card glass-panel center-card">
+                    <h2 class="danger-title">波函数退相干</h2>
+                    <p class="overlay-subtitle">DECOHERENCE - GAME OVER</p>
+                    
+                    <div class="result-stats">
+                        <div class="result-row">
+                            <span>最终量子能阶</span>
+                            <strong id="final-score" class="quantum-num">0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>历史最高能阶</span>
+                            <strong id="final-highscore">0</strong>
+                        </div>
+                        <div class="result-row">
+                            <span>穿透穿梭次数</span>
+                            <strong id="final-phase-count">0</strong>
+                        </div>
+                    </div>
+
+                    <div class="overlay-buttons">
+                        <button id="restart-btn" class="btn btn-primary btn-glow">重新纠缠</button>
+                        <a href="../../index.html" class="btn btn-outline">返回大厅</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Touch Controls -->
+        <div class="mobile-controls" id="mobile-controls">
+            <div class="dpad-container">
+                <button class="dpad-btn dpad-up" id="btn-up" aria-label="Up">▲</button>
+                <button class="dpad-btn dpad-left" id="btn-left" aria-label="Left">◀</button>
+                <button class="dpad-btn dpad-right" id="btn-right" aria-label="Right">▶</button>
+                <button class="dpad-btn dpad-down" id="btn-down" aria-label="Down">▼</button>
+                <div class="dpad-center"></div>
+            </div>
+            <div class="action-buttons-container">
+                <button class="skill-btn wave-skill-btn" id="btn-wave-skill">
+                    <span class="skill-icon">≈</span>
+                    <span class="skill-name">波动态 [Space]</span>
+                </button>
+                <button class="skill-btn collapse-skill-btn" id="btn-collapse-skill">
+                    <span class="skill-icon">💥</span>
+                    <span class="skill-name">坍缩 [E]</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
