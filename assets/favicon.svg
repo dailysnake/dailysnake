@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 32 32" fill="none">
+    <rect width="32" height="32" rx="7" fill="#050711"/>
+    <defs>
+        <linearGradient id="fav-snake-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#39ff14" />
+            <stop offset="50%" stop-color="#00f0ff" />
+            <stop offset="100%" stop-color="#ff007f" />
+        </linearGradient>
+    </defs>
+    <!-- S-Snake Body Curve -->
+    <path d="M21 7.5C21 5.5 18 3.5 13.5 3.5C8.5 3.5 6 7 6 10.5C6 14.5 10 15.5 16 16.5C22 17.5 25 19.5 25 23.5C25 27.5 21 28.5 15 28.5C10 28.5 6.5 26.5 6.5 24.5" stroke="url(#fav-snake-grad)" stroke-width="4.2" stroke-linecap="round" stroke-linejoin="round"/>
+    
+    <!-- Snake Head (Top Right) -->
+    <path d="M21 7.5L25.5 6L24.5 10.2Z" fill="#39ff14"/>
+    <circle cx="21" cy="6.2" r="1.2" fill="#050711"/>
+    <circle cx="21" cy="6.2" r="0.6" fill="#39ff14"/>
+    <!-- Forked Tongue -->
+    <path d="M25.5 6L28 5M28 5L29.5 4M28 5L29.5 6.2" stroke="#ff007f" stroke-width="1.3" stroke-linecap="round"/>
+    
+    <!-- Snake Tail Tip (Bottom Left) -->
+    <path d="M6.5 24.5L4 26" stroke="#ff007f" stroke-width="2.6" stroke-linecap="round"/>
+</svg>
