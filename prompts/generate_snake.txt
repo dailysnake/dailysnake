@@ -10,8 +10,13 @@
 
 === 阶段二：独立开发 (Development) ===
 5. 在 'games/daily-TODAY' 文件夹中创建完全独立且功能完整的贪吃蛇游戏，包括 index.html、style.css 和 game.js。
-6. 游戏应该根据玩法主题设计最契合的独特视觉与美术风格，包含流畅的动画、符合氛围的 Web Audio 声音合成器（吃食物、死亡等音效），并支持 PC 键盘及移动端触控。
-7. 如果需要，可以使用 generate_image 工具为它生成一个精美的封面图，拷贝并保存到 'assets/' 目录中。
+6. 严格规范 HTML Head SEO 结构：
+   - 网页 Title 格式统一为：`<游戏中文名> (TODAY) - Daily Snake 每日贪吃蛇`
+   - 添加规范链接 Canonical：`<link rel="canonical" href="https://dailysnake.org/games/daily-TODAY/">`
+   - 添加完整 Open Graph (og:title, og:description, og:url, og:image) 和 Twitter Card 社交元数据。
+   - 添加 VideoGame 的 JSON-LD 结构化数据 (Schema.org)。
+7. 游戏应该根据玩法主题设计最契合的独特视觉与美术风格，包含流畅的动画、符合氛围的 Web Audio 声音合成器（吃食物、死亡等音效），并支持 PC 键盘及移动端触控。
+8. 如果需要，可以使用 generate_image 工具为它生成一个精美的封面图，拷贝并保存到 'assets/' 目录中。
 
 === 阶段三：测试与 UI/UX 审查 (QA, UI/UX & Code Review) ===
 8. 游戏开发完成后，进行全方位代码与 UI/UX 检查：审查游戏代码语法逻辑、**UI/UX 视觉美感与交互体验（如布局美观度、配色和谐度、动效流畅度）**、**移动端及不同屏幕尺寸的适配性（如触控操作灵敏度、视口适配、防误触）**、声音合成逻辑及可能存在的语法错误/逻辑漏洞。

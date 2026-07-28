@@ -94,7 +94,7 @@ elif ! START_REMOTE_HASH=$(git rev-parse --verify origin/main); then
 else
     INITIAL_DIRTY_FILES=$(git status --porcelain --untracked-files=all)
     if [ -n "$INITIAL_DIRTY_FILES" ]; then
-        UNRELATED_DIRTY=$(printf '%s\n' "$INITIAL_DIRTY_FILES" | grep -Ev '^\?\? (games/daily-[0-9]{4}-[0-9]{2}-[0-9]{2}/(index\.html|style\.css|game\.js)|assets/daily-[0-9]{4}-[0-9]{2}-[0-9]{2}-.*)$' || true)
+        UNRELATED_DIRTY=$(printf '%s\n' "$INITIAL_DIRTY_FILES" | grep -Ev '^\?\? (sitemap\.xml|robots\.txt|games/daily-[0-9]{4}-[0-9]{2}-[0-9]{2}/(index\.html|style\.css|game\.js)|assets/daily-[0-9]{4}-[0-9]{2}-[0-9]{2}-.*)$' || true)
         if [ -n "$UNRELATED_DIRTY" ]; then
             FAILURE_REASON="workspace contains changes unrelated to a recoverable daily-game run; they were left untouched"
         else
@@ -160,7 +160,7 @@ while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
             if [ -n "$RECOVERY_DATES" ]; then
                 ALLOWED_DATES="$ALLOWED_DATES|$(printf '%s' "$RECOVERY_DATES" | tr '\n' '|' | sed 's/|$//')"
             fi
-            DISALLOWED_PATHS=$(printf '%s\n' "$CHANGED_PATHS" | grep -Ev "^(index\\.html|assets/daily-($ALLOWED_DATES)-[^/]+|games/daily-($ALLOWED_DATES)/(index\\.html|style\\.css|game\\.js))$" || true)
+            DISALLOWED_PATHS=$(printf '%s\n' "$CHANGED_PATHS" | grep -Ev "^(index\\.html|sitemap\\.xml|robots\\.txt|assets/daily-($ALLOWED_DATES)-[^/]+|games/daily-($ALLOWED_DATES)/(index\\.html|style\\.css|game\\.js))$" || true)
             if [ -n "$DISALLOWED_PATHS" ]; then
                 FAILURE_REASON="daily generation changed files outside the allowed game, asset, and homepage paths"
             elif ! printf '%s\n' "$CHANGED_PATHS" | grep -Fq "$THEME_DIR/"; then

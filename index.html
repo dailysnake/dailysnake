@@ -5,6 +5,56 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Daily Snake - 每日贪吃蛇 | 每天一款创意贪吃蛇游戏网页平台</title>
     <meta name="description" content="Daily Snake（每日贪吃蛇）是一个坚持“每天发布一款全新创意贪吃蛇游戏”的探索工坊。汇聚北欧极光风、日系金缮风、赛博霓虹风、3D回圈风等多种独立玩法与合成音效变体。">
+    <link rel="canonical" href="https://dailysnake.org/">
+    
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="Daily Snake - 每日贪吃蛇 | 每天一款创意贪吃蛇游戏网页平台">
+    <meta property="og:description" content="Daily Snake（每日贪吃蛇）是一个坚持“每天发布一款全新创意贪吃蛇游戏”的探索工坊。每天带给你截然不同的畅玩体验！">
+    <meta property="og:url" content="https://dailysnake.org/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-07-28-aurora-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Daily Snake - 每日贪吃蛇">
+    <meta name="twitter:description" content="每天一款全新创意贪吃蛇网页游戏探索工坊。">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-07-28-aurora-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://dailysnake.org/#website",
+          "url": "https://dailysnake.org/",
+          "name": "Daily Snake 每日贪吃蛇",
+          "description": "每天一款全新创意贪吃蛇网页游戏探索工坊",
+          "publisher": {
+            "@type": "Organization",
+            "name": "Daily Snake Studio"
+          },
+          "inLanguage": "zh-CN"
+        },
+        {
+          "@type": "CollectionPage",
+          "@id": "https://dailysnake.org/#webpage",
+          "url": "https://dailysnake.org/",
+          "name": "Daily Snake 每日贪吃蛇游戏大厅",
+          "isPartOf": { "@id": "https://dailysnake.org/#website" },
+          "about": {
+            "@type": "Thing",
+            "name": "Snake Game",
+            "sameAs": "https://en.wikipedia.org/wiki/Snake_(video_game_genre)"
+          }
+        }
+      ]
+    }
+    </script>
+
+    <link rel="icon" type="image/jpeg" href="assets/logo.jpg">
     <!-- Google Fonts: Outfit for sleek branding & headings, Inter for high-readability text -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,8 +71,24 @@
     <header class="navbar">
         <div class="nav-container">
             <a href="#" class="logo" id="nav-logo">
-                <span class="neon-text-green">DAILY</span>
-                <span class="neon-text-pink">SNAKE</span>
+                <div class="logo-icon-svg">
+                    <svg width="34" height="34" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="snake-neon-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#39ff14" />
+                                <stop offset="50%" stop-color="#00f0ff" />
+                                <stop offset="100%" stop-color="#ff007f" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M22 8C22 5.79086 20.2091 4 18 4H14C10.6863 4 8 6.68629 8 10C8 13.3137 10.6863 16 14 16H18C21.3137 16 24 18.6863 24 22C24 25.3137 21.3137 28 18 28H14C11.7909 28 10 26.2091 10 24" stroke="url(#snake-neon-grad)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        <circle cx="22" cy="8" r="2.2" fill="#39ff14"/>
+                        <circle cx="10" cy="24" r="2.2" fill="#ff007f"/>
+                    </svg>
+                </div>
+                <span class="logo-text">
+                    <span class="neon-text-green">DAILY</span>
+                    <span class="neon-text-pink">SNAKE</span>
+                </span>
             </a>
             <nav class="nav-links">
                 <a href="#hero" class="active">主页</a>
