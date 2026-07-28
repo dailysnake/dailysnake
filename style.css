@@ -138,7 +138,8 @@ body {
 
 .nav-links {
     display: flex;
-    gap: 32px;
+    align-items: center;
+    gap: 28px;
 }
 
 .nav-links a {
@@ -170,6 +171,29 @@ body {
 
 .nav-links a:hover::after, .nav-links a.active::after {
     width: 100%;
+}
+
+.nav-links a.github-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    margin-left: 6px;
+}
+
+.nav-links a.github-link:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.18);
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 12px var(--neon-blue-glow);
+    transform: translateY(-2px);
+}
+
+.nav-links a.github-link::after {
+    display: none;
 }
 
 /* --- Hero Section --- */
