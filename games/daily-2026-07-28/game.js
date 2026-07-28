@@ -787,32 +787,37 @@ class NordicAuroraGame {
         const h = this.canvas.height;
         const cs = this.cellSize;
 
-        // Clear canvas
-        this.ctx.fillStyle = '#070D18';
+        // Clear canvas with dark cosmic space
+        this.ctx.fillStyle = '#050914';
         this.ctx.fillRect(0, 0, w, h);
 
-        // Draw animated background Aurora ribbons
+        // 1. Draw Multi-layered Animated Background Aurora Waves (绚丽北极光幕)
         this.ctx.save();
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 4; i++) {
             this.ctx.beginPath();
-            this.ctx.moveTo(0, h * 0.3 + i * 40);
-            for (let x = 0; x <= w; x += 30) {
-                const y = Math.sin(x * 0.005 + this.auroraOffset + i) * 35 + h * (0.2 + i * 0.15);
+            this.ctx.moveTo(0, h * 0.2 + i * 50);
+            for (let x = 0; x <= w; x += 25) {
+                const y = Math.sin(x * 0.006 + this.auroraOffset + i * 1.5) * 45 + h * (0.2 + i * 0.16);
                 this.ctx.lineTo(x, y);
             }
             this.ctx.lineTo(w, h);
             this.ctx.lineTo(0, h);
             this.ctx.closePath();
 
-            const colors = ['rgba(0, 240, 255, 0.06)', 'rgba(0, 255, 179, 0.05)', 'rgba(192, 132, 252, 0.04)'];
+            const colors = [
+                'rgba(0, 240, 255, 0.08)',
+                'rgba(57, 255, 20, 0.06)',
+                'rgba(255, 0, 127, 0.05)',
+                'rgba(192, 132, 252, 0.04)'
+            ];
             this.ctx.fillStyle = colors[i];
             this.ctx.fill();
         }
         this.ctx.restore();
 
-        // Draw Grid Lines
+        // 2. Draw Holographic Energy Grid Lines (全息能量网格)
         this.ctx.save();
-        this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.08)';
+        this.ctx.strokeStyle = 'rgba(0, 240, 255, 0.09)';
         this.ctx.lineWidth = 1;
         for (let c = 0; c <= this.gridCols; c++) {
             this.ctx.beginPath();
@@ -828,7 +833,7 @@ class NordicAuroraGame {
         }
         this.ctx.restore();
 
-        // Draw Glacial Hazards
+        // 3. Draw Glacial Hazards (冰川灾厄)
         for (const hz of this.hazards) {
             const px = hz.x * cs;
             const py = hz.y * cs;
@@ -851,41 +856,41 @@ class NordicAuroraGame {
                 this.ctx.lineTo(px + 3, py + cs - 3);
                 this.ctx.closePath();
                 this.ctx.fillStyle = '#FF5555';
-                this.ctx.shadowBlur = 10;
+                this.ctx.shadowBlur = 14;
                 this.ctx.shadowColor = '#FF5555';
                 this.ctx.fill();
             }
             this.ctx.restore();
         }
 
-        // Draw Runes
+        // 4. Draw Runes (发光符文)
         for (const rune of this.runes) {
             const p = this.gridToPixel(rune.x, rune.y);
             this.ctx.save();
-            this.ctx.shadowBlur = 12;
+            this.ctx.shadowBlur = 16;
 
             let mainColor = '#00F0FF';
             let symbol = 'ᛋ';
 
-            if (rune.type === 'sowilo') { mainColor = '#FBBF24'; symbol = '⚡'; }
-            else if (rune.type === 'isa') { mainColor = '#38BDF8'; symbol = '❄️'; }
-            else if (rune.type === 'kenaz') { mainColor = '#FF5555'; symbol = '🔥'; }
-            else if (rune.type === 'ansuz') { mainColor = '#F472B6'; symbol = '🌟'; }
+            if (rune.type === 'sowilo') { mainColor = '#39FF14'; symbol = '⚡'; }
+            else if (rune.type === 'isa') { mainColor = '#00F0FF'; symbol = '❄️'; }
+            else if (rune.type === 'kenaz') { mainColor = '#FF007F'; symbol = '🔥'; }
+            else if (rune.type === 'ansuz') { mainColor = '#FBBF24'; symbol = '🌟'; }
 
             this.ctx.shadowColor = mainColor;
 
             // Halo Ring
             this.ctx.beginPath();
-            this.ctx.arc(p.x, p.y, cs * 0.4, 0, Math.PI * 2);
+            this.ctx.arc(p.x, p.y, cs * 0.42, 0, Math.PI * 2);
             this.ctx.fillStyle = mainColor + '33';
             this.ctx.fill();
             this.ctx.strokeStyle = mainColor;
-            this.ctx.lineWidth = 2;
+            this.ctx.lineWidth = 2.5;
             this.ctx.stroke();
 
             // Symbol
             this.ctx.fillStyle = '#FFFFFF';
-            this.ctx.font = `${cs * 0.55}px Orbitron, sans-serif`;
+            this.ctx.font = `bold ${cs * 0.55}px Orbitron, sans-serif`;
             this.ctx.textAlign = 'center';
             this.ctx.textBaseline = 'middle';
             this.ctx.fillText(symbol, p.x, p.y);
@@ -893,14 +898,43 @@ class NordicAuroraGame {
             this.ctx.restore();
         }
 
-        // Draw Snake
+        // 5. Draw Aurora Energy Beam Seam (极光灵蛇贯穿光束)
+        if (this.snake.length > 1) {
+            this.ctx.save();
+            let beamColor = '#00F0FF';
+            if (this.invincibleTimer > 0) beamColor = '#FF007F';
+            else if (this.flameTimer > 0) beamColor = '#FF5555';
+            else if (this.freezeTimer > 0) beamColor = '#38BDF8';
+            else if (this.speedTimer > 0) beamColor = '#39FF14';
+
+            this.ctx.strokeStyle = beamColor;
+            this.ctx.shadowColor = beamColor;
+            this.ctx.shadowBlur = 18;
+            this.ctx.lineWidth = cs * 0.5;
+            this.ctx.lineCap = 'round';
+            this.ctx.lineJoin = 'round';
+            this.ctx.beginPath();
+            this.snake.forEach((seg, i) => {
+                const p = this.gridToPixel(seg.x, seg.y);
+                if (i === 0) this.ctx.moveTo(p.x, p.y);
+                else this.ctx.lineTo(p.x, p.y);
+            });
+            this.ctx.stroke();
+
+            // Inner Core Laser Wire
+            this.ctx.strokeStyle = '#FFFFFF';
+            this.ctx.lineWidth = cs * 0.18;
+            this.ctx.stroke();
+            this.ctx.restore();
+        }
+
+        // 6. Draw Aurora Snake Segments with Rune Glyphs & Head (极光符文蛇身)
+        const runeGlyphs = ['ᛋ', 'ᚴ', 'ᚦ', 'ᚨ', 'ᚱ', 'ᚹ'];
         this.ctx.save();
         for (let i = this.snake.length - 1; i >= 0; i--) {
             const seg = this.snake[i];
             const p = this.gridToPixel(seg.x, seg.y);
             const isHead = i === 0;
-
-            this.ctx.beginPath();
 
             let color = '#00F0FF';
             if (this.invincibleTimer > 0) {
@@ -911,34 +945,56 @@ class NordicAuroraGame {
             } else if (this.freezeTimer > 0) {
                 color = '#38BDF8';
             } else if (this.speedTimer > 0) {
-                color = '#FBBF24';
+                color = '#39FF14';
             }
 
-            this.ctx.shadowBlur = isHead ? 20 : 10;
+            this.ctx.shadowBlur = isHead ? 24 : 12;
             this.ctx.shadowColor = color;
 
             if (isHead) {
-                this.ctx.arc(p.x, p.y, cs * 0.45, 0, Math.PI * 2);
+                // --- CYBER AURORA VIPER HEAD ---
+                this.ctx.beginPath();
+                this.ctx.arc(p.x, p.y, cs * 0.48, 0, Math.PI * 2);
                 this.ctx.fillStyle = color;
                 this.ctx.fill();
 
-                // Eyes
-                this.ctx.fillStyle = '#070D18';
+                this.ctx.lineWidth = 2;
+                this.ctx.strokeStyle = '#FFFFFF';
+                this.ctx.stroke();
+
+                // Glowing Cyan Eyes
+                this.ctx.fillStyle = '#050914';
                 this.ctx.beginPath();
-                this.ctx.arc(p.x + this.dir.x * 4 - this.dir.y * 3, p.y + this.dir.y * 4 + this.dir.x * 3, 2.5, 0, Math.PI * 2);
-                this.ctx.arc(p.x + this.dir.x * 4 + this.dir.y * 3, p.y + this.dir.y * 4 - this.dir.x * 3, 2.5, 0, Math.PI * 2);
+                this.ctx.arc(p.x + this.dir.x * 6 - this.dir.y * 4, p.y + this.dir.y * 6 + this.dir.x * 4, 3, 0, Math.PI * 2);
+                this.ctx.arc(p.x + this.dir.x * 6 + this.dir.y * 4, p.y + this.dir.y * 6 - this.dir.x * 4, 3, 0, Math.PI * 2);
+                this.ctx.fill();
+
+                this.ctx.fillStyle = '#39FF14';
+                this.ctx.beginPath();
+                this.ctx.arc(p.x + this.dir.x * 6 - this.dir.y * 4, p.y + this.dir.y * 6 + this.dir.x * 4, 1.5, 0, Math.PI * 2);
+                this.ctx.arc(p.x + this.dir.x * 6 + this.dir.y * 4, p.y + this.dir.y * 6 - this.dir.x * 4, 1.5, 0, Math.PI * 2);
                 this.ctx.fill();
             } else {
-                const radius = (cs * 0.4) * (1 - (i / (this.snake.length * 1.8)));
-                this.ctx.arc(p.x, p.y, Math.max(radius, 3), 0, Math.PI * 2);
+                // --- RUNE BODY SEGMENT ---
+                const radius = (cs * 0.42) * (1 - (i / (this.snake.length * 2.2)));
+                this.ctx.beginPath();
+                this.ctx.arc(p.x, p.y, Math.max(radius, 4), 0, Math.PI * 2);
                 this.ctx.fillStyle = color;
-                this.ctx.globalAlpha = 0.85;
                 this.ctx.fill();
+
+                // Rune Glyphs on Segments
+                if (radius > 6 && i % 2 === 1) {
+                    this.ctx.fillStyle = '#050914';
+                    this.ctx.font = `bold ${radius * 1.1}px Orbitron, sans-serif`;
+                    this.ctx.textAlign = 'center';
+                    this.ctx.textBaseline = 'middle';
+                    this.ctx.fillText(runeGlyphs[i % runeGlyphs.length], p.x, p.y);
+                }
             }
         }
         this.ctx.restore();
 
-        // Draw Particles & Shockwaves
+        // 7. Draw Particles & Shockwaves
         this.particles.draw(this.ctx);
     }
 }
@@ -946,4 +1002,7 @@ class NordicAuroraGame {
 // Instantiate and attach to window
 window.addEventListener('DOMContentLoaded', () => {
     window.game = new NordicAuroraGame();
+    if (window.location.search.includes('autoplay')) {
+        window.game.startGame();
+    }
 });
