@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>极光之痕：符文灵蛇 (2026-07-29) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新北欧极光与符文元素合成机制贪吃蛇！操控冰晶灵蛇在极光冰川游弋，收集古老符文，触发彩虹桥爆裂与冰川破裂法术！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-07-29/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="极光之痕：符文灵蛇 (2026-07-29) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新北欧极光与符文元素合成机制贪吃蛇！操控冰晶灵蛇在极光冰川游弋，收集古老符文，触发彩虹桥爆裂与冰川破裂法术！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-07-29/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-07-29-aurora-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="极光之痕：符文灵蛇 (2026-07-29) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新北欧极光与符文元素合成机制贪吃蛇！操控冰晶灵蛇在极光冰川游弋。">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-07-29-aurora-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "极光之痕：符文灵蛇",
+      "headline": "极光之痕：符文灵蛇 (2026-07-29) - Daily Snake 每日贪吃蛇",
+      "description": "全新北欧极光与符文元素合成机制贪吃蛇！操控冰晶灵蛇在极光冰川游弋，收集古老符文，触发彩虹桥爆裂与冰川破裂法术！",
+      "genre": ["Snake Game", "Arcade"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-07-29",
+      "image": "https://dailysnake.org/assets/daily-2026-07-29-aurora-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-07-29/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@500;700;900&family=Outfit:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Canvas & Dynamic Light Particles -->
+    <div class="aurora-bg"></div>
+    <div class="snow-dust-container" id="snow-dust"></div>
+
+    <div class="app-container">
+        <!-- Header Navigation -->
+        <header class="game-header">
+            <a href="../../index.html" class="back-link" title="返回游戏大厅" id="back-to-lobby-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>大厅</span>
+            </a>
+            <div class="game-title-group">
+                <h1 class="game-title">AURORA <span class="nordic-text">WEAVER</span></h1>
+                <span class="game-subtitle">极光之痕 · 北欧符文灵蛇</span>
+            </div>
+            <div class="header-controls">
+                <button id="sound-btn" class="icon-btn" title="开关音效">
+                    <svg id="sound-icon-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="sound-icon-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display:none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+                <button id="pause-btn" class="icon-btn" title="暂停游戏">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Dashboard Stats Bar -->
+        <div class="dashboard-panel">
+            <div class="stat-box">
+                <span class="stat-label">极光灵脉</span>
+                <span class="stat-value nordic-num" id="score-val">0</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-label">巅峰灵脉</span>
+                <span class="stat-value" id="highscore-val">0</span>
+            </div>
+            <div class="stat-box rune-box">
+                <span class="stat-label">活性符文</span>
+                <div class="rune-badge" id="rune-badge">
+                    <span id="rune-val">⚡ Sowilo 雷霆</span>
+                </div>
+            </div>
+            <div class="stat-box energy-box">
+                <div class="stat-label-row">
+                    <span class="stat-label">彩虹桥跃迁</span>
+                    <span class="stat-subval" id="energy-pct">0%</span>
+                </div>
+                <div class="energy-bar-track">
+                    <div class="energy-bar-fill" id="energy-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <div class="canvas-wrapper">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Status Banner / Floating Notification -->
+            <div id="status-banner" class="status-banner">
+                <span id="status-text">彩虹极光已激活！全屏破坏冰川中...</span>
+            </div>
+
+            <!-- Start Game Overlay -->
+            <div id="start-overlay" class="overlay">
+                <div class="overlay-card glass-panel">
+                    <div class="aurora-rune-logo">
+                        <div class="rune-symbol">ᛋ</div>
+                    </div>
+                    <h2>极光之痕：符文灵蛇</h2>
+                    <p class="subtitle-text">Nordic Aurora: Rune Weaver</p>
+
+                    <div class="guide-grid">
+                        <div class="guide-item">
+                            <span class="guide-icon">⚡</span>
+                            <div>
+                                <strong>Sowilo 雷霆符文</strong>
+                                <p>加速并磁吸周边 3 格范围内的符文球</p>
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <span class="guide-icon">❄️</span>
+                            <div>
+                                <strong>Isa 冰霜符文</strong>
+                                <p>减缓时空流速，冻结冰川裂隙灾厄</p>
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <span class="guide-icon">🔥</span>
+                            <div>
+                                <strong>Kenaz 烈焰符文</strong>
+                                <p>火灵附体，撞击冰裂阻碍直接粉碎</p>
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <span class="guide-icon">🌈</span>
+                            <div>
+                                <strong>彩虹桥爆裂 (Skill)</strong>
+                                <p>集满能量按 [Space] / 技能键释放全屏极光破粉碎全屏灾厄</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button id="start-btn" class="glow-btn">开启极光之旅</button>
+                </div>
+            </div>
+
+            <!-- Pause Game Overlay -->
+            <div id="pause-overlay" class="overlay" style="display:none;">
+                <div class="overlay-card glass-panel small-card">
+                    <h2>游戏已暂停</h2>
+                    <p>冰川极光静止中...</p>
+                    <div class="overlay-actions">
+                        <button id="resume-btn" class="glow-btn">继续游玩</button>
+                        <button id="restart-pause-btn" class="outline-btn">重新开始</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Over Overlay -->
+            <div id="game-over-overlay" class="overlay" style="display:none;">
+                <div class="overlay-card glass-panel">
+                    <h2 class="danger-title">灵脉碎裂</h2>
+                    <p class="subtitle-text">蛇身融于极光寒风之中...</p>
+
+                    <div class="end-stats">
+                        <div class="end-stat-item">
+                            <span class="label">本次得分</span>
+                            <span class="value" id="final-score">0</span>
+                        </div>
+                        <div class="end-stat-item">
+                            <span class="label">最高纪录</span>
+                            <span class="value" id="final-highscore">0</span>
+                        </div>
+                        <div class="end-stat-item">
+                            <span class="label">吸收符文</span>
+                            <span class="value" id="final-runes">0</span>
+                        </div>
+                    </div>
+
+                    <button id="restart-btn" class="glow-btn">再次重构灵蛇</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Touch Controls for Mobile Device -->
+        <div class="mobile-controls-panel">
+            <div class="dpad-container">
+                <button class="dpad-btn dpad-up" id="btn-up" aria-label="向上">▲</button>
+                <div class="dpad-row">
+                    <button class="dpad-btn dpad-left" id="btn-left" aria-label="向左">◀</button>
+                    <div class="dpad-center"></div>
+                    <button class="dpad-btn dpad-right" id="btn-right" aria-label="向右">▶</button>
+                </div>
+                <button class="dpad-btn dpad-down" id="btn-down" aria-label="向下">▼</button>
+            </div>
+            
+            <div class="skill-btn-wrapper">
+                <button class="skill-btn" id="skill-btn" disabled>
+                    <div class="skill-icon">🌈</div>
+                    <span>彩虹爆裂</span>
+                    <small>[SPACE]</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
