@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>赛博霓虹：光轨重构 (2026-07-31) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新赛博朋克光轮轨迹与虚相位穿隧机制贪吃蛇！操控高压霓虹灵蛇在暗夜网格飞驰，收集数据光核，开启高频相位穿隧虚化！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-07-31/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="赛博霓虹：光轨重构 (2026-07-31) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新赛博朋克光轮轨迹与虚相位穿隧机制贪吃蛇！操控高压霓虹灵蛇在暗夜网格飞驰，收集数据光核，开启高频相位穿隧虚化！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-07-31/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-07-31-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="赛博霓虹：光轨重构 (2026-07-31) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新赛博朋克光轮轨迹与虚相位穿隧机制贪吃蛇！操控高压霓虹灵蛇在暗夜网格飞驰。">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-07-31-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "赛博霓虹：光轨重构",
+      "headline": "赛博霓虹：光轨重构 (2026-07-31) - Daily Snake 每日贪吃蛇",
+      "description": "全新赛博朋克光轮轨迹与虚相位穿隧机制贪吃蛇！操控高压霓虹灵蛇在暗夜网格飞驰，收集数据光核，开启高频相位穿隧虚化！",
+      "genre": ["Snake Game", "Arcade", "Cyberpunk"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-07-31",
+      "image": "https://dailysnake.org/assets/daily-2026-07-31-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-07-31/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Outfit:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="synthwave-bg"></div>
+
+    <div class="app-container">
+        <!-- Header Navigation -->
+        <header class="game-header">
+            <a href="../../index.html" class="back-link" title="返回游戏大厅" id="back-to-lobby-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>大厅</span>
+            </a>
+
+            <div class="header-title">
+                <h1>CYBER <span>LIGHTCYCLE</span></h1>
+                <p class="subtitle">赛博霓虹 · 光轨重构之境</p>
+            </div>
+
+            <div class="header-controls">
+                <button class="icon-btn" id="sound-btn" title="开关声音">
+                    <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="pause-btn" title="暂停游戏">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Game HUD Metrics -->
+        <div class="hud-panel">
+            <div class="hud-box">
+                <span class="hud-label">得分</span>
+                <span class="hud-val glow-cyan" id="score-val">0</span>
+            </div>
+            <div class="hud-box">
+                <span class="hud-label">最高分</span>
+                <span class="hud-val" id="highscore-val">0</span>
+            </div>
+            <div class="hud-box">
+                <span class="hud-label">相位能量</span>
+                <div class="energy-track">
+                    <div class="energy-fill" id="energy-fill" style="width: 0%;"></div>
+                </div>
+                <span class="energy-text" id="energy-pct">0%</span>
+            </div>
+            <div class="hud-box">
+                <span class="hud-label">光核收集</span>
+                <span class="hud-val glow-pink" id="core-val">0</span>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <main class="game-area">
+            <div class="canvas-wrapper" id="canvas-wrapper">
+                <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                <!-- Overlay: Start Screen -->
+                <div class="overlay-screen active" id="start-overlay">
+                    <div class="overlay-content">
+                        <div class="cyber-crest">⚡</div>
+                        <h2 class="overlay-title">赛博霓虹：光轨重构</h2>
+                        <p class="overlay-desc">
+                            操控高压霓虹灵蛇在暗夜网格中飞驰。<br>
+                            移动会留下<strong>高压光轨墙</strong>，收集数据光核！<br>
+                            能量满后按 <strong>[Space / 穿隧键]</strong> 开启高频相位虚化穿墙！
+                        </p>
+                        <button id="start-btn" class="glow-btn">开启光轨重构</button>
+                    </div>
+                </div>
+
+                <!-- Overlay: Pause Screen -->
+                <div class="overlay-screen" id="pause-overlay" style="display: none;">
+                    <div class="overlay-content">
+                        <h2 class="overlay-title">游戏暂停</h2>
+                        <div class="button-group">
+                            <button id="resume-btn" class="glow-btn">继续游戏</button>
+                            <button id="restart-pause-btn" class="glow-btn secondary">重新开始</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overlay: Game Over Screen -->
+                <div class="overlay-screen" id="game-over-overlay" style="display: none;">
+                    <div class="overlay-content">
+                        <div class="cyber-crest dead">💥</div>
+                        <h2 class="overlay-title">光轨过载离线</h2>
+                        <div class="results-box">
+                            <p>本次得分: <span id="final-score">0</span></p>
+                            <p>历史最高: <span id="final-highscore">0</span></p>
+                        </div>
+                        <button id="restart-btn" class="glow-btn">再次重构光轨</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Touch Controls for Mobile Device -->
+        <div class="mobile-controls-panel">
+            <div class="dpad-container">
+                <button class="dpad-btn dpad-up" id="btn-up" aria-label="向上">▲</button>
+                <div class="dpad-row">
+                    <button class="dpad-btn dpad-left" id="btn-left" aria-label="向左">◀</button>
+                    <div class="dpad-center"></div>
+                    <button class="dpad-btn dpad-right" id="btn-right" aria-label="向右">▶</button>
+                </div>
+                <button class="dpad-btn dpad-down" id="btn-down" aria-label="向下">▼</button>
+            </div>
+
+            <div class="skill-btn-wrapper">
+                <button class="skill-btn" id="skill-btn" disabled>
+                    <div class="skill-icon">⚡</div>
+                    <span>相位穿隧</span>
+                    <small>[SPACE]</small>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

@@ -188,9 +188,62 @@ class KintsugiGame {
         this.stepTimer = 0;
         this.stepInterval = 130; // ms per step
 
+        // Initialize preview snake for live background render
+        const startX = Math.floor(this.gridSize / 2);
+        const startY = Math.floor(this.gridSize / 2);
+        this.snake = [
+            { x: startX, y: startY, fractured: false, golden: false },
+            { x: startX - 1, y: startY, fractured: false, golden: false },
+            { x: startX - 2, y: startY, fractured: false, golden: false }
+        ];
+        this.foods = [
+            { x: startX + 3, y: startY, type: 'REGULAR' },
+            { x: startX - 2, y: startY - 3, type: 'GOLD' }
+        ];
+
+        // Load Photorealistic Porcelain Game Sprites & make background transparent
+        this.sprites = {
+            head: new Image(),
+            body: new Image(),
+            tail: new Image(),
+            loaded: 0
+        };
+
+        const processTransparent = (src, key) => {
+            const raw = new Image();
+            raw.onload = () => {
+                const tempCanvas = document.createElement('canvas');
+                tempCanvas.width = raw.naturalWidth;
+                tempCanvas.height = raw.naturalHeight;
+                const tempCtx = tempCanvas.getContext('2d');
+                tempCtx.drawImage(raw, 0, 0);
+                const imgData = tempCtx.getImageData(0, 0, tempCanvas.width, tempCanvas.height);
+                const data = imgData.data;
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i];
+                    const g = data[i + 1];
+                    const b = data[i + 2];
+                    if (r > 185 && g > 185 && b > 185 && Math.abs(r - g) < 30 && Math.abs(g - b) < 30) {
+                        data[i + 3] = 0; // Alpha 0
+                    }
+                }
+                tempCtx.putImageData(imgData, 0, 0);
+                this.sprites[key].onload = () => { this.sprites.loaded++; };
+                this.sprites[key].src = tempCanvas.toDataURL();
+            };
+            raw.src = src;
+        };
+
+        processTransparent('assets/head.png', 'head');
+        processTransparent('assets/body.png', 'body');
+        processTransparent('assets/tail.png', 'tail');
+
         this.initDOM();
         this.resizeCanvas();
         this.bindEvents();
+
+        // Start continuous rendering immediately so canvas is live on page load
+        requestAnimationFrame((t) => this.loop(t));
     }
 
     initDOM() {
@@ -408,24 +461,25 @@ class KintsugiGame {
     }
 
     gameLoop(timestamp) {
-        if (this.state !== 'PLAYING') return;
-
+        if (!this.lastTime) this.lastTime = timestamp;
         const dt = timestamp - this.lastTime;
         this.lastTime = timestamp;
 
-        this.stepTimer += dt;
+        if (this.state === 'PLAYING') {
+            this.stepTimer += dt;
 
-        if (this.isResonant) {
-            this.resonantTime -= dt;
-            if (this.resonantTime <= 0) {
-                this.isResonant = false;
-                this.updateDashboard();
+            if (this.isResonant) {
+                this.resonantTime -= dt;
+                if (this.resonantTime <= 0) {
+                    this.isResonant = false;
+                    this.updateDashboard();
+                }
             }
-        }
 
-        if (this.stepTimer >= this.stepInterval) {
-            this.stepTimer = 0;
-            this.updateStep();
+            if (this.stepTimer >= this.stepInterval) {
+                this.stepTimer = 0;
+                this.updateStep();
+            }
         }
 
         this.updateParticles(dt);
@@ -440,8 +494,8 @@ class KintsugiGame {
 
         // Wall Collision Logic
         if (head.x < 0 || head.x >= this.gridSize || head.y < 0 || head.y >= this.gridSize) {
-            if (this.isResonant) {
-                // Wrap around when Resonant
+            if (this.isResonant || window.location.search.includes('autoplay')) {
+                // Wrap around when Resonant or autoplay demo
                 head.x = (head.x + this.gridSize) % this.gridSize;
                 head.y = (head.y + this.gridSize) % this.gridSize;
             } else {
@@ -592,12 +646,32 @@ class KintsugiGame {
         const width = this.canvas.width / (window.devicePixelRatio || 1);
         const height = this.canvas.height / (window.devicePixelRatio || 1);
 
-        // Clear Background with Porcelain Off-White
-        this.ctx.fillStyle = '#FAF8F5';
+        // 1. Imperial Porcelain Plate Background (瓷盘底蕴)
+        const bgGrad = this.ctx.createRadialGradient(width / 2, height / 2, 50, width / 2, height / 2, width * 0.7);
+        bgGrad.addColorStop(0, '#FAF7F2');
+        bgGrad.addColorStop(0.7, '#EFEAE2');
+        bgGrad.addColorStop(1, '#DED6C8');
+        this.ctx.fillStyle = bgGrad;
         this.ctx.fillRect(0, 0, width, height);
 
-        // Draw Craquelure Grid Lines (瓷纹网格)
-        this.ctx.strokeStyle = 'rgba(0, 43, 73, 0.05)';
+        // Underglaze Porcelain Dish Rings (青花盘环饰)
+        this.ctx.save();
+        this.ctx.strokeStyle = 'rgba(0, 43, 73, 0.08)';
+        this.ctx.lineWidth = 3;
+        this.ctx.beginPath();
+        this.ctx.arc(width / 2, height / 2, Math.min(width, height) * 0.46, 0, Math.PI * 2);
+        this.ctx.stroke();
+
+        this.ctx.strokeStyle = 'rgba(212, 175, 55, 0.15)'; // Gold outer rim
+        this.ctx.lineWidth = 2;
+        this.ctx.beginPath();
+        this.ctx.arc(width / 2, height / 2, Math.min(width, height) * 0.48, 0, Math.PI * 2);
+        this.ctx.stroke();
+        this.ctx.restore();
+
+        // 2. Ice-Crackle / Craquelure Grid Lines (冰裂纹瓷底)
+        this.ctx.save();
+        this.ctx.strokeStyle = 'rgba(0, 43, 73, 0.04)';
         this.ctx.lineWidth = 1;
         for (let x = 0; x <= this.gridSize; x++) {
             this.ctx.beginPath();
@@ -611,111 +685,75 @@ class KintsugiGame {
             this.ctx.lineTo(width, y * this.tileSize);
             this.ctx.stroke();
         }
+        this.ctx.restore();
 
-        // Draw Foods
-        this.foods.forEach(food => {
-            const px = (food.x + 0.5) * this.tileSize;
-            const py = (food.y + 0.5) * this.tileSize;
-            const radius = this.tileSize * 0.38;
+        // 3. Draw Photorealistic 3D Porcelain Dragon Serpent (3D 超真青花金缮灵蛇)
+        if (this.snake.length > 0) {
+            const headSize = this.tileSize * 1.35;
+            const bodySize = this.tileSize * 1.15;
 
-            this.ctx.save();
-            if (food.type === 'REGULAR') {
-                // Cobalt Blue Bead
-                this.ctx.beginPath();
-                this.ctx.arc(px, py, radius, 0, Math.PI * 2);
-                this.ctx.fillStyle = '#002B49';
-                this.ctx.fill();
+            // Draw Body & Tail Segments from tail to head
+            for (let i = this.snake.length - 1; i >= 0; i--) {
+                const seg = this.snake[i];
+                const px = (seg.x + 0.5) * this.tileSize;
+                const py = (seg.y + 0.5) * this.tileSize;
 
-                this.ctx.lineWidth = 2;
-                this.ctx.strokeStyle = '#3182CE';
-                this.ctx.stroke();
+                this.ctx.save();
+                this.ctx.translate(px, py);
 
-                // Specular sheen
-                this.ctx.beginPath();
-                this.ctx.arc(px - radius * 0.3, py - radius * 0.3, radius * 0.25, 0, Math.PI * 2);
-                this.ctx.fillStyle = '#FFFFFF';
-                this.ctx.fill();
-            } else if (food.type === 'GOLD') {
-                // Gold Lacquer Shard
-                this.ctx.beginPath();
-                this.ctx.arc(px, py, radius * 1.1, 0, Math.PI * 2);
-                this.ctx.fillStyle = '#FFD700';
-                this.ctx.shadowColor = '#FFD700';
-                this.ctx.shadowBlur = 12;
-                this.ctx.fill();
+                // Compute orientation angle relative to movement direction
+                let angle = 0;
+                if (i === 0) {
+                    angle = Math.atan2(this.dir.y, this.dir.x);
+                } else if (i === this.snake.length - 1) {
+                    const prevSeg = this.snake[i - 1];
+                    // Adjust tail sprite diagonal angle offset so tail aligns seamlessly with body
+                    angle = Math.atan2(seg.y - prevSeg.y, seg.x - prevSeg.x) + Math.PI * 0.25;
+                } else {
+                    const prevSeg = this.snake[i - 1];
+                    angle = Math.atan2(prevSeg.y - seg.y, prevSeg.x - seg.x);
+                }
+                this.ctx.rotate(angle);
 
-                this.ctx.fillStyle = '#D4AF37';
-                this.ctx.beginPath();
-                this.ctx.arc(px, py, radius * 0.6, 0, Math.PI * 2);
-                this.ctx.fill();
-            } else if (food.type === 'FIRE') {
-                // Kiln Fire Ember
-                this.ctx.beginPath();
-                this.ctx.arc(px, py, radius * 1.1, 0, Math.PI * 2);
-                this.ctx.fillStyle = '#E53E3E';
-                this.ctx.shadowColor = '#E53E3E';
-                this.ctx.shadowBlur = 14;
-                this.ctx.fill();
-            }
-            this.ctx.restore();
-        });
+                if (i === 0) {
+                    // --- 3D PORCELAIN SNAKE HEAD ---
+                    if (this.sprites.head.complete && this.sprites.head.naturalWidth !== 0) {
+                        this.ctx.shadowColor = 'rgba(0, 30, 60, 0.45)';
+                        this.ctx.shadowBlur = 12;
+                        this.ctx.drawImage(this.sprites.head, -headSize * 0.5, -headSize * 0.5, headSize, headSize);
+                    }
+                } else if (i === this.snake.length - 1) {
+                    // --- 3D PORCELAIN SNAKE TAIL ---
+                    if (this.sprites.tail.complete && this.sprites.tail.naturalWidth !== 0) {
+                        this.ctx.shadowColor = 'rgba(0, 30, 60, 0.35)';
+                        this.ctx.shadowBlur = 8;
+                        this.ctx.drawImage(this.sprites.tail, -bodySize * 0.5, -bodySize * 0.5, bodySize, bodySize);
+                    }
+                } else {
+                    // --- 3D PORCELAIN DRAGON BODY SEGMENT ---
+                    if (this.sprites.body.complete && this.sprites.body.naturalWidth !== 0) {
+                        this.ctx.shadowColor = 'rgba(0, 30, 60, 0.35)';
+                        this.ctx.shadowBlur = 8;
+                        this.ctx.drawImage(this.sprites.body, -bodySize * 0.5, -bodySize * 0.5, bodySize, bodySize);
+                    }
+                }
 
-        // Draw Snake Body
-        const glaze = this.glazes[this.currentGlazeIndex];
-        this.snake.forEach((seg, index) => {
-            const px = (seg.x + 0.5) * this.tileSize;
-            const py = (seg.y + 0.5) * this.tileSize;
-            const radius = (index === 0 ? 0.45 : 0.4) * this.tileSize;
-
-            this.ctx.save();
-
-            if (seg.golden || this.isResonant) {
-                // Kintsugi Golden Seam Bead
-                this.ctx.beginPath();
-                this.ctx.arc(px, py, radius, 0, Math.PI * 2);
-                this.ctx.fillStyle = '#FFD700';
-                this.ctx.shadowColor = '#FFD700';
-                this.ctx.shadowBlur = seg.golden ? 10 : 16;
-                this.ctx.fill();
-
-                this.ctx.lineWidth = 2;
-                this.ctx.strokeStyle = '#FFFFFF';
-                this.ctx.stroke();
-            } else {
-                // Porcelain Bead
-                this.ctx.beginPath();
-                this.ctx.arc(px, py, radius, 0, Math.PI * 2);
-                this.ctx.fillStyle = glaze.color;
-                this.ctx.fill();
-
-                this.ctx.lineWidth = 2.5;
-                this.ctx.strokeStyle = seg.fractured ? '#E53E3E' : glaze.accent;
-                this.ctx.stroke();
-
-                // Draw Fractured Crack overlay if cracked
-                if (seg.fractured) {
+                // Add glowing Kintsugi Gold Vein highlights if golden/fractured
+                if (seg.golden || seg.fractured || this.isResonant) {
+                    this.ctx.strokeStyle = '#FFD700';
+                    this.ctx.shadowColor = '#FFD700';
+                    this.ctx.shadowBlur = 12;
+                    this.ctx.lineWidth = 3;
                     this.ctx.beginPath();
-                    this.ctx.moveTo(px - radius * 0.5, py - radius * 0.5);
-                    this.ctx.lineTo(px + radius * 0.2, py);
-                    this.ctx.lineTo(px - radius * 0.1, py + radius * 0.5);
-                    this.ctx.strokeStyle = '#FFFFFF';
-                    this.ctx.lineWidth = 1.5;
+                    this.ctx.arc(0, 0, bodySize * 0.35, 0, Math.PI * 2);
                     this.ctx.stroke();
                 }
 
-                // Head Eye Details
-                if (index === 0) {
-                    this.ctx.beginPath();
-                    this.ctx.arc(px + this.dir.x * 4, py + this.dir.y * 4, 3, 0, Math.PI * 2);
-                    this.ctx.fillStyle = '#FFD700';
-                    this.ctx.fill();
-                }
+                this.ctx.restore();
             }
+        }
 
-            this.ctx.restore();
-        });
-
-        // Draw Particles
+        // 6. Draw Particles
         this.particles.forEach(p => {
             this.ctx.save();
             this.ctx.fillStyle = p.color;
@@ -726,12 +764,14 @@ class KintsugiGame {
             this.ctx.restore();
         });
 
-        // Resonance Visual Filter Wave
+        // 7. Golden Kintsugi Resonance Frame Aura
         if (this.isResonant) {
             this.ctx.save();
-            this.ctx.strokeStyle = 'rgba(255, 215, 0, 0.4)';
-            this.ctx.lineWidth = 4;
-            this.ctx.strokeRect(4, 4, width - 8, height - 8);
+            this.ctx.strokeStyle = 'rgba(255, 215, 0, 0.6)';
+            this.ctx.shadowColor = '#FFD700';
+            this.ctx.shadowBlur = 20;
+            this.ctx.lineWidth = 6;
+            this.ctx.strokeRect(6, 6, width - 12, height - 12);
             this.ctx.restore();
         }
     }
@@ -739,5 +779,8 @@ class KintsugiGame {
 
 // Instantiate on Load
 window.addEventListener('DOMContentLoaded', () => {
-    new KintsugiGame();
+    const game = new KintsugiGame();
+    if (window.location.search.includes('autoplay')) {
+        game.startGame();
+    }
 });
