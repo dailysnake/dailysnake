@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>敦煌飞天：天衣神帛 (2026-08-01) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新敦煌壁画艺术风格与天衣织风/飞天法阵机制贪吃蛇！操控飞天彩绫在砂岩云霄飘逸穿梭，收集莲花灵珠与五彩矿物颜料，触发金莲法印全屏净化，按 [Space] 开启飞天神韵化仙Mode！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-01/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="敦煌飞天：天衣神帛 (2026-08-01) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新敦煌壁画艺术风格与天衣织风/飞天法阵机制贪吃蛇！操控飞天彩绫在砂岩云霄飘逸穿梭，收集莲花灵珠与五彩矿物颜料！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-01/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-01-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="敦煌飞天：天衣神帛 (2026-08-01) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新敦煌壁画艺术风格与天衣织风/飞天法阵机制贪吃蛇！操控飞天彩绫在砂岩云霄飘逸穿梭。">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-01-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "敦煌飞天：天衣神帛",
+      "headline": "敦煌飞天：天衣神帛 (2026-08-01) - Daily Snake 每日贪吃蛇",
+      "description": "全新敦煌壁画艺术风格与天衣织风/飞天法阵机制贪吃蛇！操控飞天彩绫在砂岩云霄飘逸穿梭，收集莲花灵珠与五彩矿物颜料，触发金莲法印全屏净化，按 [Space] 开启飞天神韵化仙Mode！",
+      "genre": ["Snake Game", "Arcade", "Dunhuang Art", "Mythology"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-01",
+      "image": "https://dailysnake.org/assets/daily-2026-08-01-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-01/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts: Ma Shan Zheng for calligraphic titles, Outfit & Noto Sans SC for UI -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@600;700;900&family=Outfit:wght@400;600;700;900&family=Noto+Sans+SC:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Dunhuang Sandstone Fresco Animated Background -->
+    <div class="dunhuang-bg">
+        <div class="sandstone-texture"></div>
+        <div class="flying-clouds"></div>
+        <div class="gold-dust-overlay"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Header Navigation -->
+        <header class="game-header">
+            <a href="../../index.html" class="back-link" title="返回游戏大厅" id="back-to-lobby-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>大厅</span>
+            </a>
+
+            <div class="header-title">
+                <h1>DUNHUANG <span>FLYING SILK</span></h1>
+                <p class="subtitle">敦煌飞天 · 天衣神帛之境</p>
+            </div>
+
+            <div class="header-controls">
+                <button class="icon-btn" id="sound-btn" title="开关音效 (五声音阶)">
+                    <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="pause-btn" title="暂停游戏">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Game HUD Metrics -->
+        <div class="hud-panel">
+            <div class="hud-box">
+                <span class="hud-label">神帛功德 (得分)</span>
+                <span class="hud-val glow-gold" id="score-val">0</span>
+            </div>
+            <div class="hud-box">
+                <span class="hud-label">历史巅峰</span>
+                <span class="hud-val" id="highscore-val">0</span>
+            </div>
+            <div class="hud-box hud-skill-box">
+                <div class="hud-label-row">
+                    <span class="hud-label">五彩飞天神韵</span>
+                    <span class="hud-sub" id="skill-status-text">未就绪</span>
+                </div>
+                <div class="meter-bar">
+                    <div class="meter-fill" id="flight-meter"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Canvas Container -->
+        <div class="game-viewport">
+            <canvas id="game-canvas" width="800" height="600"></canvas>
+
+            <!-- Floating Overlay: Start / Pause / Game Over Screens -->
+            <div class="overlay-modal" id="overlay-screen">
+                <div class="modal-card">
+                    <div class="fresco-seal">敦煌·神帛</div>
+                    <h2 class="modal-title" id="modal-title">敦煌飞天：天衣神帛</h2>
+                    <p class="modal-desc" id="modal-desc">
+                        操控敦煌飞天彩绫在云霄游弋。收集【莲花灵珠】与【五彩颜料】，形成结印法阵全屏净化！<br>
+                        当五彩神韵蓄满时，按 <kbd>Space</kbd> 或点击【飞天化仙】触发强力穿隧与金莲盛开！
+                    </p>
+
+                    <div class="stats-result" id="final-stats" style="display: none;">
+                        <div class="res-item">
+                            <span class="res-lbl">本次功德分</span>
+                            <span class="res-val glow-gold" id="res-score">0</span>
+                        </div>
+                        <div class="res-item">
+                            <span class="res-lbl">结印法阵数</span>
+                            <span class="res-val glow-cinnabar" id="res-loops">0</span>
+                        </div>
+                    </div>
+
+                    <button class="start-btn" id="start-btn">
+                        <span id="btn-text">开启飞天之行</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Touch Controls -->
+        <div class="mobile-controls">
+            <div class="dpad">
+                <button class="dbtn dbtn-up" id="btn-up" aria-label="向上">▲</button>
+                <button class="dbtn dbtn-left" id="btn-left" aria-label="向左">◄</button>
+                <button class="dbtn dbtn-right" id="btn-right" aria-label="向右">►</button>
+                <button class="dbtn dbtn-down" id="btn-down" aria-label="向下">▼</button>
+                <div class="dbtn-center"></div>
+            </div>
+
+            <button class="skill-touch-btn" id="skill-touch-btn" title="触发飞天化仙">
+                <span class="skill-icon">🪷</span>
+                <span class="skill-label">飞天化仙</span>
+            </button>
+        </div>
+
+        <!-- Gameplay Tips & Lore Footer -->
+        <footer class="game-footer">
+            <div class="tip-item">
+                <span class="tip-badge">键盘操作</span>
+                <span>方向键 <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd> 或 <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> 转向，<kbd>Space</kbd> 触发神韵化仙，<kbd>P</kbd> 暂停</span>
+            </div>
+            <div class="tip-item">
+                <span class="tip-badge">神帛结印</span>
+                <span>飞天彩绫首尾重叠闭环包围物体时，可激活【金莲法印】触发额外超高分与弹幕清屏！</span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
