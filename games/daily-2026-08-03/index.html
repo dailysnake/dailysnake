@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>蓝图工程：矢量构形 (2026-08-03) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新建筑蓝图与矢量构形工程机制贪吃蛇！操控精细绘图矢量蛇在图纸网格中穿梭，吞噬立面标尺、黄金分割核与圆规卡尺，按 [Space] 开启矢量构形投影虚化穿透与全屏引力抽取！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-03/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="蓝图工程：矢量构形 (2026-08-03) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新建筑蓝图与矢量构形工程机制贪吃蛇！操控绘图笔头在工程网格中穿梭，解锁黄金分割与矢量投影穿透！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-03/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-03-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="蓝图工程：矢量构形 (2026-08-03) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新建筑蓝图与矢量构形工程机制贪吃蛇！操控绘图笔头在工程网格中穿梭，解锁黄金分割与矢量投影穿透！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-03-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "蓝图工程：矢量构形",
+      "headline": "蓝图工程：矢量构形 (2026-08-03) - Daily Snake 每日贪吃蛇",
+      "description": "全新建筑蓝图与矢量构形工程机制贪吃蛇！操控精细绘图矢量蛇在图纸网格中穿梭，吞噬立面标尺、黄金分割核与圆规卡尺，按 [Space] 开启矢量构形投影虚化穿透与全屏引力抽取！",
+      "genre": ["Snake Game", "Arcade", "Blueprint", "Vector Architecture", "Geometry"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-03",
+      "image": "https://dailysnake.org/assets/daily-2026-08-03-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-03/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Noto+Sans+SC:wght@400;600;700;900&family=Outfit:wght@500;700;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cyanotype Engineering Blueprint Canvas Background -->
+    <div class="blueprint-bg">
+        <div class="cyanotype-grid"></div>
+        <div class="isometric-guide-lines"></div>
+        <div class="drafting-vignette"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Game Header -->
+        <header class="game-header">
+            <a href="../../index.html" class="back-link" title="返回游戏大厅" id="back-to-lobby-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>大厅</span>
+            </a>
+
+            <div class="header-title">
+                <h1>BLUEPRINT <span>VECTOR MATRIX</span></h1>
+                <p class="subtitle">蓝图工程 · 矢量构形之章</p>
+            </div>
+
+            <div class="header-controls">
+                <button class="icon-btn" id="sound-btn" title="开关工程声学音效">
+                    <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="pause-btn" title="暂停工程制图">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- HUD Metrics & Blueprint Status -->
+        <div class="hud-panel">
+            <div class="hud-box">
+                <span class="hud-label">构形工程分 (SCORE)</span>
+                <span class="hud-val glow-cyan" id="score-val">0</span>
+            </div>
+            <div class="hud-box">
+                <span class="hud-label">绘图比例 (SCALE)</span>
+                <span class="hud-val glow-blue" id="scale-val">1:100</span>
+            </div>
+            <div class="hud-box gauge-box">
+                <span class="hud-label">矢量能量 (VECTOR CHARGE)</span>
+                <div class="energy-bar-container">
+                    <div class="energy-bar-fill" id="energy-fill"></div>
+                    <span class="energy-text" id="energy-text">0% [READY]</span>
+                </div>
+            </div>
+            <div class="hud-box">
+                <span class="hud-label">黄金比例 (RATIO)</span>
+                <span class="hud-val glow-gold" id="ratio-val">Φ 1.618</span>
+            </div>
+        </div>
+
+        <!-- Main Game Area -->
+        <main class="game-viewport-container">
+            <div class="canvas-wrapper">
+                <canvas id="game-canvas"></canvas>
+
+                <!-- Technical Blueprint Drafting Overlay & HUD Callouts -->
+                <div class="canvas-technical-overlay">
+                    <div class="drafting-corner top-left">SCALE 1:100 | DRAFT-03</div>
+                    <div class="drafting-corner top-right">COORDS: <span id="hud-coords">X: 00.0 Y: 00.0</span></div>
+                    <div class="drafting-corner bottom-left">BLUEPRINT VECTOR ENGINE</div>
+                    <div class="drafting-corner bottom-right">STATUS: <span id="hud-status">ACTIVE</span></div>
+                </div>
+
+                <!-- Overlay Game Start / Game Over Modal -->
+                <div class="overlay-screen active" id="overlay-screen">
+                    <div class="modal-card">
+                        <div class="blueprint-stamp">APPROVED</div>
+                        <h2 class="modal-title" id="modal-title">蓝图工程 · 矢量构形</h2>
+                        <p class="modal-desc" id="modal-desc">
+                            操控精准矢量绘图蛇在工程暗蓝图纸上穿梭，吞噬<strong>立面标尺</strong>与<strong>黄金分割核</strong>，收集<strong>圆规卡尺</strong>释放构形圆阵。<br>
+                            蓄满矢量能量后按 <kbd>SPACE</kbd> / 点击 [构形] 触发<strong>矢量投影模式</strong>：虚化穿墙透体、磁力吸引全屏节点！
+                        </p>
+
+                        <div class="score-summary" id="score-summary" style="display: none;">
+                            <div class="summary-item">
+                                <span>最终构形得分</span>
+                                <strong id="final-score">0</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>最高历史纪录</span>
+                                <strong id="high-score">0</strong>
+                            </div>
+                            <div class="summary-item">
+                                <span>吞噬构形节点</span>
+                                <strong id="nodes-eaten">0</strong>
+                            </div>
+                        </div>
+
+                        <button class="primary-btn" id="start-btn">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                            <span id="start-btn-text">启动工程制图</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Touch Controls -->
+        <footer class="mobile-controls-panel">
+            <div class="dpad">
+                <button class="dpad-btn dpad-up" id="btn-up" aria-label="向上移动">▲</button>
+                <button class="dpad-btn dpad-left" id="btn-left" aria-label="向左移动">◀</button>
+                <button class="dpad-btn dpad-center" id="btn-center" aria-label="制图核心">◉</button>
+                <button class="dpad-btn dpad-right" id="btn-right" aria-label="向右移动">▶</button>
+                <button class="dpad-btn dpad-down" id="btn-down" aria-label="向下移动">▼</button>
+            </div>
+            <div class="action-panel">
+                <button class="action-btn" id="btn-skill">
+                    <span class="btn-icon">⚡</span>
+                    <span class="btn-text">构形投影</span>
+                    <small>(SPACE)</small>
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

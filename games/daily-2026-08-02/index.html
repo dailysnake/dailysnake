@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>胞吞进化论：基因重组 (2026-08-02) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新微观显微视界与胞吞演化机制贪吃蛇！操控原生生物胞体在暗海培养皿中穿梭，吞噬线粒体、叶绿体与核糖体，收集 DNA 基因片段促成演化跃迁，按 [Space] 开启 ATP 喷射冲刺！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-02/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="胞吞进化论：基因重组 (2026-08-02) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新微观显微视界与胞吞演化机制贪吃蛇！操控原生生物胞体吞噬细胞器，解锁基因突变与形态演化！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-02/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-02-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="胞吞进化论：基因重组 (2026-08-02) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新微观显微视界与胞吞演化机制贪吃蛇！操控原生生物胞体吞噬细胞器，解锁基因突变与形态演化！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-02-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "胞吞进化论：基因重组",
+      "headline": "胞吞进化论：基因重组 (2026-08-02) - Daily Snake 每日贪吃蛇",
+      "description": "全新微观显微视界与胞吞演化机制贪吃蛇！操控原生生物胞体在暗海培养皿中穿梭，吞噬线粒体、叶绿体与核糖体，收集 DNA 基因片段促成演化跃迁，按 [Space] 开启 ATP 喷射冲刺！",
+      "genre": ["Snake Game", "Arcade", "Bio Simulation", "Evolution"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-02",
+      "image": "https://dailysnake.org/assets/daily-2026-08-02-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-02/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700;800&family=Noto+Sans+SC:wght@400;600;700;900&family=Outfit:wght@500;700;900&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Bioluminescent Microscope Dish Ambient Background -->
+    <div class="bio-bg">
+        <div class="dish-grid"></div>
+        <div class="fluid-particles"></div>
+        <div class="vignette-overlay"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Game Header -->
+        <header class="game-header">
+            <a href="../../index.html" class="back-link" title="返回游戏大厅" id="back-to-lobby-btn">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>大厅</span>
+            </a>
+
+            <div class="header-title">
+                <h1>CELLULAR <span>METAMORPHOSIS</span></h1>
+                <p class="subtitle">胞吞进化论 · 基因重组之章</p>
+            </div>
+
+            <div class="header-controls">
+                <button class="icon-btn" id="sound-btn" title="开关生物声学音效">
+                    <svg id="sound-icon-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="sound-icon-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="display: none;">
+                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                    </svg>
+                </button>
+                <button class="icon-btn" id="pause-btn" title="暂停游戏">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="6" y="4" width="4" height="16"></rect>
+                        <rect x="14" y="4" width="4" height="16"></rect>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- HUD Panel Metrics -->
+        <div class="hud-panel">
+            <div class="hud-box">
+                <span class="hud-label">基因积分 (Score)</span>
+                <span class="hud-val glow-cyan" id="score-val">0</span>
+            </div>
+            <div class="hud-box">
+                <span class="hud-label">最高纪录 (Best)</span>
+                <span class="hud-val" id="high-score-val">0</span>
+            </div>
+            <div class="hud-box stage-box">
+                <span class="hud-label">演化形态 (Evolution)</span>
+                <div class="stage-badge" id="stage-badge">1阶: 原生变形虫</div>
+            </div>
+            <div class="hud-box atp-box">
+                <div class="atp-label-group">
+                    <span class="hud-label">ATP 冲刺能量 [Space]</span>
+                    <span class="atp-percent" id="atp-percent">100%</span>
+                </div>
+                <div class="atp-bar-track">
+                    <div class="atp-bar-fill" id="atp-bar-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DNA Sequence & Shield Status Bar -->
+        <div class="dna-status-bar">
+            <div class="dna-sequence-group">
+                <span class="dna-label">DNA 密码子链:</span>
+                <div class="dna-slots" id="dna-slots">
+                    <span class="dna-empty">等待胞吞细胞器...</span>
+                </div>
+            </div>
+            <div class="shield-indicator" id="shield-indicator" title="生物护盾状态">
+                <span class="shield-icon">🛡️</span>
+                <span class="shield-text" id="shield-text">护盾: 0/1</span>
+            </div>
+        </div>
+
+        <!-- Main Game Viewport -->
+        <div class="game-viewport">
+            <canvas id="game-canvas" width="800" height="600"></canvas>
+
+            <!-- Evolution Notification Toast Overlay -->
+            <div class="evo-toast" id="evo-toast">
+                <div class="evo-toast-icon">🧬</div>
+                <div class="evo-toast-content">
+                    <div class="evo-toast-title" id="evo-toast-title">基因跃迁！</div>
+                    <div class="evo-toast-desc" id="evo-toast-desc">形态进化为：2阶 荧光水螅</div>
+                </div>
+            </div>
+
+            <!-- Start Game Overlay -->
+            <div class="overlay-modal" id="start-modal">
+                <div class="modal-card">
+                    <div class="modal-badge">TODAY'S SPECIAL MODE</div>
+                    <h2 class="modal-title">胞吞进化论</h2>
+                    <p class="modal-subtitle">BIO-CELLULAR METAMORPHOSIS</p>
+                    <p class="modal-desc">
+                        吞噬培养皿中的细胞器（线粒体、叶绿体、核糖体），组合 DNA 密码子链，完成基因演化跃迁！按 [Space] 消耗 ATP 冲刺，躲避剧毒自由基！
+                    </p>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="start-btn">
+                            <span>开始演化</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pause Modal -->
+            <div class="overlay-modal" id="pause-modal" style="display: none;">
+                <div class="modal-card">
+                    <h2 class="modal-title">显微视界暂停</h2>
+                    <p class="modal-desc">按 [P] 或点击下方按钮恢复基因演化</p>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="resume-btn">恢复演化</button>
+                        <button class="btn btn-secondary" id="restart-pause-btn">重新开始</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Over Modal -->
+            <div class="overlay-modal" id="gameover-modal" style="display: none;">
+                <div class="modal-card">
+                    <div class="modal-badge danger">胞膜溶解</div>
+                    <h2 class="modal-title">演化终止</h2>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-lbl">本次积分</span>
+                            <span class="stat-val glow-cyan" id="final-score">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-lbl">吞噬细胞器</span>
+                            <span class="stat-val glow-green" id="final-eaten">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-lbl">基因演化阶级</span>
+                            <span class="stat-val glow-gold" id="final-stage">1阶</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-lbl">最高历史记录</span>
+                            <span class="stat-val" id="final-high-score">0</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button class="btn btn-primary" id="restart-btn">
+                            <span>再次演化</span>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                                <path d="M23 4v6h-6"></path>
+                                <path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Touch Controls -->
+        <div class="mobile-controls">
+            <div class="dpad">
+                <button class="dpad-btn up" id="btn-up" aria-label="向上">▲</button>
+                <button class="dpad-btn left" id="btn-left" aria-label="向左">◄</button>
+                <button class="dpad-btn right" id="btn-right" aria-label="向右">►</button>
+                <button class="dpad-btn down" id="btn-down" aria-label="向下">▼</button>
+            </div>
+            <button class="atp-dash-btn" id="btn-dash">
+                <span>ATP 冲刺</span>
+                <small>⚡ DASH</small>
+            </button>
+        </div>
+
+        <!-- Gameplay Mechanics Legend Card -->
+        <footer class="game-legend">
+            <div class="legend-header">
+                <h3>显微胞体与演化指南 (CELLULAR GUIDE)</h3>
+            </div>
+            <div class="legend-grid">
+                <div class="legend-item">
+                    <span class="organelle-icon red">⚡</span>
+                    <div class="organelle-info">
+                        <strong>线粒体 (Mitochondria)</strong>
+                        <p>高积分 + 快速充能 ATP 能量槽。</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="organelle-icon green">🛡️</span>
+                    <div class="organelle-info">
+                        <strong>叶绿体 (Chloroplast)</strong>
+                        <p>提供光合作用生物护盾，可抵御1次碰撞。</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="organelle-icon blue">🔮</span>
+                    <div class="organelle-info">
+                        <strong>核糖体 (Ribosome)</strong>
+                        <p>增长胞体，扩展外膜微观磁吸半径。</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="organelle-icon gold">🧬</span>
+                    <div class="organelle-info">
+                        <strong>细胞核 (Nucleus Core)</strong>
+                        <p>稀有金色核心，快速加速 DNA 密码子演化。</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="organelle-icon purple">☠️</span>
+                    <div class="organelle-info">
+                        <strong>剧毒自由基 (Free Radical)</strong>
+                        <p>缓慢飘移的毒素，触碰消耗护盾或溶解尾巴！</p>
+                    </div>
+                </div>
+                <div class="legend-item">
+                    <span class="organelle-icon cyan">🚀</span>
+                    <div class="organelle-info">
+                        <strong>演化阶段 (Evolution Stages)</strong>
+                        <p>1阶 原生变形虫 ➔ 2阶 荧光水螅 (解锁冲刺) ➔ 3阶 赛博巨兽 (解锁全膜穿透)</p>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
