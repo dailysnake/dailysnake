@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>星穹熔炉：恒星重核合成 (2026-08-04) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新深空等离子体与恒星核聚变机制贪吃蛇！操控恒星等离子长丝在银河深空穿梭，吞噬氢、氦、碳、氧、铁元素，触发恒星核聚变与连击裂变，按 [Space] 释放超新星坍缩与全屏引力收缩！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-04/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="星穹熔炉：恒星重核合成 (2026-08-04) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新深空等离子体与恒星核聚变机制贪吃蛇！操控恒星等离子长丝在银河深空穿梭，吞噬氢氦碳氧铁元素，开启超新星引力爆裂！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-04/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-04-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="星穹熔炉：恒星重核合成 (2026-08-04) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新深空等离子体与恒星核聚变机制贪吃蛇！操控恒星等离子长丝在银河深空穿梭，吞噬氢氦碳氧铁元素，开启超新星引力爆裂！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-04-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "星穹熔炉：恒星重核合成",
+      "headline": "星穹熔炉：恒星重核合成 (2026-08-04) - Daily Snake 每日贪吃蛇",
+      "description": "全新深空等离子体与恒星核聚变机制贪吃蛇！操控恒星等离子长丝在银河深空穿梭，吞噬氢、氦、碳、氧、铁元素，触发恒星核聚变与连击裂变，按 [Space] 释放超新星坍缩与全屏引力收缩！",
+      "genre": ["Snake Game", "Arcade", "Sci-Fi", "Astrophysics", "Cosmic Plasma"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-04",
+      "image": "https://dailysnake.org/assets/daily-2026-08-04-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-04/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Noto+Sans+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cosmic Space Background Canvas FX -->
+    <div class="cosmos-bg-wrapper">
+        <canvas id="cosmos-bg-canvas"></canvas>
+        <div class="cosmic-vignette"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Game Header -->
+        <header class="game-header">
+            <div class="header-left">
+                <a href="../../index.html" class="back-btn" title="返回游戏大厅">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    <span>游戏大厅</span>
+                </a>
+                <div class="title-wrap">
+                    <h1 class="main-title">星穹熔炉 <span class="sub-badge">恒星重核合成</span></h1>
+                    <span class="version-tag">STELLAR FORGE v1.0</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button id="sound-btn" class="icon-btn" title="开关音效">
+                    <svg id="sound-icon-on" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    <svg id="sound-icon-off" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="hidden">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <line x1="23" y1="9" x2="17" y2="15"/>
+                        <line x1="17" y1="9" x2="23" y2="15"/>
+                    </svg>
+                </button>
+                <button id="pause-btn" class="icon-btn" title="暂停游戏 (P)">
+                    <svg id="pause-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                    <svg id="play-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="hidden">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Game Core Section -->
+        <main class="game-main">
+            <!-- HUD Metrics Bar -->
+            <div class="hud-bar">
+                <div class="hud-item score-box">
+                    <span class="hud-label">星能积分 STELLAR ENERGY</span>
+                    <span class="hud-value" id="score-val">000,000</span>
+                </div>
+                <div class="hud-item mass-box">
+                    <span class="hud-label">恒星质量 MASS (M☉)</span>
+                    <span class="hud-value" id="mass-val">1.00</span>
+                </div>
+                <div class="hud-item temp-box">
+                    <span class="hud-label">炉心温度 TEMP (K)</span>
+                    <span class="hud-value" id="temp-val">15.7M</span>
+                </div>
+                <div class="hud-item combo-box">
+                    <span class="hud-label">聚变连击 FUSION CHAIN</span>
+                    <span class="hud-value" id="combo-val">x1</span>
+                </div>
+                <div class="hud-item high-score-box">
+                    <span class="hud-label">巅峰纪录 HIGH SCORE</span>
+                    <span class="hud-value" id="high-score-val">000,000</span>
+                </div>
+            </div>
+
+            <!-- Energy & Skill Meter Bar -->
+            <div class="supernova-bar-container">
+                <div class="bar-label">
+                    <span>超新星引力核爆 [SPACE]</span>
+                    <span id="supernova-status-text">聚变储能 0%</span>
+                </div>
+                <div class="bar-track">
+                    <div id="supernova-progress" class="bar-fill"></div>
+                    <div class="bar-glow"></div>
+                </div>
+            </div>
+
+            <!-- Canvas Viewport Wrapper -->
+            <div class="canvas-wrapper">
+                <canvas id="game-canvas" width="800" height="600"></canvas>
+
+                <!-- Start / Pause / Game Over Overlay -->
+                <div id="overlay-screen" class="overlay-screen">
+                    <div class="overlay-content">
+                        <div class="cosmic-symbol">☀️</div>
+                        <h2 id="overlay-title" class="overlay-title">星穹熔炉：恒星重核合成</h2>
+                        <p id="overlay-sub" class="overlay-sub">
+                            操控恒星等离子蛇，吞噬 <b>¹H(氢)</b> → <b>⁴He(氦)</b> → <b>¹²C(碳)</b> → <b>¹⁶O(氧)</b> → <b>⁵⁶Fe(铁)</b><br>
+                            触发元素核聚变连击！满能量按 [SPACE] 开启<b>超新星坍缩与全屏引力收缩</b>！
+                        </p>
+                        
+                        <div class="element-legend">
+                            <div class="legend-item"><span class="elem-dot dot-h">¹H</span> 氢质子 (+10)</div>
+                            <div class="legend-item"><span class="elem-dot dot-he">⁴He</span> 氦核 (+30)</div>
+                            <div class="legend-item"><span class="elem-dot dot-c">¹²C</span> 碳核 (+80)</div>
+                            <div class="legend-item"><span class="elem-dot dot-o">¹⁶O</span> 氧核 (+200)</div>
+                            <div class="legend-item"><span class="elem-dot dot-fe">⁵⁶Fe</span> 铁核 (+500)</div>
+                        </div>
+
+                        <div id="overlay-stats" class="overlay-stats hidden">
+                            <div class="stat-card">
+                                <span>本次星能</span>
+                                <strong id="final-score">0</strong>
+                            </div>
+                            <div class="stat-card">
+                                <span>最终质量</span>
+                                <strong id="final-mass">1.0 M☉</strong>
+                            </div>
+                            <div class="stat-card">
+                                <span>聚变次数</span>
+                                <strong id="final-fusions">0</strong>
+                            </div>
+                        </div>
+
+                        <button id="start-btn" class="btn-glow-primary">
+                            <span>开始核聚变演化</span>
+                            <div class="btn-glow-effect"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Controls Panel -->
+            <div class="mobile-controls-panel">
+                <div class="dpad-container">
+                    <button class="dpad-btn dpad-up" id="btn-up" aria-label="向上">▲</button>
+                    <button class="dpad-btn dpad-left" id="btn-left" aria-label="向左">◄</button>
+                    <button class="dpad-btn dpad-center" id="btn-center" aria-label="加速">⚡</button>
+                    <button class="dpad-btn dpad-right" id="btn-right" aria-label="向右">►</button>
+                    <button class="dpad-btn dpad-down" id="btn-down" aria-label="向下">▼</button>
+                </div>
+                <div class="mobile-skill-wrapper">
+                    <button id="mobile-skill-btn" class="skill-btn-mobile">
+                        <span class="skill-icon">💥</span>
+                        <span class="skill-text">超新星爆裂</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer / Instructions -->
+        <footer class="game-footer">
+            <div class="key-guide">
+                <span class="key-badge">W/A/S/D</span> 或 <span class="key-badge">方向键</span> 控制等离子蛇移动
+                <span class="key-separator">|</span>
+                <span class="key-badge">SPACE</span> 触发超新星爆裂
+                <span class="key-separator">|</span>
+                <span class="key-badge">P</span> 暂停
+                <span class="key-separator">|</span>
+                <span class="key-badge">R</span> 重新开始
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Daily Snake 每日贪吃蛇 | 星穹熔炉 Stellar Forge
+            </div>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
