@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>浮世浪潮：神奈川巨浪与墨龙跃升 (2026-08-05) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新浮世绘木版画水墨风贪吃蛇！操控海龙在神奈川冲浪巨浪中穿梭，吞噬朱砂锦鲤、蓝染神珠与金箔浪钱，按 [Space] 释放“怒海狂涛·神龙跃浪”全屏吞噬与无敌冲刺！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-05/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="浮世浪潮：神奈川巨浪与墨龙跃升 (2026-08-05) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新浮世绘木版画水墨风贪吃蛇！操控海龙在神奈川冲浪巨浪中穿梭，吞噬朱砂锦鲤、蓝染神珠与金箔浪钱，按 [Space] 释放“怒海狂涛·神龙跃浪”全屏吞噬与无敌冲刺！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-05/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-05-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="浮世浪潮：神奈川巨浪与墨龙跃升 (2026-08-05) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新浮世绘木版画水墨风贪吃蛇！操控海龙在神奈川冲浪巨浪中穿梭，吞噬朱砂锦鲤、蓝染神珠与金箔浪钱，按 [Space] 释放“怒海狂涛·神龙跃浪”全屏吞噬与无敌冲刺！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-05-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "浮世浪潮：神奈川巨浪与墨龙跃升",
+      "headline": "浮世浪潮：神奈川巨浪与墨龙跃升 (2026-08-05) - Daily Snake 每日贪吃蛇",
+      "description": "全新浮世绘木版画水墨风贪吃蛇！操控海龙在神奈川冲浪巨浪中穿梭，吞噬朱砂锦鲤、蓝染神珠与金箔浪钱，按 [Space] 释放“怒海狂涛·神龙跃浪”全屏吞噬与无敌冲刺！",
+      "genre": ["Snake Game", "Arcade", "Ukiyo-e", "Artistic", "Japanese Woodblock"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-05",
+      "image": "https://dailysnake.org/assets/daily-2026-08-05-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-05/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Noto+Serif+JP:wght@600;900&family=Noto+Sans+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Ukiyo-e Background Canvas FX -->
+    <div class="ukiyo-bg-wrapper">
+        <canvas id="ukiyo-bg-canvas"></canvas>
+        <div class="washi-vignette"></div>
+    </div>
+
+    <div class="app-container">
+        <!-- Game Header -->
+        <header class="game-header">
+            <div class="header-left">
+                <a href="../../index.html" class="back-btn" title="返回游戏大厅">
+                    <svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    <span>游戏大厅</span>
+                </a>
+                <div class="title-wrap">
+                    <h1 class="main-title">浮世浪潮 <span class="sub-badge">神奈川墨龙跃升</span></h1>
+                    <span class="version-tag">UKIYO-E WAVE v1.0</span>
+                </div>
+            </div>
+
+            <div class="header-right">
+                <button id="sound-btn" class="icon-btn" title="开关音效">
+                    <svg id="sound-icon-on" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/>
+                    </svg>
+                    <svg id="sound-icon-off" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="hidden">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/>
+                        <line x1="23" y1="9" x2="17" y2="15"/>
+                        <line x1="17" y1="9" x2="23" y2="15"/>
+                    </svg>
+                </button>
+                <button id="pause-btn" class="icon-btn" title="暂停游戏 (P)">
+                    <svg id="pause-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none">
+                        <rect x="6" y="4" width="4" height="16"/>
+                        <rect x="14" y="4" width="4" height="16"/>
+                    </svg>
+                    <svg id="play-icon" viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" stroke-width="2" fill="none" class="hidden">
+                        <polygon points="5 3 19 12 5 21 5 3"/>
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Game Core Section -->
+        <main class="game-main">
+            <!-- HUD Metrics Bar -->
+            <div class="hud-bar">
+                <div class="hud-item score-box">
+                    <span class="hud-label">浪潮积分 SCORE</span>
+                    <span class="hud-value" id="score-val">000,000</span>
+                </div>
+                <div class="hud-item tide-box">
+                    <span class="hud-label">潮水流速 TIDE SPEED</span>
+                    <span class="hud-value" id="tide-val">1.0x</span>
+                </div>
+                <div class="hud-item length-box">
+                    <span class="hud-label">龙脊节数 LENGTH</span>
+                    <span class="hud-value" id="length-val">5 节</span>
+                </div>
+                <div class="hud-item combo-box">
+                    <span class="hud-label">狂涛连击 COMBO</span>
+                    <span class="hud-value" id="combo-val">x1</span>
+                </div>
+                <div class="hud-item high-score-box">
+                    <span class="hud-label">巅峰纪录 HIGH SCORE</span>
+                    <span class="hud-value" id="high-score-val">000,000</span>
+                </div>
+            </div>
+
+            <!-- Energy & Skill Meter Bar -->
+            <div class="surge-bar-container">
+                <div class="bar-label">
+                    <span>怒海狂涛·神龙跃浪 [SPACE]</span>
+                    <span id="surge-status-text">怒气蓄力 0%</span>
+                </div>
+                <div class="bar-track">
+                    <div id="surge-progress" class="bar-fill"></div>
+                    <div class="bar-glow"></div>
+                </div>
+            </div>
+
+            <!-- Canvas Viewport Wrapper -->
+            <div class="canvas-wrapper">
+                <canvas id="game-canvas" width="800" height="600"></canvas>
+
+                <!-- Start / Pause / Game Over Overlay -->
+                <div id="overlay-screen" class="overlay-screen">
+                    <div class="overlay-content">
+                        <div class="ukiyo-symbol">🌊</div>
+                        <h2 id="overlay-title" class="overlay-title">浮世浪潮：神奈川巨浪与墨龙跃升</h2>
+                        <p id="overlay-sub" class="overlay-sub">
+                            操控水墨海龙穿梭于葛饰北斋式的巨浪与海漩之间，吞噬<b>朱砂锦鲤</b>、<b>蓝染神珠</b>、<b>金箔浪钱</b>与<b>翡翠龙角</b>！<br>
+                            蓄满怒气后按 [SPACE] 触发<b>怒海狂涛·神龙跃浪</b>，无敌吸金并横扫全海！
+                        </p>
+                        
+                        <div class="element-legend">
+                            <div class="legend-item"><span class="elem-dot dot-koi">🐟</span> 朱砂锦鲤 (+10)</div>
+                            <div class="legend-item"><span class="elem-dot dot-pearl">🔮</span> 蓝染神珠 (+30)</div>
+                            <div class="legend-item"><span class="elem-dot dot-coin">🪙</span> 金箔浪钱 (+80)</div>
+                            <div class="legend-item"><span class="elem-dot dot-horn">🐉</span> 翡翠龙角 (+150)</div>
+                        </div>
+
+                        <div id="overlay-stats" class="overlay-stats hidden">
+                            <div class="stat-card">
+                                <span>本次积分</span>
+                                <strong id="final-score">0</strong>
+                            </div>
+                            <div class="stat-card">
+                                <span>龙脊长度</span>
+                                <strong id="final-length">0 节</strong>
+                            </div>
+                            <div class="stat-card">
+                                <span>狂涛跃升</span>
+                                <strong id="final-surges">0 次</strong>
+                            </div>
+                        </div>
+
+                        <button id="start-btn" class="btn-glow-primary">
+                            <span>踏浪驾龙出发</span>
+                            <div class="btn-glow-effect"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Controls Panel -->
+            <div class="mobile-controls-panel">
+                <div class="dpad-container">
+                    <button class="dpad-btn dpad-up" id="btn-up" aria-label="向上">▲</button>
+                    <button class="dpad-btn dpad-left" id="btn-left" aria-label="向左">◄</button>
+                    <button class="dpad-btn dpad-center" id="btn-center" aria-label="加速">⚡</button>
+                    <button class="dpad-btn dpad-right" id="btn-right" aria-label="向右">►</button>
+                    <button class="dpad-btn dpad-down" id="btn-down" aria-label="向下">▼</button>
+                </div>
+                <div class="mobile-skill-wrapper">
+                    <button id="mobile-skill-btn" class="skill-btn-mobile">
+                        <span class="skill-icon">🌊</span>
+                        <span class="skill-text">怒海狂涛</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer / Instructions -->
+        <footer class="game-footer">
+            <div class="key-guide">
+                <span class="key-badge">W/A/S/D</span> 或 <span class="key-badge">方向键</span> 控制海龙游动
+                <span class="key-separator">|</span>
+                <span class="key-badge">SPACE</span> 释放怒海狂涛
+                <span class="key-separator">|</span>
+                <span class="key-badge">P</span> 暂停
+                <span class="key-separator">|</span>
+                <span class="key-badge">R</span> 重新开始
+            </div>
+            <div class="footer-copy">
+                &copy; 2026 Daily Snake 每日贪吃蛇 | 浮世浪潮 Ukiyo-e Wave
+            </div>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
