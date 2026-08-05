@@ -18,6 +18,9 @@ export HTTPS_PROXY="http://127.0.0.1:7890"
 export no_proxy="127.0.0.1,localhost,192.168.*,172.*,10.*"
 export NO_PROXY="127.0.0.1,localhost,192.168.*,172.*,10.*"
 
+export CLOUDFLARE_API_TOKEN="${CLOUDFLARE_API_TOKEN:-cfat_995gtzWVcS61Gd347skwZahCfSPlYmX9AWe9JUwFfec1e453}"
+export CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-932501690a1941378133afa28567e559}"
+
 PROJECT_DIR="/home/yhc/Projects/daily_snake"
 AGY_BIN="${AGY_BIN:-/home/yhc/.local/bin/agy}"
 FEISHU_SCRIPT="${FEISHU_SCRIPT:-/home/yhc/Projects/AutoBlogComment/auto-fill/.codex/skills/feishu-ops/scripts/send-app-bot-notification.mjs}"
@@ -213,6 +216,9 @@ while [ $RETRY_COUNT -lt $MAX_RETRIES ]; do
 done
 
 if [ "$SUCCESS" = true ]; then
+    echo "Deploying build directly to Cloudflare Pages via wrangler..."
+    npx -y wrangler pages deploy "$PROJECT_DIR" --project-name daily-snake --commit-dirty=true || true
+
     ONLINE_VERIFIED=false
     DEPLOY_ATTEMPT=1
     MAX_DEPLOY_ATTEMPTS=12
