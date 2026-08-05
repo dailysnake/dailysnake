@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>秘境温室：蔓藤突袭与光合跃升 (2026-08-06) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新维多利亚复古温室植物风贪吃蛇！操控灵动食肉藤蔓在温室中穿梭，借助移动日光触发光合作用，释放“捕蝇草远距突袭”吞噬蜜露兰花与金纯露珠！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-06/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="秘境温室：蔓藤突袭与光合跃升 (2026-08-06) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新维多利亚复古温室植物风贪吃蛇！操控灵动食肉藤蔓在温室中穿梭，借助移动日光触发光合作用，释放“捕蝇草远距突袭”吞噬蜜露兰花与金纯露珠！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-06/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-06-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="秘境温室：蔓藤突袭与光合跃升 (2026-08-06) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新维多利亚复古温室植物风贪吃蛇！操控灵动食肉藤蔓在温室中穿梭，借助移动日光触发光合作用，释放“捕蝇草远距突袭”吞噬蜜露兰花与金纯露珠！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-06-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "秘境温室：蔓藤突袭与光合跃升",
+      "headline": "秘境温室：蔓藤突袭与光合跃升 (2026-08-06) - Daily Snake 每日贪吃蛇",
+      "description": "全新维多利亚复古温室植物风贪吃蛇！操控灵动食肉藤蔓在温室中穿梭，借助移动日光触发光合作用，释放“捕蝇草远距突袭”吞噬蜜露兰花与金纯露珠！",
+      "genre": ["Snake Game", "Arcade", "Botanical", "Terrarium", "Action"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-06",
+      "image": "https://dailysnake.org/assets/daily-2026-08-06-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-06/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Noto+Serif+SC:wght@600;700;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Victorian Header -->
+        <header class="header">
+            <a href="../../index.html" class="back-home-btn" title="返回每日大厅">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>每日大厅</span>
+            </a>
+            <div class="title-wrapper">
+                <h1 class="main-title">秘境温室 <span class="sub-highlight">BOTANICAL TERRARIUM</span></h1>
+                <p class="subtitle">蔓藤突袭 &bull; 光合跃升 &bull; 维多利亚秘境</p>
+            </div>
+            <div class="header-actions">
+                <button id="sound-btn" class="icon-btn" title="切换音效">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <button id="help-btn" class="icon-btn" title="游戏玩法">
+                    <span>❓</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Stats Dashboard -->
+            <div class="dashboard">
+                <div class="stat-card">
+                    <span class="stat-label">生长得分</span>
+                    <span id="score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">最高纪录</span>
+                    <span id="high-score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">藤蔓长度</span>
+                    <span id="length-val" class="stat-value">5</span>
+                </div>
+                <div class="stat-card energy-card">
+                    <span class="stat-label">日光光合 [SPACE]</span>
+                    <div class="energy-bar-track">
+                        <div id="energy-bar-fill" class="energy-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Wrapper -->
+            <div class="canvas-outer-frame">
+                <div class="brass-ornament top-left"></div>
+                <div class="brass-ornament top-right"></div>
+                <div class="brass-ornament bottom-left"></div>
+                <div class="brass-ornament bottom-right"></div>
+                
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+                    
+                    <!-- Overlay Screens -->
+                    <div id="start-overlay" class="overlay active">
+                        <div class="overlay-card">
+                            <div class="card-emblem">🪴</div>
+                            <h2>秘境温室：蔓藤突袭</h2>
+                            <p class="card-desc">
+                                操控食肉藤蔓穿梭于玻璃温室。在移动的日光束中吸收能量，按下 <strong>[SPACE]</strong> 释放“捕蝇草远距突袭”！
+                            </p>
+                            <div class="guide-mini">
+                                <div class="guide-item">💧 金纯露珠 (+10)</div>
+                                <div class="guide-item">🌸 蜜露兰花 (+30)</div>
+                                <div class="guide-item">☀️ 光合精粹 (满能量)</div>
+                                <div class="guide-item">🌵 毒荆棘 (光合狂热可摧毁)</div>
+                            </div>
+                            <button id="start-btn" class="btn btn-primary">开启温室之旅</button>
+                        </div>
+                    </div>
+
+                    <div id="game-over-overlay" class="overlay hidden">
+                        <div class="overlay-card">
+                            <div class="card-emblem">🍂</div>
+                            <h2>藤蔓枯萎谢幕</h2>
+                            <div class="final-scores">
+                                <p>本次得分: <strong id="final-score-val">0</strong></p>
+                                <p>历史最高: <strong id="final-high-val">0</strong></p>
+                            </div>
+                            <p id="death-reason" class="death-msg">藤蔓撞击了温室黄铜边框！</p>
+                            <button id="restart-btn" class="btn btn-primary">重新苏醒生长</button>
+                        </div>
+                    </div>
+
+                    <div id="pause-overlay" class="overlay hidden">
+                        <div class="overlay-card">
+                            <h2>温室微风暂停中</h2>
+                            <p>按 P 或点击下方按钮继续</p>
+                            <button id="resume-btn" class="btn btn-primary">继续游戏</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Controls -->
+            <div class="mobile-controls">
+                <div class="dpad">
+                    <button id="btn-up" class="dpad-btn up" aria-label="向上">▲</button>
+                    <button id="btn-left" class="dpad-btn left" aria-label="向左">◄</button>
+                    <button id="btn-right" class="dpad-btn right" aria-label="向右">►</button>
+                    <button id="btn-down" class="dpad-btn down" aria-label="向下">▼</button>
+                </div>
+                <div class="action-panel">
+                    <button id="mobile-snap-btn" class="snap-action-btn">
+                        <span class="snap-icon">🌱</span>
+                        <span class="snap-text">捕蝇突袭</span>
+                        <span id="snap-cooldown-ring" class="cooldown-ring"></span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Rules Modal -->
+        <div id="help-modal" class="modal hidden">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3>🌿 秘境温室玩法指南</h3>
+                    <button id="close-help-btn" class="modal-close">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <h4>核心规则与操作：</h4>
+                    <ul>
+                        <li><strong>方向控制：</strong>键盘【W A S D】/【方向键】或移动端【虚拟D-pad / 触控滑屏】。</li>
+                        <li><strong>☀️ 光合作用：</strong>温室中有移动的金色日光束，在日光下穿梭可获得 <strong>2倍得分</strong> 并加速充能！</li>
+                        <li><strong>🌱 捕蝇草突袭：</strong>能量满后按【SPACE】或点击【捕蝇突袭】，藤蔓头部瞬间向前方弹射 3 格，远距离张口吞噬前方所有食物！</li>
+                        <li><strong>🌵 毒荆棘与狂热：</strong>能量满后触发【光合狂热】6 秒，此期间藤蔓通体发光，可直接撞碎毒荆棘！</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2026 Daily Snake Studio. All Rights Reserved. &bull; <a href="../../index.html">返回每日大厅</a></p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
