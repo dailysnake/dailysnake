@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>默片狂想曲：橡皮蛇与胶片逆转 (2026-08-07) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新1930年代黑白默片橡皮管卡通风格贪吃蛇！操控萌趣橡皮蛇在老电影放映室穿梭，吞噬电影胶片盘、黑胶唱片与爆米花桶，借助放映机聚光灯，按下 [Space] 触发“胶片倒放·时间逆转”化险为夷！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-07/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="默片狂想曲：橡皮蛇与胶片逆转 (2026-08-07) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新1930年代黑白默片橡皮管卡通风格贪吃蛇！操控萌趣橡皮蛇在老电影放映室穿梭，吞噬电影胶片盘、黑胶唱片与爆米花桶，借助放映机聚光灯，按下 [Space] 触发“胶片倒放·时间逆转”化险为夷！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-07/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-07-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="默片狂想曲：橡皮蛇与胶片逆转 (2026-08-07) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新1930年代黑白默片橡皮管卡通风格贪吃蛇！操控萌趣橡皮蛇在老电影放映室穿梭，吞噬电影胶片盘、黑胶唱片与爆米花桶，借助放映机聚光灯，按下 [Space] 触发“胶片倒放·时间逆转”化险为夷！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-07-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "默片狂想曲：橡皮蛇与胶片逆转",
+      "headline": "默片狂想曲：橡皮蛇与胶片逆转 (2026-08-07) - Daily Snake 每日贪吃蛇",
+      "description": "全新1930年代黑白默片橡皮管卡通风格贪吃蛇！操控萌趣橡皮蛇在老电影放映室穿梭，吞噬电影胶片盘、黑胶唱片与爆米花桶，借助放映机聚光灯，按下 [Space] 触发“胶片倒放·时间逆转”化险为夷！",
+      "genre": ["Snake Game", "Arcade", "Vintage Cartoon", "Rubber Hose", "Retro Film", "Action"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-07",
+      "image": "https://dailysnake.org/assets/daily-2026-08-07-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-07/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts: Special Elite (vintage typewriter/film print), Courier Prime & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Courier+Prime:wght@400;700&family=Noto+Serif+SC:wght@700;900&family=Outfit:wght@600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Vintage Silent Cinema Background Filter -->
+    <div class="film-vignette"></div>
+    <div class="film-grain"></div>
+    <div class="projector-beam-bg"></div>
+
+    <div class="app-container">
+        <!-- Vintage Silent Film Intertitle Header -->
+        <header class="header">
+            <a href="../../index.html" class="back-home-btn" id="back-to-lobby-btn" title="返回每日大厅">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>每日大厅</span>
+            </a>
+            <div class="title-wrapper">
+                <h1 class="main-title">默片狂想曲 <span class="sub-highlight">SILENT REEL RHAPSODY</span></h1>
+                <p class="subtitle">&bull; 1930s橡皮管卡通 &bull; 胶片倒放 &bull; 放映机聚光灯 &bull;</p>
+            </div>
+            <div class="header-actions">
+                <button id="sound-btn" class="icon-btn" title="切换音效">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <button id="help-btn" class="icon-btn" title="游戏说明">
+                    <span>❓</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="main-content">
+            <!-- Vintage Stats Dashboard -->
+            <div class="dashboard">
+                <div class="stat-card">
+                    <span class="stat-label">映演得分</span>
+                    <span id="score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">历史峰值</span>
+                    <span id="high-score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">胶片长度</span>
+                    <span id="length-val" class="stat-value">5</span>
+                </div>
+                <div class="stat-card energy-card">
+                    <span class="stat-label">胶片倒放 [SPACE]</span>
+                    <div class="energy-bar-track">
+                        <div id="energy-bar-fill" class="energy-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Wrapper with Sprocket Holes -->
+            <div class="canvas-outer-frame">
+                <!-- Film Sprocket Holes (Left/Right) -->
+                <div class="sprocket-holes-left">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+                <div class="sprocket-holes-right">
+                    <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                </div>
+
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Film Rewind Active Overlay -->
+                    <div id="rewind-overlay" class="rewind-overlay hidden">
+                        <div class="rewind-badge">
+                            <span class="rewind-icon">⏪</span>
+                            <span class="rewind-text">REWIND 倒带中...</span>
+                        </div>
+                        <div class="film-static-lines"></div>
+                    </div>
+
+                    <!-- Jazz Frenzy Overlay Notice -->
+                    <div id="frenzy-notice" class="frenzy-notice hidden">
+                        <span>🎷 爵士狂欢！双倍积分! 🎺</span>
+                    </div>
+
+                    <!-- Start Overlay -->
+                    <div id="start-screen" class="overlay-screen">
+                        <div class="vintage-intertitle-card">
+                            <div class="card-border-inner">
+                                <h2 class="vintage-heading">SILENT REEL RHAPSODY</h2>
+                                <div class="film-strip-divider"></div>
+                                <p class="vintage-desc">操控1930年代橡皮蛇，在古董影院中搜集胶片！</p>
+                                <p class="vintage-tip">按下 <kbd>SPACE</kbd> 触发 <b>【胶片倒放】</b> 逆转时光逃避碰撞！</p>
+                                <button id="start-btn" class="vintage-btn pulse-glow">▶ 开始放映 (START)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay -->
+                    <div id="gameover-screen" class="overlay-screen hidden">
+                        <div class="vintage-intertitle-card">
+                            <div class="card-border-inner">
+                                <h2 class="vintage-heading text-danger">THE END &bull; 放映结束</h2>
+                                <div class="film-strip-divider"></div>
+                                <div class="final-stats">
+                                    <div class="final-stat-row">
+                                        <span>本场得分：</span>
+                                        <strong id="final-score">0</strong>
+                                    </div>
+                                    <div class="final-stat-row">
+                                        <span>最高记录：</span>
+                                        <strong id="final-high-score">0</strong>
+                                    </div>
+                                    <div class="final-stat-row">
+                                        <span>成功倒带救命：</span>
+                                        <strong id="final-rewind-count">0 次</strong>
+                                    </div>
+                                </div>
+                                <button id="restart-btn" class="vintage-btn pulse-glow">🔄 重调胶片 (RESTART)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Ability Skill Button (Mobile & Desktop UX) -->
+            <div class="skill-bar">
+                <button id="skill-btn" class="skill-btn" disabled>
+                    <div class="skill-icon">⏪</div>
+                    <div class="skill-label">
+                        <span class="skill-name">胶片倒放 (REWIND)</span>
+                        <span class="skill-shortcut">[ Space 键 ]</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Touch Controls for Mobile -->
+            <div class="mobile-controls">
+                <div class="dpad">
+                    <button class="dpad-btn dpad-up" id="btn-up" aria-label="Up">▲</button>
+                    <button class="dpad-btn dpad-left" id="btn-left" aria-label="Left">◀</button>
+                    <button class="dpad-btn dpad-center" id="btn-center" aria-label="Center">●</button>
+                    <button class="dpad-btn dpad-right" id="btn-right" aria-label="Right">▶</button>
+                    <button class="dpad-btn dpad-down" id="btn-down" aria-label="Down">▼</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content vintage-intertitle-card">
+            <div class="card-border-inner">
+                <button class="modal-close" id="close-help">&times;</button>
+                <h3 class="modal-title">🎬 游戏放映指南</h3>
+                <div class="film-strip-divider"></div>
+                <div class="help-grid">
+                    <div class="help-item">
+                        <div class="help-icon">🎞️</div>
+                        <div class="help-info">
+                            <strong>电影胶片盘 (+100分)</strong>
+                            <p>核心放映拷贝，吞噬增加橡皮蛇长度并积攒倒带能量。</p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-icon">🎷</div>
+                        <div class="help-info">
+                            <strong>黑胶唱片 (+250分)</strong>
+                            <p>激活6秒爵士狂欢状态，画面摇摆且全场得分与倒带充能翻倍！</p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-icon">🍿</div>
+                        <div class="help-info">
+                            <strong>爆米花桶 (+500分)</strong>
+                            <p>美味零食！消掉橡皮蛇身体末端2节，大幅降低拥挤感。</p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-icon">💡</div>
+                        <div class="help-info">
+                            <strong>放映机聚光灯 (双倍曝光)</strong>
+                            <p>在舞台上缓慢移动的聚光灯范围内进食，获得双倍加分！</p>
+                        </div>
+                    </div>
+                    <div class="help-item highlight-box">
+                        <div class="help-icon">⏪</div>
+                        <div class="help-info">
+                            <strong>【胶片倒放】特技 [SPACE]</strong>
+                            <p>能量满时按空格或触屏按钮，画面逆向倒带3秒，避开致命碰撞！</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="vintage-btn modal-confirm-btn" id="confirm-help">明白，开始放映！</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
