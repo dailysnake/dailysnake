@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>哥特花窗：圣辉琉璃与日光折光 (2026-08-09) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新中世纪哥特花窗风贪吃蛇！操控圣辉琉璃蛇在古老教堂中收集红宝、蓝宝与祖母绿琉璃碎片，触发三色和弦连击。按 [Space] 释放【玫瑰花窗光辉爆发】，让神圣光芒净化全屏 shadow 并吸收璀璨碎片！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-09/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="哥特花窗：圣辉琉璃与日光折光 (2026-08-09) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新中世纪哥特花窗风贪吃蛇！操控圣辉琉璃蛇在古老教堂中收集红宝、蓝宝与祖母绿琉璃碎片，触发三色和弦连击。按 [Space] 释放【玫瑰花窗光辉爆发】，让神圣光芒净化全屏 shadow 并吸收璀璨碎片！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-09/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-09-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="哥特花窗：圣辉琉璃与日光折光 (2026-08-09) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新中世纪哥特花窗风贪吃蛇！操控圣辉琉璃蛇在古老教堂中收集红宝、蓝宝与祖母绿琉璃碎片，触发三色和弦连击。按 [Space] 释放【玫瑰花窗光辉爆发】，让神圣光芒净化全屏 shadow 并吸收璀璨碎片！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-09-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "哥特花窗：圣辉琉璃与日光折光",
+      "headline": "哥特花窗：圣辉琉璃与日光折光 (2026-08-09) - Daily Snake 每日贪吃蛇",
+      "description": "全新中世纪哥特花窗风贪吃蛇！操控圣辉琉璃蛇在古老教堂中收集红宝、蓝宝与祖母绿琉璃碎片，触发三色和弦连击。按 [Space] 释放【玫瑰花窗光辉爆发】，让神圣光芒净化全屏 shadow 并吸收璀璨碎片！",
+      "genre": ["Snake Game", "Arcade", "Gothic Cathedral", "Stained Glass", "Puzzle Action"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-09",
+      "image": "https://dailysnake.org/assets/daily-2026-08-09-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-09/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts: Cinzel, Outfit & Noto Serif SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Noto+Serif+SC:wght@600;700;900&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Cathedral Lighting Ambient Effects -->
+    <div class="cathedral-bg"></div>
+    <div class="god-rays-overlay"></div>
+    <div class="stained-glass-orb orb-red"></div>
+    <div class="stained-glass-orb orb-blue"></div>
+    <div class="stained-glass-orb orb-gold"></div>
+
+    <div class="app-container">
+        <!-- Gothic Header -->
+        <header class="header">
+            <a href="../../index.html" class="back-home-btn" id="back-to-lobby-btn" title="返回每日大厅">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>每日大厅</span>
+            </a>
+            <div class="title-wrapper">
+                <h1 class="main-title">哥特花窗 <span class="sub-highlight">GOTHIC ROSE WINDOW</span></h1>
+                <p class="subtitle">&bull; 圣辉琉璃 &bull; 三色和弦连击 &bull; 日光折光爆发 &bull;</p>
+            </div>
+            <div class="header-actions">
+                <button id="sound-btn" class="icon-btn" title="切换音效">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <button id="help-btn" class="icon-btn" title="玩法指南">
+                    <span>❓</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Stats Dashboard -->
+            <div class="dashboard">
+                <div class="stat-card">
+                    <span class="stat-label">圣辉积分</span>
+                    <span id="score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">最高纪录</span>
+                    <span id="high-score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">三色和弦</span>
+                    <span id="combo-val" class="stat-value">x1</span>
+                </div>
+                <div class="stat-card energy-card">
+                    <span class="stat-label">花窗爆发 [SPACE]</span>
+                    <div class="energy-bar-track">
+                        <div id="energy-bar-fill" class="energy-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Wrapper with Gothic Arch Frame -->
+            <div class="canvas-outer-frame">
+                <div class="gothic-arch-top"></div>
+                <div class="gothic-corner top-left"></div>
+                <div class="gothic-corner top-right"></div>
+                <div class="gothic-corner bottom-left"></div>
+                <div class="gothic-corner bottom-right"></div>
+
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Active Radiance Overlay -->
+                    <div id="radiance-overlay" class="radiance-overlay hidden">
+                        <div class="radiance-badge">
+                            <span class="badge-icon">⚜️</span>
+                            <span>ROSE RADIANCE 光辉爆发中</span>
+                        </div>
+                    </div>
+
+                    <!-- Start Overlay Screen -->
+                    <div id="start-screen" class="overlay-screen">
+                        <div class="gothic-card">
+                            <div class="card-inner-border">
+                                <h2 class="card-heading">STAINED GLASS SERPENT</h2>
+                                <div class="gold-divider"></div>
+                                <p class="card-desc">操控圣辉琉璃蛇，在哥特教堂中搜集红宝、蓝宝与祖母绿花窗碎片！</p>
+                                <p class="card-tip">按 <kbd>SPACE</kbd> 释放 <b>【玫瑰花窗光辉爆发】</b> 获得无敌并净化暗影！</p>
+                                <button id="start-btn" class="gothic-btn pulse-glow">⚜️ 开启圣殿 (START)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay Screen -->
+                    <div id="gameover-screen" class="overlay-screen hidden">
+                        <div class="gothic-card">
+                            <div class="card-inner-border">
+                                <h2 class="card-heading text-danger">SACRED REQUIEM &bull; 圣殿安息</h2>
+                                <div class="gold-divider"></div>
+                                <div class="final-stats">
+                                    <div class="final-stat-row">
+                                        <span>本场得分：</span>
+                                        <strong id="final-score">0</strong>
+                                    </div>
+                                    <div class="final-stat-row">
+                                        <span>最高纪录：</span>
+                                        <strong id="final-high-score">0</strong>
+                                    </div>
+                                    <div class="final-stat-row">
+                                        <span>最高和弦连击：</span>
+                                        <strong id="final-combo-count">x1</strong>
+                                    </div>
+                                </div>
+                                <button id="restart-btn" class="gothic-btn pulse-glow">🔄 重启圣殿 (RESTART)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Ability Skill Button -->
+            <div class="skill-bar">
+                <button id="skill-btn" class="skill-btn" disabled>
+                    <div class="skill-icon">⚜️</div>
+                    <div class="skill-label">
+                        <span class="skill-name">光辉爆发 (RADIANCE)</span>
+                        <span class="skill-shortcut">[ Space 键 ]</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Touch Controls for Mobile Devices -->
+            <div class="mobile-controls">
+                <div class="dpad">
+                    <button class="dpad-btn dpad-up" id="btn-up" aria-label="Up">▲</button>
+                    <button class="dpad-btn dpad-left" id="btn-left" aria-label="Left">◀</button>
+                    <button class="dpad-btn dpad-center" id="btn-center" aria-label="Center">⚜️</button>
+                    <button class="dpad-btn dpad-right" id="btn-right" aria-label="Right">▶</button>
+                    <button class="dpad-btn dpad-down" id="btn-down" aria-label="Down">▼</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content gothic-card">
+            <div class="card-inner-border">
+                <button class="modal-close" id="close-help">&times;</button>
+                <h3 class="modal-title">⚜️ 哥特花窗玩法说明</h3>
+                <div class="gold-divider"></div>
+                <div class="help-grid">
+                    <div class="help-item">
+                        <div class="help-icon">💎</div>
+                        <div class="help-info">
+                            <strong>三色琉璃碎片 (+10分)</strong>
+                            <p>包含红宝石、蓝宝石与祖母绿琉璃。依次收集不同颜色的碎片可提升和弦倍率！</p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-icon">🔮</div>
+                        <div class="help-info">
+                            <strong>太阳三棱镜 (+50分)</strong>
+                            <p>稀有光华三棱镜，直接填满 30% 爆发能量条并触发全屏彩光！</p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-icon">🗿</div>
+                        <div class="help-info">
+                            <strong>石雕鬼面阴影 (障碍物)</strong>
+                            <p>暗影石雕鬼面，撞击会导致失败。但在【光辉爆发】期间可将其彻底净化！</p>
+                        </div>
+                    </div>
+                    <div class="help-item highlight-box">
+                        <div class="help-icon">✨</div>
+                        <div class="help-info">
+                            <strong>【光辉爆发】特技 [SPACE]</strong>
+                            <p>能量满时按空格，激活神圣光辉：获得 6 秒无敌、磁力吸附全屏琉璃并净化鬼面阴影！</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="gothic-btn modal-confirm-btn" id="confirm-help">踏入光辉圣殿！</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
