@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>赛博街头：霓虹涂鸦与领地画卷 (2026-08-10) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新赛博街头涂鸦风贪吃蛇！操控霓虹喷涂蛇在暗夜砖墙画卷上穿梭，收集青蓝、品红与荧光黄喷漆罐，触发三色调和倍率连击。按 [Space] 释放【狂风极速喷涂】，以耀眼气雾磁吸全屏珍馐并绘制壁画！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-10/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="赛博街头：霓虹涂鸦与领地画卷 (2026-08-10) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新赛博街头涂鸦风贪吃蛇！操控霓虹喷涂蛇在暗夜砖墙画卷上穿梭，收集青蓝、品红与荧光黄喷漆罐，触发三色调和倍率连击。按 [Space] 释放【狂风极速喷涂】，以耀眼气雾磁吸全屏珍馐并绘制壁画！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-10/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-10-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="赛博街头：霓虹涂鸦与领地画卷 (2026-08-10) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新赛博街头涂鸦风贪吃蛇！操控霓虹喷涂蛇在暗夜砖墙画卷上穿梭，收集青蓝、品红与荧光黄喷漆罐，触发三色调和倍率连击。按 [Space] 释放【狂风极速喷涂】，以耀眼气雾磁吸全屏珍馐并绘制壁画！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-10-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "赛博街头：霓虹涂鸦与领地画卷",
+      "headline": "赛博街头：霓虹涂鸦与领地画卷 (2026-08-10) - Daily Snake 每日贪吃蛇",
+      "description": "全新赛博街头涂鸦风贪吃蛇！操控霓虹喷涂蛇在暗夜砖墙画卷上穿梭，收集青蓝、品红与荧光黄喷漆罐，触发三色调和倍率连击。按 [Space] 释放【狂风极速喷涂】，以耀眼气雾磁吸全屏珍馐并绘制壁画！",
+      "genre": ["Snake Game", "Arcade", "Street Art", "Cyberpunk", "Graffiti Paint"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-10",
+      "image": "https://dailysnake.org/assets/daily-2026-08-10-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-10/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts: Permanent Marker, Orbitron, Outfit & Noto Sans SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;900&family=Orbitron:wght@600;800;900&family=Outfit:wght@600;800;900&family=Permanent+Marker&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Street Neon Background Effects -->
+    <div class="street-bg"></div>
+    <div class="neon-fog-overlay"></div>
+    <div class="neon-light-orb orb-cyan"></div>
+    <div class="neon-light-orb orb-pink"></div>
+    <div class="neon-light-orb orb-yellow"></div>
+
+    <div class="app-container">
+        <!-- Street Style Header -->
+        <header class="header">
+            <a href="../../index.html" class="back-home-btn" id="back-to-lobby-btn" title="返回每日大厅">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>每日大厅</span>
+            </a>
+            <div class="title-wrapper">
+                <h1 class="main-title">赛博街头 <span class="sub-highlight">CYBER GRAFFITI</span></h1>
+                <p class="subtitle">&bull; 霓虹喷涂 &bull; 三色颜料连击 &bull; 狂风极速爆破 &bull;</p>
+            </div>
+            <div class="header-actions">
+                <button id="sound-btn" class="icon-btn" title="切换音效">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <button id="help-btn" class="icon-btn" title="玩法指南">
+                    <span>❓</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Stats Dashboard -->
+            <div class="dashboard">
+                <div class="stat-card card-cyan">
+                    <span class="stat-label">街头积分</span>
+                    <span id="score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card card-yellow">
+                    <span class="stat-label">最高纪录</span>
+                    <span id="high-score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card card-pink">
+                    <span class="stat-label">调和倍率</span>
+                    <span id="combo-val" class="stat-value">x1</span>
+                </div>
+                <div class="stat-card energy-card">
+                    <span class="stat-label">极速喷涂 [SPACE]</span>
+                    <div class="energy-bar-track">
+                        <div id="energy-bar-fill" class="energy-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Canvas Wrapper with Street Wall Frame -->
+            <div class="canvas-outer-frame">
+                <div class="street-frame-header">
+                    <span class="frame-tag">CANVAS: NIGHT URBAN BRICK WALL</span>
+                    <span class="frame-status" id="canvas-status">STATUS: READY</span>
+                </div>
+                <div class="canvas-corner top-left"></div>
+                <div class="canvas-corner top-right"></div>
+                <div class="canvas-corner bottom-left"></div>
+                <div class="canvas-corner bottom-right"></div>
+
+                <div class="canvas-container">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+
+                    <!-- Active Hyper Spray Overlay -->
+                    <div id="hyper-overlay" class="hyper-overlay hidden">
+                        <div class="hyper-badge">
+                            <span class="badge-icon">🎨</span>
+                            <span>HYPER SPRAY 极速喷涂爆发中</span>
+                        </div>
+                    </div>
+
+                    <!-- Start Overlay Screen -->
+                    <div id="start-screen" class="overlay-screen">
+                        <div class="street-card">
+                            <div class="card-inner-border">
+                                <h2 class="card-heading">NEON GRAFFITI SERPENT</h2>
+                                <div class="neon-divider"></div>
+                                <p class="card-desc">操控霓虹喷涂蛇，在城市黑夜砖墙上搜集青蓝、品红与黄颜喷漆罐！</p>
+                                <p class="card-tip">按 <kbd>SPACE</kbd> 释放 <b>【狂风极速喷涂】</b> 磁吸全屏珍馐并触发无敌彩虹流光！</p>
+                                <button id="start-btn" class="street-btn pulse-glow">🎨 开启街头画卷 (START)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay Screen -->
+                    <div id="gameover-screen" class="overlay-screen hidden">
+                        <div class="street-card">
+                            <div class="card-inner-border">
+                                <h2 class="card-heading text-danger">STREET JAM OVER &bull; 创作终章</h2>
+                                <div class="neon-divider"></div>
+                                <div class="final-stats">
+                                    <div class="final-stat-row">
+                                        <span>本场得分：</span>
+                                        <strong id="final-score" class="text-cyan">0</strong>
+                                    </div>
+                                    <div class="final-stat-row">
+                                        <span>最高纪录：</span>
+                                        <strong id="final-high-score" class="text-yellow">0</strong>
+                                    </div>
+                                    <div class="final-stat-row">
+                                        <span>最高调和倍率：</span>
+                                        <strong id="final-combo-count" class="text-pink">x1</strong>
+                                    </div>
+                                </div>
+                                <button id="restart-btn" class="street-btn pulse-glow">🔄 重启画卷 (RESTART)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Ability Skill Button -->
+            <div class="skill-bar">
+                <button id="skill-btn" class="skill-btn" disabled>
+                    <div class="skill-icon">🎨</div>
+                    <div class="skill-label">
+                        <span class="skill-name">狂风极速喷涂 (HYPER SPRAY)</span>
+                        <span class="skill-shortcut">[ Space 键 ]</span>
+                    </div>
+                </button>
+            </div>
+
+            <!-- Touch Controls for Mobile Devices -->
+            <div class="mobile-controls">
+                <div class="dpad">
+                    <button class="dpad-btn dpad-up" id="btn-up" aria-label="Up">▲</button>
+                    <button class="dpad-btn dpad-left" id="btn-left" aria-label="Left">◀</button>
+                    <button class="dpad-btn dpad-center" id="btn-center" aria-label="Center">🎨</button>
+                    <button class="dpad-btn dpad-right" id="btn-right" aria-label="Right">▶</button>
+                    <button class="dpad-btn dpad-down" id="btn-down" aria-label="Down">▼</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal hidden">
+        <div class="modal-content street-card">
+            <div class="card-inner-border">
+                <button class="modal-close" id="close-help">&times;</button>
+                <h3 class="modal-title">🎨 赛博街头玩法说明</h3>
+                <div class="neon-divider"></div>
+                <div class="help-grid">
+                    <div class="help-item">
+                        <div class="help-icon">🛢️</div>
+                        <div class="help-info">
+                            <strong>炫彩喷漆罐 (+10分)</strong>
+                            <p>包含青蓝(#00f0ff)、品红(#ff007f)与荧光黄(#ffe600)喷漆罐。连续收集不同颜色的喷漆可触发三色调和倍率！</p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-icon">🌟</div>
+                        <div class="help-info">
+                            <strong>金箔特别版喷罐 (+50分)</strong>
+                            <p>稀有金色喷罐，直接填满 30% 极速能量条，并在地面留下金光流动轨迹！</p>
+                        </div>
+                    </div>
+                    <div class="help-item">
+                        <div class="help-icon">🧱</div>
+                        <div class="help-info">
+                            <strong>街头障壁砖墙 (障碍物)</strong>
+                            <p>黑夜废墟障壁砖块，碰撞会导致画卷中断。但在【极速喷涂】模式下可将其摧毁！</p>
+                        </div>
+                    </div>
+                    <div class="help-item highlight-box">
+                        <div class="help-icon">⚡</div>
+                        <div class="help-info">
+                            <strong>【狂风极速喷涂】特技 [SPACE]</strong>
+                            <p>能量满时按空格，激活极速模式：获得 6 秒无敌、全屏漆雾磁吸罐体并粉碎全屏障壁砖块！</p>
+                        </div>
+                    </div>
+                </div>
+                <button class="street-btn modal-confirm-btn" id="confirm-help">踏入街头领地！</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
