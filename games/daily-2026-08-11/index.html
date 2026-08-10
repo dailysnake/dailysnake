@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>时空残影：因果回路与时间停滞 (2026-08-11) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新时空双重残影贪吃蛇！操控量子钟表蛇在科幻暗夜时空秘境中穿梭，回避16步前的历史残影。收集过去之砂、未来结晶与悖论质核，按 [Space] 开启【时空停滞】，磁吸全屏珍馐并虚化穿越因果悖论！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-11/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="时空残影：因果回路与时间停滞 (2026-08-11) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新时空双重残影贪吃蛇！操控量子钟表蛇在科幻暗夜时空秘境中穿梭，回避16步前的历史残影。收集过去之砂、未来结晶与悖论质核，按 [Space] 开启【时空停滞】，磁吸全屏珍馐并虚化穿越因果悖论！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-11/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-11-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="时空残影：因果回路与时间停滞 (2026-08-11) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新时空双重残影贪吃蛇！操控量子钟表蛇在科幻暗夜时空秘境中穿梭，回避16步前的历史残影。收集过去之砂、未来结晶与悖论质核，按 [Space] 开启【时空停滞】，磁吸全屏珍馐并虚化穿越因果悖论！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-11-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "时空残影：因果回路与时间停滞",
+      "headline": "时空残影：因果回路与时间停滞 (2026-08-11) - Daily Snake 每日贪吃蛇",
+      "description": "全新时空双重残影贪吃蛇！操控量子钟表蛇在科幻暗夜时空秘境中穿梭，回避16步前的历史残影。收集过去之砂、未来结晶与悖论质核，按 [Space] 开启【时空停滞】，磁吸全屏珍馐并虚化穿越因果悖论！",
+      "genre": ["Snake Game", "Arcade", "Time Travel", "Sci-Fi", "Chrono Echo"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-11",
+      "image": "https://dailysnake.org/assets/daily-2026-08-11-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-11/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts: Orbitron, Outfit & Noto Sans SC -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@500;700;900&family=Orbitron:wght@600;800;900&family=Outfit:wght@600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Background Ambient Effects -->
+    <div class="chrono-bg"></div>
+    <div class="time-warp-overlay" id="time-warp-overlay"></div>
+    <div class="glow-orb orb-cyan"></div>
+    <div class="glow-orb orb-amber"></div>
+    <div class="glow-orb orb-violet"></div>
+
+    <div class="app-container">
+        <!-- Chrono Header -->
+        <header class="header">
+            <a href="../../index.html" class="back-home-btn" id="back-to-lobby-btn" title="返回每日大厅">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>每日大厅</span>
+            </a>
+            <div class="title-wrapper">
+                <h1 class="main-title">时空残影 <span class="sub-highlight">CHRONO ECHO</span></h1>
+                <p class="subtitle">&bull; 历史残影回路 &bull; 因果悖论避障 &bull; 时空停滞虚化 &bull;</p>
+            </div>
+            <div class="header-actions">
+                <button id="sound-btn" class="icon-btn" title="切换音效">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <button id="help-btn" class="icon-btn" title="玩法指南">
+                    <span>❓</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Stats Dashboard -->
+            <div class="dashboard">
+                <div class="stat-card card-cyan">
+                    <span class="stat-label">时空积分</span>
+                    <span id="score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card card-amber">
+                    <span class="stat-label">最高纪录</span>
+                    <span id="high-score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card card-violet">
+                    <span class="stat-label">因果倍率</span>
+                    <span id="combo-val" class="stat-value">x1</span>
+                </div>
+                <div class="stat-card energy-card">
+                    <span class="stat-label">时空停滞 [SPACE]</span>
+                    <div class="energy-bar-track">
+                        <div id="energy-bar-fill" class="energy-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Viewport Container -->
+            <div class="game-container">
+                <div class="canvas-wrapper" id="canvas-wrapper">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+                    <div id="stasis-overlay" class="stasis-overlay">
+                        <div class="stasis-badge">⌛ 时空停滞中 - 磁吸全屏 &amp; 残影虚化</div>
+                    </div>
+
+                    <!-- Start Overlay Screen -->
+                    <div id="start-screen" class="overlay-screen active">
+                        <div class="overlay-card glass-panel">
+                            <div class="chrono-icon-wrapper">
+                                <svg width="70" height="70" viewBox="0 0 100 100" fill="none" class="chrono-svg">
+                                    <circle cx="50" cy="50" r="42" stroke="#00f0ff" stroke-width="4" stroke-dasharray="8 4"/>
+                                    <circle cx="50" cy="50" r="32" stroke="#ffb700" stroke-width="3"/>
+                                    <path d="M50 20 L50 50 L70 50" stroke="#e024ff" stroke-width="4" stroke-linecap="round"/>
+                                    <circle cx="50" cy="50" r="6" fill="#00f0ff"/>
+                                </svg>
+                            </div>
+                            <h2 class="overlay-title">CHRONO ECHO</h2>
+                            <p class="overlay-subtitle">时空残影：因果回路与时间停滞</p>
+                            <div class="rules-summary">
+                                <div class="rule-item">
+                                    <span class="rule-icon">⌛</span>
+                                    <span><strong>时间残影</strong>：回避16步前跟随你的紫色历史残影蛇！</span>
+                                </div>
+                                <div class="rule-item">
+                                    <span class="rule-icon">💎</span>
+                                    <span><strong>时空晶石</strong>：收集过去之砂、未来结晶与悖论质核。</span>
+                                </div>
+                                <div class="rule-item">
+                                    <span class="rule-icon">⚡</span>
+                                    <span><strong>时空停滞</strong>：按 [Space] 冻结时间、磁吸全屏晶石并穿透残影！</span>
+                                </div>
+                            </div>
+                            <button id="start-btn" class="btn btn-primary btn-glow">开启时空之旅</button>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay Screen -->
+                    <div id="gameover-screen" class="overlay-screen">
+                        <div class="overlay-card glass-panel">
+                            <div class="gameover-badge">CHRONO PARADOX</div>
+                            <h2 class="overlay-title gameover-title">因果悖论崩溃</h2>
+                            <p class="gameover-reason" id="gameover-reason">你触碰了历史残影引发了时间悖论！</p>
+                            
+                            <div class="final-stats-grid">
+                                <div class="final-stat-item">
+                                    <span class="final-label">本次得分</span>
+                                    <span class="final-val neon-cyan" id="final-score">0</span>
+                                </div>
+                                <div class="final-stat-item">
+                                    <span class="final-label">最高纪录</span>
+                                    <span class="final-val neon-amber" id="final-high-score">0</span>
+                                </div>
+                                <div class="final-stat-item">
+                                    <span class="final-label">最大连击</span>
+                                    <span class="final-val neon-violet" id="final-combo-count">x1</span>
+                                </div>
+                            </div>
+
+                            <button id="restart-btn" class="btn btn-primary btn-glow">重构时空回路</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls Bar (Skill & Status) -->
+                <div class="controls-bar">
+                    <button id="skill-btn" class="btn btn-skill" disabled>
+                        <span class="skill-icon">⌛</span>
+                        <span class="skill-text">时空停滞 (SPACE)</span>
+                    </button>
+                    <div class="canvas-status" id="canvas-status">按方向键 / WASD 开始移动</div>
+                </div>
+
+                <!-- Mobile D-Pad Controller -->
+                <div class="mobile-controls">
+                    <div class="dpad">
+                        <button class="dpad-btn dpad-up" id="btn-up" aria-label="向上">▲</button>
+                        <button class="dpad-btn dpad-left" id="btn-left" aria-label="向左">◄</button>
+                        <button class="dpad-btn dpad-center" id="btn-center" aria-label="停滞">⌛</button>
+                        <button class="dpad-btn dpad-right" id="btn-right" aria-label="向右">►</button>
+                        <button class="dpad-btn dpad-down" id="btn-down" aria-label="向下">▼</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2026 Daily Snake Studio. Chrono Echo Variant. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <!-- Help Modal -->
+    <div id="help-modal" class="modal-backdrop">
+        <div class="modal-card glass-panel">
+            <div class="modal-header">
+                <h3>时空残影 玩法规则与技巧</h3>
+                <button class="close-btn" id="close-help">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="help-section">
+                    <h4>⌛ 核心机制：时间残影 (Echo Phantom)</h4>
+                    <p>你的历史行动轨迹会在16步后形成一条紫色半透明的“时间残影蛇”。你不能撞击自己的历史残影，否则会触发因果悖论导致游戏结束！</p>
+                </div>
+                <div class="help-section">
+                    <h4>💎 三种时空晶石 (Chrono Shards)</h4>
+                    <ul>
+                        <li><span class="color-dot dot-amber"></span><strong>过去之砂 (Amber)</strong>: 增加 100 积分与基础长度。</li>
+                        <li><span class="color-dot dot-cyan"></span><strong>未来结晶 (Cyan)</strong>: 增加 250 积分，触发 1.5 倍加速与 2x 得分倍率。</li>
+                        <li><span class="color-dot dot-violet"></span><strong>悖论质核 (Violet)</strong>: 随机出现，增加 400 积分，即刻充能 50% 并粉碎全屏时空裂缝！</li>
+                    </ul>
+                </div>
+                <div class="help-section">
+                    <h4>⚡ 终极技能：时空停滞 (Chrono Stasis)</h4>
+                    <p>当能量槽满 100% 时，按 [Space] 键或点击技能按钮激活【时空停滞】：全屏时间减缓 80%，食物产生强力磁吸靠近蛇头，且蛇在此期间获得残影虚化穿透特权！</p>
+                </div>
+                <div class="help-section">
+                    <h4>🎮 操作说明</h4>
+                    <p><strong>PC 键盘</strong>: 方向键 / W A S D 转向，空格键 [Space] 释放技能，P 键暂停/继续。</p>
+                    <p><strong>移动触控</strong>: 使用底部虚拟十字 D-Pad 或在屏幕画布上滑动控制方向。</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="confirm-help">明白，开始挑战</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
