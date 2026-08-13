@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>梵高星夜：印象星漩与画彩灵蛇 (2026-08-14) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新后印象派油画艺术贪吃蛇变体！在梵高《星夜》般的动态油彩画卷中游弋，收集星光灵珠与太阳花精，调配大师油漆管色彩。按 [Space] 或点击技能键触发【星漩暴风·印象倾泻】，化身金蓝星流彗星无敌冲刺、磁吸全场画彩并卷碎乌云迷雾！">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-08-14/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="梵高星夜：印象星漩与画彩灵蛇 (2026-08-14) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新后印象派油画艺术贪吃蛇变体！在梵高《星夜》般的动态油彩画卷中游弋，收集星光灵珠与太阳花精，调配大师油漆管色彩。按 [Space] 触发【星漩暴风·印象倾泻】，化身金蓝星流彗星无敌冲刺、磁吸全场画彩并卷碎乌云迷雾！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-08-14/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-08-14-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="梵高星夜：印象星漩与画彩灵蛇 (2026-08-14) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新后印象派油画艺术贪吃蛇变体！操控星流彩蛇在梵高星夜画卷中游弋，收集星光与太阳花精，触发【星漩暴风·印象倾泻】！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-08-14-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "梵高星夜：印象星漩与画彩灵蛇",
+      "headline": "梵高星夜：印象星漩与画彩灵蛇 (2026-08-14) - Daily Snake 每日贪吃蛇",
+      "description": "全新后印象派油画艺术贪吃蛇变体！在梵高《星夜》般的动态油彩画卷中游弋，收集星光灵珠与太阳花精，调配大师油漆管色彩。按 [Space] 或点击技能键触发【星漩暴风·印象倾泻】，化身金蓝星流彗星无敌冲刺、磁吸全场画彩并卷碎乌云迷雾！",
+      "genre": ["Snake Game", "Arcade", "Impressionism", "Van Gogh Art", "Cosmic Aesthetics"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-08-14",
+      "image": "https://dailysnake.org/assets/daily-2026-08-14-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-08-14/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts: Playfair Display, Cinzel, Noto Sans SC, Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800;900&family=Noto+Sans+SC:wght@500;700;900&family=Outfit:wght@600;800;900&family=Playfair+Display:ital,wght@0,600;0,800;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Canvas & Oil Texture Ambient Overlay -->
+    <div class="starry-canvas-bg"></div>
+    <div class="swirling-vector-overlay"></div>
+    <div class="starry-glow-nebula"></div>
+    <div class="ambient-paint-dust"></div>
+
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="header">
+            <a href="../../index.html" class="back-home-btn" id="back-to-lobby-btn" title="返回每日大厅">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                <span>每日大厅</span>
+            </a>
+            <div class="title-wrapper">
+                <h1 class="main-title">梵高星夜 <span class="sub-highlight">STARRY NIGHT SERPENT</span></h1>
+                <p class="subtitle">&bull; 油彩画卷流纹 &bull; 梵高星光凝萃 &bull; 星漩暴风倾泻 &bull;</p>
+            </div>
+            <div class="header-actions">
+                <button id="sound-btn" class="icon-btn" title="切换音效">
+                    <span id="sound-icon">🔊</span>
+                </button>
+                <button id="help-btn" class="icon-btn" title="艺术指南">
+                    <span>🎨</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Stats Dashboard -->
+            <div class="dashboard">
+                <div class="stat-card card-blue">
+                    <span class="stat-label">画作灵感得分</span>
+                    <span id="score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card card-gold">
+                    <span class="stat-label">大师最高纪录</span>
+                    <span id="high-score-val" class="stat-value">0</span>
+                </div>
+                <div class="stat-card card-star">
+                    <span class="stat-label">色彩连击</span>
+                    <span id="combo-val" class="stat-value">x1</span>
+                </div>
+                <div class="stat-card energy-card">
+                    <span class="stat-label">星漩能量 [SPACE 暴风]</span>
+                    <div class="energy-bar-track">
+                        <div id="energy-bar-fill" class="energy-bar-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Viewport Container -->
+            <div class="game-container">
+                <div class="canvas-wrapper" id="canvas-wrapper">
+                    <canvas id="game-canvas" width="600" height="600"></canvas>
+                    <div id="starry-vortex-overlay" class="starry-vortex-overlay">
+                        <div class="vortex-badge">✨ 星漩暴风·印象倾泻 - 全场画彩磁吸 &amp; 卷碎乌云迷雾！</div>
+                    </div>
+
+                    <!-- Start Overlay Screen -->
+                    <div id="start-screen" class="overlay-screen active">
+                        <div class="overlay-card glass-panel">
+                            <div class="art-icon-wrapper">
+                                <svg width="84" height="84" viewBox="0 0 100 100" fill="none" class="art-svg">
+                                    <circle cx="50" cy="50" r="44" stroke="#ffcb05" stroke-width="4" stroke-dasharray="12 6"/>
+                                    <path d="M20 50 Q35 20, 50 50 T80 50" stroke="#1a59b8" stroke-width="5" fill="none" stroke-linecap="round"/>
+                                    <circle cx="50" cy="50" r="16" fill="#ff9900" opacity="0.9"/>
+                                    <circle cx="50" cy="50" r="8" fill="#ffffff"/>
+                                    <polygon points="50,15 54,28 67,28 56,36 60,49 50,41 40,49 44,36 33,28 46,28" fill="#ffd700"/>
+                                </svg>
+                            </div>
+                            <h2 class="overlay-title">STARRY NIGHT SERPENT</h2>
+                            <p class="overlay-subtitle">梵高星夜：印象星漩与画彩灵蛇</p>
+                            <div class="rules-summary">
+                                <div class="rule-item">
+                                    <span class="rule-icon">🌟</span>
+                                    <span><strong>星光灵珠 &amp; 太阳花精</strong>：吞噬璀璨星珠与向日葵精魂，延展细腻油彩蛇身并充能星漩能量。</span>
+                                </div>
+                                <div class="rule-item">
+                                    <span class="rule-icon">🎨</span>
+                                    <span><strong>大师调色管</strong>：拾取钴蓝（磁吸）、铬黄（双倍爆发）、翡翠绿（凝缩蛇身）带来特殊艺术增益！</span>
+                                </div>
+                                <div class="rule-item">
+                                    <span class="rule-icon">☁️</span>
+                                    <span><strong>夜幕乌云迷雾</strong>：避开画卷中扭曲游走的乌云漩涡，切勿冲撞画布边框！</span>
+                                </div>
+                                <div class="rule-item">
+                                    <span class="rule-icon">✨</span>
+                                    <span><strong>星漩暴风</strong>：能量充能后按 [Space] 或点击【星漩暴风】按钮，化身无敌金蓝彗星全屏磁吸并冲碎乌云！</span>
+                                </div>
+                            </div>
+                            <button id="start-btn" class="btn btn-primary btn-glow">绘制星夜巨作</button>
+                        </div>
+                    </div>
+
+                    <!-- Pause Overlay Screen -->
+                    <div id="pause-screen" class="overlay-screen">
+                        <div class="overlay-card glass-panel">
+                            <h2 class="overlay-title">画布沉思中</h2>
+                            <p class="overlay-subtitle">星夜笔触暂停流动，按空格键或点击恢复</p>
+                            <button id="resume-btn" class="btn btn-primary">继续创作</button>
+                        </div>
+                    </div>
+
+                    <!-- Game Over Overlay Screen -->
+                    <div id="gameover-screen" class="overlay-screen">
+                        <div class="overlay-card glass-panel">
+                            <h2 class="overlay-title text-gold">星辉落幕</h2>
+                            <p class="overlay-subtitle">星夜画卷创作完成，您的后印象派艺术结晶：</p>
+                            <div class="gameover-stats">
+                                <div class="go-stat">
+                                    <span>画作灵感得分</span>
+                                    <strong id="final-score">0</strong>
+                                </div>
+                                <div class="go-stat">
+                                    <span>大师最高纪录</span>
+                                    <strong id="final-high-score">0</strong>
+                                </div>
+                                <div class="go-stat">
+                                    <span>最高色彩连击</span>
+                                    <strong id="final-max-combo">x1</strong>
+                                </div>
+                                <div class="go-stat">
+                                    <span>星漩暴风释放</span>
+                                    <strong id="final-vortex-blasts">0</strong>
+                                </div>
+                            </div>
+                            <div class="go-actions">
+                                <button id="restart-btn" class="btn btn-primary btn-glow">重新提笔</button>
+                                <button id="share-btn" class="btn btn-secondary">展出名画</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Touch Controls for Mobile -->
+                <div class="touch-controls">
+                    <div class="dpad">
+                        <button class="dpad-btn dpad-up" id="btn-up" aria-label="Up">▲</button>
+                        <button class="dpad-btn dpad-left" id="btn-left" aria-label="Left">◄</button>
+                        <button class="dpad-btn dpad-right" id="btn-right" aria-label="Right">►</button>
+                        <button class="dpad-btn dpad-down" id="btn-down" aria-label="Down">▼</button>
+                    </div>
+                    <button class="vortex-touch-btn" id="btn-vortex">
+                        <span class="btn-icon">✨</span>
+                        <span class="btn-text">星漩暴风</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Help Modal -->
+        <div id="help-modal" class="modal-overlay">
+            <div class="modal-card glass-panel">
+                <div class="modal-header">
+                    <h3>🎨 梵高星夜·画艺游彩指南</h3>
+                    <button id="close-help-btn" class="modal-close-btn">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <ul class="help-list">
+                        <li><strong>方向控制</strong>：键盘方向键/WASD操控灵蛇在画卷中游弋（移动端支持虚拟触控盘与滑动手势）。</li>
+                        <li><strong>星光灵珠 🌟</strong>：梵高夜空微光，加 100 分，提升 10% 星漩能量。</li>
+                        <li><strong>向日葵精魂 🌻</strong>：灿烂炽热艺术之花，加 300 分，充能 30% 星漩能量。</li>
+                        <li><strong>大师调色管 🎨</strong>：
+                            <br>&bull; <span style="color:#2d68c4">钴蓝管</span>：开启 6 秒强力磁力场，自动吸取周边星珠。
+                            <br>&bull; <span style="color:#ffc107">铬黄管</span>：开启 6 秒双倍得分与提速爆发。
+                            <br>&bull; <span style="color:#20c997">翡翠管</span>：瞬间裁剪 2 节尾巴（保留得分）。
+                        </li>
+                        <li><strong>夜幕乌云迷雾 ☁️</strong>：游走在画布中的漆黑风暴漩涡，触碰将摧毁画卷！星漩暴风模式下可将其卷碎（+300 分）。</li>
+                        <li><strong>星漩暴风·印象倾泻 ✨</strong>：能量达 30% 以上按 [Space] 或点击【星漩暴风】按钮唤醒！无敌彗星状态，磁吸全屏星珠，并清理乌云迷雾！</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>&copy; 2026 Daily Snake Studio. 每日贪吃蛇 &bull; 梵高星夜 (2026-08-14)</p>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
