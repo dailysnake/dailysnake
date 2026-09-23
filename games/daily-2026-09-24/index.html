@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>定格黏土：奇趣彩泥与塑形重构 (2026-09-24) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新定格动画黏土重构贪吃蛇变体！在手工台瓦楞纸板上游弋，收集三原色彩泥引发【调色融合反应】（橘彩爆破/翡翠弹力护盾/紫晶磁体/七彩虹泥）。积累塑形能量，按 [Space] 触发【擀面杖碾压大风暴】将硬化泥块碾平！纯 Web Audio 捏捏合成音效，支持PC与移动触控。">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-09-24/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="定格黏土：奇趣彩泥与塑形重构 (2026-09-24) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新定格动画黏土重构贪吃蛇变体！收集三原色彩泥引发【调色融合反应】，按 [Space] 触发【擀面杖碾压大风暴】粉碎硬化泥块！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-09-24/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-09-24-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="定格黏土：奇趣彩泥与塑形重构 (2026-09-24) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新定格动画黏土重构贪吃蛇变体！收集三原色彩泥引发调色融合，触发擀面杖全屏碾压！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-09-24-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "定格黏土：奇趣彩泥与塑形重构",
+      "headline": "定格黏土：奇趣彩泥与塑形重构 (2026-09-24) - Daily Snake 每日贪吃蛇",
+      "description": "全新定格动画黏土重构贪吃蛇变体！在手工台瓦楞纸板上游弋，收集三原色彩泥引发调色融合反应，按 [Space] 触发擀面杖碾压大风暴粉碎硬化泥块！",
+      "genre": ["Snake Game", "Arcade", "Claymation", "Physics", "Puzzle", "Action"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-09-24",
+      "image": "https://dailysnake.org/assets/daily-2026-09-24-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-09-24/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Outfit:wght@500;700;800&family=Noto+Sans+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Nav Bar -->
+        <header class="top-bar">
+            <div class="brand">
+                <a href="../../index.html" class="back-link" title="返回每日贪吃蛇大厅">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M20,11H7.83l5.59-5.59L12,4L4,12L12,20l1.41-1.41L7.83,13H20V11Z"/></svg>
+                    <span>大厅</span>
+                </a>
+                <div class="title-group">
+                    <span class="game-tag">2026-09-24 今日首发</span>
+                    <h1 class="game-title">定格黏土：奇趣彩泥与塑形重构</h1>
+                </div>
+            </div>
+            <div class="top-actions">
+                <button id="fps-toggle-btn" class="clay-pill-btn" title="切换定格画帧/流畅模式 (F)">
+                    <span id="fps-label">12 FPS 定格</span>
+                </button>
+                <button id="audio-toggle-btn" class="icon-btn" title="声音开关 (M)">
+                    <svg id="audio-on-icon" viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.2 15.43,8.63 14,7.97V16.02C15.43,15.37 16.5,13.8 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>
+                    <svg id="audio-off-icon" viewBox="0 0 24 24" class="icon hidden"><path fill="currentColor" d="M12,4L7,9H3V15H7L12,20V4M16.59,12L14,9.41L15.41,8L18,10.59L20.59,8L22,9.41L19.41,12L22,14.59L20.59,16L18,13.41L15.41,16L14,14.59L16.59,12Z"/></svg>
+                </button>
+                <button id="pause-btn" class="icon-btn" title="暂停/继续 (P)">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z"/></svg>
+                </button>
+                <button id="help-btn" class="icon-btn" title="玩法指南">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,22A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard HUD -->
+        <div class="hud-panel">
+            <div class="hud-card clay-card">
+                <span class="hud-label">CLAY SCORE 塑形得分</span>
+                <span id="score-val" class="hud-value clay-yellow">0</span>
+            </div>
+            <div class="hud-card clay-card">
+                <span class="hud-label">COLOR COMBO 调色融合</span>
+                <div class="combo-dots">
+                    <span id="combo-dot-1" class="combo-dot empty"></span>
+                    <span class="combo-plus">+</span>
+                    <span id="combo-dot-2" class="combo-dot empty"></span>
+                    <span class="combo-equal">=</span>
+                    <span id="combo-result" class="combo-text">未融合</span>
+                </div>
+            </div>
+            <div class="hud-card clay-card">
+                <span class="hud-label">ACTIVE BUFF 当前状态</span>
+                <span id="buff-val" class="hud-value clay-green">标准黏土</span>
+            </div>
+            <div class="hud-card clay-card">
+                <span class="hud-label">BEST RECORD 最高纪录</span>
+                <span id="high-score-val" class="hud-value clay-orange">0</span>
+            </div>
+        </div>
+
+        <!-- Rolling Pin Skill Gauge Bar -->
+        <div class="rolling-pin-gauge-container">
+            <div class="gauge-header">
+                <span class="gauge-label">🪵 擀面杖碾压能量 ROLLING PIN PRESS (按 [SPACE] 或 按钮激活)</span>
+                <span id="gauge-status-text" class="gauge-status">揉捏蓄力中 0%</span>
+            </div>
+            <div class="gauge-progress-bar">
+                <div id="gauge-fill" class="gauge-fill" style="width: 0%;"></div>
+                <div class="gauge-pin-head"></div>
+            </div>
+        </div>
+
+        <!-- Canvas Game Viewport -->
+        <main class="game-viewport">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Touch Skill Floating Button for Mobile -->
+            <button id="mobile-skill-btn" class="mobile-skill-btn" aria-label="触发擀面杖碾压">
+                <div class="btn-inner">
+                    <span class="skill-btn-icon">🪵</span>
+                    <span class="skill-btn-text">擀面杖碾压</span>
+                </div>
+                <div class="btn-ripple"></div>
+            </button>
+
+            <!-- Overlay Game Over Screen -->
+            <div id="game-over-modal" class="modal-overlay hidden">
+                <div class="modal-card clay-modal">
+                    <div class="modal-badge clay-badge-red">CLAY COLLAPSE</div>
+                    <h2>黏土撞击 · 变形中断</h2>
+                    <p class="modal-desc">彩泥蛇触碰到了坚硬的硬化泥块或工作台边缘。本次塑形艺术成果总结如下：</p>
+                    <div class="score-summary-grid">
+                        <div class="summary-box">
+                            <span class="sum-label">最终塑形得分</span>
+                            <span id="final-score" class="sum-value clay-yellow">0</span>
+                        </div>
+                        <div class="summary-box">
+                            <span class="sum-label">调色融合触发</span>
+                            <span id="final-fusions" class="sum-value clay-green">0 次</span>
+                        </div>
+                        <div class="summary-box">
+                            <span class="sum-label">擀面杖碾压次数</span>
+                            <span id="final-pins" class="sum-value clay-orange">0 次</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="restart-btn" class="btn btn-primary clay-btn">重新捏制 (R)</button>
+                        <a href="../../index.html" class="btn btn-outline clay-btn-outline">返回大厅</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay Pause Screen -->
+            <div id="pause-modal" class="modal-overlay hidden">
+                <div class="modal-card clay-modal">
+                    <div class="modal-badge clay-badge-blue">WORKBENCH PAUSED</div>
+                    <h2>手工台定格暂停中</h2>
+                    <p class="modal-desc">按 [P] 键或点击下方按钮继续进行彩泥创作。</p>
+                    <div class="modal-actions">
+                        <button id="resume-btn" class="btn btn-primary clay-btn">继续创作 (P)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay Help / Guide Modal -->
+            <div id="help-modal" class="modal-overlay hidden">
+                <div class="modal-card help-card clay-modal">
+                    <div class="modal-badge clay-badge-gold">CRAFTING MANUAL</div>
+                    <h2>定格黏土 · 玩法机制与手捏指南</h2>
+                    <div class="guide-list">
+                        <div class="guide-item">
+                            <div class="guide-icon">🔴🔵🟡</div>
+                            <div class="guide-text">
+                                <strong>三原色彩泥球：</strong>吃掉红、蓝、黄彩泥增长身体并填充调色盘。
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <div class="guide-icon">🎨</div>
+                            <div class="guide-text">
+                                <strong>调色融合反应：</strong>
+                                <br>• 🔴 + 🟡 = 🍊 <strong>橘彩爆破</strong>：引发震荡粉碎周围坏泥块。
+                                <br>• 🔵 + 🟡 = 🟢 <strong>翡翠弹力</strong>：获得1次墙面反弹安全护盾。
+                                <br>• 🔴 + 🔵 = 🟣 <strong>紫晶磁体</strong>：大范围自动磁吸全屏彩泥球。
+                                <br>• 🔴 + 🔵 + 🟡 = 🌈 <strong>七彩虹泥</strong>：进入全屏无敌无视障碍的定格冲刺！
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <div class="guide-icon">🪵</div>
+                            <div class="guide-text">
+                                <strong>擀面杖全屏碾压：</strong>能量槽全满时按 [Space] 或点击右下角按钮，召唤木质擀面杖全屏滚过，将所有坏泥块压成金星彩泥饼并全屏磁吸！
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <div class="guide-icon">🎮</div>
+                            <div class="guide-text">
+                                <strong>操作控制：</strong>PC端使用方向键/WASD移动，空格键释放擀面杖，F键切换 12FPS定格 / 60FPS流畅 模式。移动端可使用虚拟方向键或屏幕滑动。
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="close-help-btn" class="btn btn-primary clay-btn">理解并开始捏制</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Touch Controller Overlay -->
+        <footer class="controls-overlay">
+            <div class="dpad-container">
+                <button class="dpad-btn dpad-up" data-dir="up" aria-label="向上">▲</button>
+                <button class="dpad-btn dpad-left" data-dir="left" aria-label="向左">◄</button>
+                <button class="dpad-btn dpad-center" aria-label="中心"></button>
+                <button class="dpad-btn dpad-right" data-dir="right" aria-label="向右">►</button>
+                <button class="dpad-btn dpad-down" data-dir="down" aria-label="向下">▼</button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
