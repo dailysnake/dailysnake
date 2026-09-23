@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>晶圆微轨：电路脉冲与逻辑超频 (2026-09-23) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新硅基晶圆电路与逻辑超频贪吃蛇变体！在暗青PCB芯片阵列上游弋，收集高低电平数据包与能量晶体，穿过【AND/OR/XOR逻辑门】触发信号质变。闭环锁紧数据节点，按 [Space] 释放【电磁脉冲 (EMP)】全屏磁吸并清除坏块！支持PC键盘与移动端触控。">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-09-23/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="晶圆微轨：电路脉冲与逻辑超频 (2026-09-23) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新硅基晶圆电路与逻辑超频贪吃蛇变体！穿过逻辑门触发信号质变，闭环锁紧数据节点，按 [Space] 释放【电磁脉冲 (EMP)】扫荡坏块！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-09-23/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-09-23-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="晶圆微轨：电路脉冲与逻辑超频 (2026-09-23) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新硅基晶圆电路与逻辑超频贪吃蛇变体！穿过逻辑门触发信号质变，释放EMP扫荡坏块！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-09-23-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "晶圆微轨：电路脉冲与逻辑超频",
+      "headline": "晶圆微轨：电路脉冲与逻辑超频 (2026-09-23) - Daily Snake 每日贪吃蛇",
+      "description": "全新硅基晶圆电路与逻辑超频贪吃蛇变体！在暗青PCB芯片阵列上游弋，收集高低电平数据包与能量晶体，穿过逻辑门触发信号质变，释放电磁脉冲全屏扫荡！",
+      "genre": ["Snake Game", "Arcade", "Cyberpunk", "Circuit", "Puzzle", "Action"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-09-23",
+      "image": "https://dailysnake.org/assets/daily-2026-09-23-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-09-23/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600;700&family=Orbitron:wght@500;700;900&family=Outfit:wght@400;600;700;800&family=Noto+Sans+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header Nav Bar -->
+        <header class="top-bar">
+            <div class="brand">
+                <a href="../../index.html" class="back-link" title="返回每日贪吃蛇大厅">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M20,11H7.83l5.59-5.59L12,4L4,12L12,20l1.41-1.41L7.83,13H20V11Z"/></svg>
+                    <span>大厅</span>
+                </a>
+                <div class="title-group">
+                    <span class="game-tag">2026-09-23 今日首发</span>
+                    <h1 class="game-title">晶圆微轨：电路脉冲与逻辑超频</h1>
+                </div>
+            </div>
+            <div class="top-actions">
+                <button id="audio-toggle-btn" class="icon-btn" title="声音开关 (M)">
+                    <svg id="audio-on-icon" viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.2 15.43,8.63 14,7.97V16.02C15.43,15.37 16.5,13.8 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>
+                    <svg id="audio-off-icon" viewBox="0 0 24 24" class="icon hidden"><path fill="currentColor" d="M12,4L7,9H3V15H7L12,20V4M16.59,12L14,9.41L15.41,8L18,10.59L20.59,8L22,9.41L19.41,12L22,14.59L20.59,16L18,13.41L15.41,16L14,14.59L16.59,12Z"/></svg>
+                </button>
+                <button id="pause-btn" class="icon-btn" title="暂停/继续 (P)">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z"/></svg>
+                </button>
+                <button id="help-btn" class="icon-btn" title="玩法指南">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard HUD -->
+        <div class="hud-panel">
+            <div class="hud-card">
+                <span class="hud-label">LOGIC SCORE</span>
+                <span id="score-val" class="hud-value neon-cyan">0</span>
+            </div>
+            <div class="hud-card">
+                <span class="hud-label">CLOCK FREQ</span>
+                <span id="freq-val" class="hud-value neon-green">100 MHz</span>
+            </div>
+            <div class="hud-card">
+                <span class="hud-label">SIGNAL STATE</span>
+                <span id="state-val" class="hud-value neon-gold">NOR</span>
+            </div>
+            <div class="hud-card">
+                <span class="hud-label">HIGH SCORE</span>
+                <span id="high-score-val" class="hud-value">0</span>
+            </div>
+        </div>
+
+        <!-- Energy Gauge & EMP Skill Bar -->
+        <div class="emp-gauge-container">
+            <div class="emp-gauge-header">
+                <span class="emp-label">OVERCLOCK EMP CHARGE (按 [SPACE] 或 按钮激活)</span>
+                <span id="emp-status-text" class="emp-status">CHARGING 0%</span>
+            </div>
+            <div class="emp-progress-bar">
+                <div id="emp-fill" class="emp-fill" style="width: 0%;"></div>
+                <div class="emp-glow-head"></div>
+            </div>
+        </div>
+
+        <!-- Canvas Game Arena -->
+        <main class="game-viewport">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Touch Skill Floating Button for Mobile -->
+            <button id="mobile-emp-btn" class="mobile-emp-btn" aria-label="触发电磁脉冲">
+                <div class="btn-inner">
+                    <span class="emp-btn-icon">⚡</span>
+                    <span class="emp-btn-text">EMP 脉冲</span>
+                </div>
+                <div class="btn-ripple"></div>
+            </button>
+
+            <!-- Overlay Game Over Screen -->
+            <div id="game-over-modal" class="modal-overlay hidden">
+                <div class="modal-card">
+                    <div class="modal-icon-badge">SYSTEM CRASH</div>
+                    <h2>电路过载 · 信号中断</h2>
+                    <p class="modal-desc">系统检测到蛇头触碰到腐蚀坏块或电路边界。本次芯片算力输出如下：</p>
+                    <div class="score-summary-grid">
+                        <div class="summary-box">
+                            <span class="sum-label">最终算力积分</span>
+                            <span id="final-score" class="sum-value neon-cyan">0</span>
+                        </div>
+                        <div class="summary-box">
+                            <span class="sum-label">闭环消解节点</span>
+                            <span id="final-loops" class="sum-value neon-green">0</span>
+                        </div>
+                        <div class="summary-box">
+                            <span class="sum-label">EMP 释放次数</span>
+                            <span id="final-emps" class="sum-value neon-gold">0</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="restart-btn" class="btn btn-primary">重新初始化 (R)</button>
+                        <a href="../../index.html" class="btn btn-outline">返回游戏大厅</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay Pause Screen -->
+            <div id="pause-modal" class="modal-overlay hidden">
+                <div class="modal-card">
+                    <div class="modal-icon-badge">CLOCK PAUSED</div>
+                    <h2>系统时钟暂停中</h2>
+                    <p class="modal-desc">按 [P] 键或点击下方按钮恢复时钟信号。</p>
+                    <div class="modal-actions">
+                        <button id="resume-btn" class="btn btn-primary">继续运行 (P)</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Overlay Help / Guide Modal -->
+            <div id="help-modal" class="modal-overlay hidden">
+                <div class="modal-card help-card">
+                    <div class="modal-icon-badge">OPERATIONAL MANUAL</div>
+                    <h2>晶圆微轨 · 核心机制与操作指南</h2>
+                    <div class="guide-list">
+                        <div class="guide-item">
+                            <div class="guide-icon">1 / 0</div>
+                            <div class="guide-text">
+                                <strong>高低电平包：</strong>吃掉高低电平数据节点增长蛇身并增加算力积分。
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <div class="guide-icon">& / | / ^</div>
+                            <div class="guide-text">
+                                <strong>逻辑门共振：</strong>穿过与门(&)、或门(|)、异或门(^)可触发信号转变（得分倍率/磁吸/穿墙护盾）。
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <div class="guide-icon">⚡</div>
+                            <div class="guide-text">
+                                <strong>闭环锁紧 & EMP 脉冲：</strong>用身体围成闭环可消解包围圈内的所有节点。超频槽全满时按 [Space] 或点击移动端 EMP 按钮，释放全屏电磁脉冲波清除腐蚀坏块并进入无敌磁吸超频！
+                            </div>
+                        </div>
+                        <div class="guide-item">
+                            <div class="guide-icon">🎮</div>
+                            <div class="guide-text">
+                                <strong>操作控制：</strong>PC端使用方向键/WASD移动，空格键释放EMP。移动端可直接滑动屏幕或使用下方虚拟摇杆/方向按键。
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-actions">
+                        <button id="close-help-btn" class="btn btn-primary">理解并开始</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Mobile Touch Controller Overlay -->
+        <footer class="controls-overlay">
+            <div class="dpad-container">
+                <button class="dpad-btn dpad-up" data-dir="up" aria-label="向上">▲</button>
+                <button class="dpad-btn dpad-left" data-dir="left" aria-label="向左">◄</button>
+                <button class="dpad-btn dpad-center" aria-label="中心"></button>
+                <button class="dpad-btn dpad-right" data-dir="right" aria-label="向右">►</button>
+                <button class="dpad-btn dpad-down" data-dir="down" aria-label="向下">▼</button>
+            </div>
+        </footer>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
