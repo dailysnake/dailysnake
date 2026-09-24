@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>声波脉冲：频谱共振与声学重构 (2026-09-25) - Daily Snake 每日贪吃蛇</title>
+    <meta name="description" content="全新高科技声学合成器与示波器贪吃蛇变体！在阴极示波器网格上游弋，收集正弦波、方波与失真锯齿音符，引发频谱共振。积累均衡器能量，按 [Space] 释放【均衡器全屏声波暴扫】扫除全屏杂波噪点！纯 Web Audio 动态声学合成器，支持 PC 键盘与移动端触控。">
+    <link rel="canonical" href="https://dailysnake.org/games/daily-2026-09-25/">
+
+    <!-- Open Graph / Social Media Meta -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Daily Snake 每日贪吃蛇">
+    <meta property="og:title" content="声波脉冲：频谱共振与声学重构 (2026-09-25) - Daily Snake 每日贪吃蛇">
+    <meta property="og:description" content="全新高科技声学合成器与示波器贪吃蛇变体！收集正弦波与失真锯齿音符，按 [Space] 触发【均衡器全屏声波暴扫】粉碎全屏杂波噪点！">
+    <meta property="og:url" content="https://dailysnake.org/games/daily-2026-09-25/">
+    <meta property="og:image" content="https://dailysnake.org/assets/daily-2026-09-25-cover.jpg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="声波脉冲：频谱共振与声学重构 (2026-09-25) - Daily Snake 每日贪吃蛇">
+    <meta name="twitter:description" content="全新高科技声学合成器与示波器贪吃蛇变体！拾取正弦波与失真锯齿音符，释放全屏声波冲击！">
+    <meta name="twitter:image" content="https://dailysnake.org/assets/daily-2026-09-25-cover.jpg">
+
+    <!-- JSON-LD Structured Data for Google SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "声波脉冲：频谱共振与声学重构",
+      "headline": "声波脉冲：频谱共振与声学重构 (2026-09-25) - Daily Snake 每日贪吃蛇",
+      "description": "全新高科技声学合成器与示波器贪吃蛇变体！在阴极示波器网格上游弋，收集正弦波、方波与失真锯齿音符，按 [Space] 触发【均衡器全屏声波暴扫】粉碎全屏杂波噪点！",
+      "genre": ["Snake Game", "Arcade", "Audio Visualizer", "Rhythm", "Synth", "Action"],
+      "gamePlatform": "Web Browser",
+      "applicationCategory": "GameApplication",
+      "operatingSystem": "Web Browser",
+      "datePublished": "2026-09-25",
+      "image": "https://dailysnake.org/assets/daily-2026-09-25-cover.jpg",
+      "url": "https://dailysnake.org/games/daily-2026-09-25/",
+      "author": { "@type": "Organization", "name": "Daily Snake Studio" },
+      "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
+    }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Noto+Sans+SC:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="crt-overlay"></div>
+    <div class="app-container">
+        <!-- Header Nav Bar -->
+        <header class="top-bar">
+            <div class="brand">
+                <a href="../../index.html" class="back-link" title="返回每日贪吃蛇大厅">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M20,11H7.83l5.59-5.59L12,4L4,12L12,20l1.41-1.41L7.83,13H20V11Z"/></svg>
+                    <span>大厅</span>
+                </a>
+                <div class="title-group">
+                    <span class="game-tag">2026-09-25 今日首发</span>
+                    <h1 class="game-title">声波脉冲：频谱共振与声学重构</h1>
+                </div>
+            </div>
+            <div class="top-actions">
+                <button id="crt-toggle-btn" class="synth-pill-btn" title="切换阴极射线管 CRT 扫描线 (C)">
+                    <span id="crt-label">CRT 示波模式</span>
+                </button>
+                <button id="audio-toggle-btn" class="icon-btn" title="声音合成器 (M)">
+                    <svg id="audio-on-icon" viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18.01,19.86 21,16.28 21,12C21,7.72 18.01,4.14 14,3.23M16.5,12C16.5,10.2 15.43,8.63 14,7.97V16.02C15.43,15.37 16.5,13.8 16.5,12M3,9V15H7L12,20V4L7,9H3Z"/></svg>
+                    <svg id="audio-off-icon" viewBox="0 0 24 24" class="icon hidden"><path fill="currentColor" d="M12,4L7,9H3V15H7L12,20V4M16.59,12L14,9.41L15.41,8L18,10.59L20.59,8L22,9.41L19.41,12L22,14.59L20.59,16L18,13.41L15.41,16L14,14.59L16.59,12Z"/></svg>
+                </button>
+                <button id="pause-btn" class="icon-btn" title="暂停/继续 (P)">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z"/></svg>
+                </button>
+                <button id="help-btn" class="icon-btn" title="玩法指南">
+                    <svg viewBox="0 0 24 24" class="icon"><path fill="currentColor" d="M11,18H13V16H11V18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,22A10,10 0 0,0 12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,6A4,4 0 0,0 8,10H10A2,2 0 0,1 12,8A2,2 0 0,1 14,10C14,12 11,11.75 11,15H13C13,12.75 16,12.5 16,10A4,4 0 0,0 12,6Z"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Dashboard HUD -->
+        <div class="hud-panel">
+            <div class="hud-card synth-card">
+                <span class="hud-label">FREQ SCORE 频谱得分</span>
+                <span id="score-val" class="hud-value neon-cyan">0</span>
+            </div>
+            <div class="hud-card synth-card">
+                <span class="hud-label">SIGNAL STATE 当前信号</span>
+                <div class="wave-state-indicator">
+                    <span id="wave-icon" class="wave-symbol">∿</span>
+                    <span id="wave-state-text" class="hud-value neon-emerald">基准正弦波</span>
+                </div>
+            </div>
+            <div class="hud-card synth-card">
+                <span class="hud-label">PEAK RECORD 峰值纪录</span>
+                <span id="high-score-val" class="hud-value neon-amber">0</span>
+            </div>
+        </div>
+
+        <!-- Equalizer Skill Bar -->
+        <div class="eq-gauge-container">
+            <div class="eq-label-group">
+                <span class="eq-title"><svg class="eq-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M3,22H5V16H3V22M7,22H9V8H7V22M11,22H13V12H11V22M15,22H17V4H15V22M19,22H21V10H19V22Z"/></svg> EQUALIZER POWER 均衡器暴扫能量</span>
+                <span id="eq-status-text" class="eq-status">蓄能中 [0%]</span>
+            </div>
+            <div class="eq-bar-track">
+                <div id="eq-fill" class="eq-bar-fill"></div>
+                <div class="eq-segments">
+                    <span></span><span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Game Stage Area -->
+        <main class="game-stage">
+            <canvas id="game-canvas"></canvas>
+
+            <!-- Floating Start Overlay -->
+            <div id="start-overlay" class="stage-overlay">
+                <div class="overlay-card synth-card">
+                    <div class="osc-decor-ring"></div>
+                    <h2>声波脉冲：频谱共振</h2>
+                    <p class="subtitle">SONIC WAVEFORM & ACOUSTIC SPECTRUM OVERDRIVE</p>
+                    <div class="start-features">
+                        <div class="feature-item">
+                            <span class="feat-icon">∿</span>
+                            <span>调幅波形：正弦 / 方波 / 锯齿失真 / 超低音</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feat-icon">⚡</span>
+                            <span>全屏冲击：按 [Space] 释放均衡器声波暴扫</span>
+                        </div>
+                        <div class="feature-item">
+                            <span class="feat-icon">🎵</span>
+                            <span>即时声学：基于 Web Audio API 动态合成</span>
+                        </div>
+                    </div>
+                    <button id="start-game-btn" class="synth-btn primary-btn">
+                        <span>启动波形发生器</span>
+                        <svg viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M8,5.14V19.14L19,12.14L8,5.14Z"/></svg>
+                    </button>
+                    <div class="control-hints-row">
+                        <span>PC: [方向键 / WASD] 转向, [Space] 均衡暴扫</span>
+                        <span>触控: 屏幕滑屏 / 虚拟 D-Pad</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Virtual Touch D-Pad & Skill Controls -->
+            <div class="mobile-controls">
+                <div class="dpad">
+                    <button id="btn-up" class="dpad-btn up" aria-label="上">▲</button>
+                    <button id="btn-left" class="dpad-btn left" aria-label="左">◀</button>
+                    <button id="btn-down" class="dpad-btn down" aria-label="下">▼</button>
+                    <button id="btn-right" class="dpad-btn right" aria-label="右">▶</button>
+                </div>
+                <div class="mobile-skill">
+                    <button id="mobile-skill-btn" class="skill-trigger-btn disabled" disabled>
+                        <span class="skill-btn-title">EQ 暴扫</span>
+                        <span class="skill-btn-sub">POWER 100%</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <!-- Pause Modal -->
+        <div id="pause-modal" class="modal-backdrop hidden">
+            <div class="modal-card synth-card">
+                <h2>信号暂停 / SIGNAL PAUSED</h2>
+                <p>示波器处于静止采样状态...</p>
+                <div class="modal-actions">
+                    <button id="resume-btn" class="synth-btn primary-btn">恢复采样 (P)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help / Guide Modal -->
+        <div id="help-modal" class="modal-backdrop hidden">
+            <div class="modal-card synth-card help-modal-card">
+                <div class="modal-header">
+                    <h2>声波脉冲 - 玩法指南</h2>
+                    <button id="close-help-btn" class="close-icon-btn">×</button>
+                </div>
+                <div class="help-content">
+                    <div class="help-section">
+                        <h3>1. 音符与波形状态 (Wave Types)</h3>
+                        <div class="help-grid">
+                            <div class="help-item">
+                                <span class="badge note-sine">∿ 正弦音符</span>
+                                <p>基准音符。增加身体长度，增加 15% 均衡器能量。</p>
+                            </div>
+                            <div class="help-item">
+                                <span class="badge note-square">▅ 方波重击</span>
+                                <p>高能谐波。4 倍得分，获得 5 秒高频疾风加速，增加 25% 能量。</p>
+                            </div>
+                            <div class="help-item">
+                                <span class="badge note-saw">M 锯齿失真</span>
+                                <p>过载魔音。头部化为高速旋转锯齿波，持续 8 秒，可直接撞碎杂波噪点！</p>
+                            </div>
+                            <div class="help-item">
+                                <span class="badge note-sub">● 超低音共振</span>
+                                <p>重低音脉冲。立即向四周发射小型震荡波，清除近距离杂波。</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="help-section">
+                        <h3>2. 核心大招：均衡器全屏声波暴扫 (Sonic Wave Sweep)</h3>
+                        <p>收集音符将【均衡器暴扫能量】积满至 100% 后，按下 <strong>[Space]</strong> 键（或移动端点击右下角按钮），即可向全屏辐射一道金色声波光环，<strong>粉碎所有杂波噪点障碍并将其转化为高分金币！</strong></p>
+                    </div>
+                    <div class="help-section">
+                        <h3>3. 杂波噪点 (Noise Static)</h3>
+                        <p>网格中会不定时出现红色闪烁的数字杂波。普通状态碰撞会导致信号断裂（游戏结束）。使用锯齿失真或均衡器暴扫可粉碎杂波。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Over Modal -->
+        <div id="game-over-modal" class="modal-backdrop hidden">
+            <div class="modal-card synth-card game-over-card">
+                <div class="glitch-header">
+                    <h2 class="neon-red">信号终止 SIGNAL LOST</h2>
+                    <span class="sub-glitch">FREQUENCY COLLISION DETECTED</span>
+                </div>
+                <div class="final-stats-grid">
+                    <div class="stat-box">
+                        <span class="box-label">最终频谱得分</span>
+                        <span id="final-score" class="box-val neon-cyan">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="box-label">暴扫触发次数</span>
+                        <span id="final-sweeps" class="box-val neon-amber">0</span>
+                    </div>
+                    <div class="stat-box">
+                        <span class="box-label">粉碎杂波数量</span>
+                        <span id="final-destroyed" class="box-val neon-purple">0</span>
+                    </div>
+                </div>
+                <div id="new-record-banner" class="new-record-banner hidden">★ 刷新历史最高频响纪录！ ★</div>
+                <div class="modal-actions">
+                    <button id="restart-btn" class="synth-btn primary-btn">
+                        <span>重新发生调制</span>
+                        <svg viewBox="0 0 24 24" class="btn-icon"><path fill="currentColor" d="M12,5V1L7,6L12,11V7A5,5 0 0,1 17,12A5,5 0 0,1 12,17A5,5 0 0,1 7,12H5A7,7 0 0,0 12,19A7,7 0 0,0 19,12A7,7 0 0,0 12,5Z"/></svg>
+                    </button>
+                    <a href="../../index.html" class="synth-btn secondary-btn">返回每日大厅</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Game Engine -->
+    <script src="game.js"></script>
+</body>
+</html>
